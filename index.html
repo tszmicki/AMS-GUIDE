@@ -425,9 +425,7 @@ body{font-family:'Kanit',sans-serif;background:var(--bg);color:var(--t);display:
     <span class="sfilt-v" id="thc-v">0%</span>
   </div>
   <div id="list-body"></div>
-  <div class="no-res" id="list-nores">nessun risultato con questi filtri</div>
-  <button style="display:block;margin:.5rem auto 0;font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--m2);background:none;border:1px solid var(--b1);border-radius:99px;padding:.28rem 1rem;cursor:pointer" onclick="if(confirm('Reset lista?')){ALL.forEach(i=>rm(i.id));renderList()}">reset lista</button>
-  <div class="pb10"></div>
+  <div class="no-res" id="list-nores" style="display:none">nessun risultato con questi filtri</div>
 </div>
 
 <!-- PAGE: WISHLIST -->
@@ -438,6 +436,7 @@ body{font-family:'Kanit',sans-serif;background:var(--bg);color:var(--t);display:
     <div class="sp"><span class="sn" style="color:var(--G)" id="w-fnd">0</span><span class="sl">trovate</span></div>
     <div class="sp"><span class="sn" style="color:var(--BL)" id="w-sh">0</span><span class="sl">shop</span></div>
   </div>
+  <div style="display:flex;justify-content:center;margin:.4rem 0 0"><button style="font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--m2);background:none;border:1px solid var(--b1);border-radius:99px;padding:.28rem 1rem;cursor:pointer" onclick="if(confirm('Reset tutti i dati?')){ALL.forEach(function(i){rm(i.id)});SHOPS.forEach(function(s){rm('sh_'+s.id)});renderList();renderShops();renderWish();updateNavBadges()}">⟳ reset tutti i dati</button></div>
   <div class="wtabs" id="wish-tabs">
     <button class="wtab wt-g" onclick="setWT(this,'weed')">🌿 Erbe (0)</button>
     <button class="wtab" onclick="setWT(this,'hash')">🍫 Hash (0)</button>
@@ -1113,7 +1112,7 @@ function renderWishShops(body,shops){
 }
 
 function removeWishItem(id){
-  const s=gs(id);s.starred=false;ss(id,s);
+  const s=gs(id);s.starred=false;ss(id,s);updateNavBadges();
   const rowEl=document.getElementById('row-'+id);
   if(rowEl)rowEl.classList.remove('strd');
   const sb=document.getElementById('star-'+id);
@@ -1121,7 +1120,7 @@ function removeWishItem(id){
   renderWish();updateStats();
 }
 function removeWishShop(id){
-  const s=gs('sh_'+id);s.starred=false;ss('sh_'+id,s);
+  const s=gs('sh_'+id);s.starred=false;ss('sh_'+id,s);updateNavBadges();
   const lb=document.getElementById('shstar-'+id);
   if(lb){lb.textContent='☆';lb.classList.remove('on');}
   renderWish();
@@ -1205,7 +1204,7 @@ function toggleChkPop(id,isHash){
   updateStats();updateRatio();
 }
 function toggleStarPop(id){
-  const s=gs(id);s.starred=!s.starred;ss(id,s);
+  const s=gs(id);s.starred=!s.starred;ss(id,s);updateNavBadges();
   const btn=document.getElementById('pop-star');
   if(btn){btn.textContent=s.starred?'★ In wishlist':'☆ Wishlist';btn.className='pa '+(s.starred?'pa2':'');}
   const row=document.getElementById('row-'+id);
@@ -1325,7 +1324,7 @@ function openShopPop(id){
 }
 
 function toggleShopStar(id){
-  const s=gs('sh_'+id);s.starred=!s.starred;ss('sh_'+id,s);
+  const s=gs('sh_'+id);s.starred=!s.starred;ss('sh_'+id,s);updateNavBadges();
   const btn=document.getElementById('sh-star');
   if(btn){btn.textContent=s.starred?'★ In wishlist':'☆ Wishlist shop';btn.className='pa '+(s.starred?'pa2':'');}
   const lb=document.getElementById('shstar-'+id);
