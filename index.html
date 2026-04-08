@@ -23,6 +23,8 @@ body{font-family:'Kanit',sans-serif;background:var(--bg);color:var(--t);display:
 
 /* ── NAV ── */
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:500;background:rgba(7,7,7,.97);backdrop-filter:blur(24px);border-top:1px solid var(--b1);display:flex;padding:5px 0 13px}
+.nav-badge{display:inline-block;background:var(--A);color:#000;font-size:9px;font-weight:700;border-radius:8px;padding:0 4px;margin-left:3px;min-width:14px;text-align:center;line-height:14px;vertical-align:middle}
+
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;border:none;background:none;cursor:pointer;color:var(--m2);transition:color .18s}
 .nb .ic{font-size:22px;line-height:1;transition:transform .15s}
 .nb .lb{font-family:'Kanit',sans-serif;font-size:12px;letter-spacing:.04em}
@@ -480,8 +482,8 @@ body{font-family:'Kanit',sans-serif;background:var(--bg);color:var(--t);display:
 <!-- NAV -->
 <nav class="bnav">
   <button class="nb ag" onclick="nav('list',this,'ag')" id="nb-list"><span class="ic">◈</span><span class="lb">Lista</span></button>
-  <button class="nb" onclick="nav('wish',this,'aa');renderWish()" id="nb-wish"><span class="ic">★</span><span class="lb">Wishlist</span></button>
-  <button class="nb" onclick="nav('shops',this,'aa')" id="nb-shops"><span class="ic">☕</span><span class="lb">Shops</span></button>
+  <button class="nb" onclick="nav('wish',this,'aa');renderWish()" id="nb-wish"><span class="ic">★</span><span class="lb">Wishlist<span class="nav-badge" id="nb-wish-cnt" style="display:none"></span></span></button>
+  <button class="nb" onclick="nav('shops',this,'aa')" id="nb-shops"><span class="ic">☕</span><span class="lb">Shops<span class="nav-badge" id="nb-shops-cnt" style="display:none"></span></span></button>
 </nav>
 
 <script>
@@ -985,6 +987,17 @@ function updateStats(){
   let tot=0,wish=0;
   ALL.forEach(i=>{tot++;if(gs(i.id).starred)wish++;});
   V('s-tot',tot);V('s-wish',wish);
+  updateNavBadges();
+}
+function updateNavBadges(){
+  const wishItems=ALL.filter(i=>gs(i.id).starred).length;
+  const wishShops=SHOPS.filter(s=>gs('sh_'+s.id).starred).length;
+  const wishTot=wishItems+wishShops;
+  const wBadge=document.getElementById('nb-wish-cnt');
+  if(wBadge){wBadge.textContent='('+wishTot+')';wBadge.style.display=wishTot?'inline-block':'none';}
+  const starredShops=SHOPS.filter(s=>gs('sh_'+s.id).starred).length;
+  const sBadge=document.getElementById('nb-shops-cnt');
+  if(sBadge){sBadge.textContent='('+starredShops+')';sBadge.style.display=starredShops?'inline-block':'none';}
 }
 function updateRatio(){
   const w=ALL.filter(i=>i.type==='weed'),t=w.length||1;
