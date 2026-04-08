@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>AMS Green Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,600&family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070707;--s1:#0e0e0e;--s2:#161616;--s3:#1e1e1e;
+  --b1:#202020;--b2:#2c2c2c;--b3:#3e3e3e;
+  --G:#4eff38;--Gd:#091e08;--Gb:#154012;
+  --A:#f5c342;--Ad:#1c1406;--Ab:#3a2806;
+  --B:#c8906a;--Bd:#1a1008;--Bb:#3a2008;
+  --BL:#48b4ff;--BLd:#071828;
+  --P:#b794f4;--R:#ff4f4f;--T:#e8c84a;
+  --t:#f5f2ee;--m1:#b0aca4;--m2:#888480;--m3:#242424;
+  --r:10px;--r2:7px;--r3:20px;
+}
+html,body{height:100%;overflow:hidden;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+body{font-family:'Kanit',sans-serif;background:var(--bg);color:var(--t);display:flex;flex-direction:column;max-width:480px;margin:0 auto}
+
+/* ── NAV ── */
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:500;background:rgba(7,7,7,.97);backdrop-filter:blur(24px);border-top:1px solid var(--b1);display:flex;padding:5px 0 13px}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;border:none;background:none;cursor:pointer;color:var(--m2);transition:color .18s}
+.nb .ic{font-size:22px;line-height:1;transition:transform .15s}
+.nb .lb{font-family:'Kanit',sans-serif;font-size:12px;letter-spacing:.04em}
+.nb.ag{color:var(--G)}.nb.ag .ic{transform:translateY(-2px)}
+.nb.aa{color:var(--A)}.nb.aa .ic{transform:translateY(-2px)}
+.nb.abl{color:var(--BL)}.nb.abl .ic{transform:translateY(-2px)}
+
+/* ── PAGES ── */
+.page{display:none;height:calc(100vh - 58px);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.page.on{display:block}
+
+/* ── HERO ── */
+.hero{padding:.8rem .75rem .1rem;text-align:center}
+.hl{font-size:11px;letter-spacing:.3em;color:var(--m1);text-transform:uppercase;font-family:'Kanit',sans-serif;margin-bottom:.1rem}
+.ht{font-size:clamp(1.7rem,8vw,2.5rem);font-weight:700;line-height:1;font-family:'Chakra Petch',sans-serif}
+.ht-g{background:linear-gradient(130deg,var(--G),#9affb0);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ht-a{background:linear-gradient(130deg,var(--A),#ffe070);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* ── STATS ── */
+.ss{display:flex;gap:4px;padding:.25rem .75rem .15rem;overflow-x:auto;scrollbar-width:none}
+.ss::-webkit-scrollbar{display:none}
+.sp{background:var(--s2);border:1px solid var(--b1);border-radius:99px;padding:.25rem .7rem;white-space:nowrap;display:flex;align-items:center;gap:.3rem;flex-shrink:0}
+.sn{font-family:'Kanit',sans-serif;font-size:15px;font-weight:600}
+.sl{font-family:'Kanit',sans-serif;font-size:12px;color:var(--m1)}
+
+/* ── RATIO BAR ── */
+.rbar{margin:.12rem .75rem .04rem;height:4px;background:var(--m3);border-radius:99px;overflow:hidden;display:flex}
+.rb-s{background:var(--A);transition:width .4s}
+.rb-h{background:#5ee8b2}
+.rb-i{background:var(--P);flex:1}
+.rlbl{display:flex;justify-content:space-between;padding:0 .75rem;margin-bottom:.22rem}
+.rl{font-family:'Kanit',sans-serif;font-size:11px;color:var(--m2)}
+
+/* ── SEARCH ── */
+.sb{display:flex;align-items:center;gap:.3rem;background:var(--s2);border:1px solid var(--b1);border-radius:99px;padding:.4rem .75rem;margin:.25rem .75rem .2rem}
+.sb input{flex:1;font-family:'Kanit',sans-serif;font-size:14px;background:transparent;border:none;color:var(--t);outline:none}
+.sb input::placeholder{color:var(--m2)}
+.sb-ico{color:var(--m2);font-size:16px;flex-shrink:0}
+.sb-clr{display:none;color:var(--m2);font-size:10px;cursor:pointer;flex-shrink:0;padding:0 2px}
+
+/* ── FILTER CHIPS ── */
+.frow{padding:0 .75rem .22rem;overflow-x:auto;scrollbar-width:none;display:flex;gap:3px}
+.frow::-webkit-scrollbar{display:none}
+.fc{font-family:'Kanit',sans-serif;font-size:12px;padding:6px 13px;border-radius:99px;border:1px solid var(--b2);background:transparent;color:var(--m1);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .15s}
+.fc.on{border-color:var(--Gb);background:var(--Gd);color:var(--G)}
+.fc.on-a{border-color:var(--Ab);background:var(--Ad);color:var(--A)}
+.fc.on-b{border-color:var(--Bb);background:var(--Bd);color:var(--B)}
+.fc.on-p{border-color:#3a2868;background:#120a28;color:var(--P)}
+
+/* ── THC SLIDER ── */
+.sfilt{display:flex;align-items:center;gap:.4rem;padding:.02rem .75rem .2rem}
+.sfilt-l{font-family:'Kanit',sans-serif;font-size:12px;color:var(--m2);white-space:nowrap;flex-shrink:0}
+.sfilt-s{-webkit-appearance:none;appearance:none;flex:1;height:3px;background:var(--b2);border-radius:99px;outline:none;cursor:pointer}
+.sfilt-s::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--A);cursor:pointer}
+.sfilt-v{font-family:'Kanit',sans-serif;font-size:12px;color:var(--A);min-width:22px;text-align:right}
+
+/* ── SECTION ── */
+.sec{padding:0 .75rem;margin-bottom:.55rem}
+.slbl{font-family:'Chakra Petch',sans-serif;font-size:11px;letter-spacing:.15em;color:var(--m2);text-transform:uppercase;margin-bottom:.4rem;display:flex;align-items:center;gap:.35rem}
+.slbl::after{content:'';flex:1;height:1px;background:var(--b1)}
+.slbl-c{color:var(--m2);font-size:11px;letter-spacing:0;margin-left:.12rem;text-transform:none}
+
+/* ══════════════════════════════════════
+   ITEM ROWS — stilizzate per personalità
+══════════════════════════════════════ */
+.ir{display:grid;grid-template-columns:28px minmax(0,1fr) auto auto 36px;align-items:center;gap:.35rem;padding:.45rem .4rem .45rem .5rem;border-radius:var(--r2);margin-bottom:.25rem;cursor:pointer;user-select:none;-webkit-user-select:none;transition:opacity .12s;position:relative;overflow:hidden;border:1px solid transparent}
+.ir:active{opacity:.82}
+
+/* default */
+.ir-default{background:var(--s2);border-color:var(--b1)}
+.ir-default:hover{border-color:var(--b2)}
+
+/* sativa — verde-giallo caldo */
+.ir-sativa{background:linear-gradient(100deg,#0e1a0a,#121a08);border-color:#1a3010}
+.ir-sativa:hover{border-color:#254018}
+.ir-sativa .inm{color:#c8e88a}
+
+/* indica — viola profondo */
+.ir-indica{background:linear-gradient(100deg,#0e0a1a,#120a1e);border-color:#281060}
+.ir-indica:hover{border-color:#3a1880}
+.ir-indica .inm{color:#c4a0f4}
+
+/* hybrid — teal-verde */
+.ir-hybrid{background:linear-gradient(100deg,#081814,#0a1e18);border-color:#103828}
+.ir-hybrid:hover{border-color:#185040}
+.ir-hybrid .inm{color:#80e0c0}
+
+/* fruity — arancio-pesca */
+.ir-fruity{background:linear-gradient(100deg,#1a0e08,#1e1008);border-color:#402010}
+.ir-fruity:hover{border-color:#582c18}
+.ir-fruity .inm{color:#f0a060}
+
+/* haze — azzurro-celeste */
+.ir-haze{background:linear-gradient(100deg,#080e1a,#08101e);border-color:#0e2040}
+.ir-haze:hover{border-color:#183060}
+.ir-haze .inm{color:#80c0f8}
+
+/* hash marocchino — sabbia-oro */
+.ir-hash-mar{background:linear-gradient(100deg,#1a1208,#1e1608);border-color:#402808}
+.ir-hash-mar:hover{border-color:#583810}
+.ir-hash-mar .inm{color:#e0b060}
+
+/* hash orientale — terracotta */
+.ir-hash-ori{background:linear-gradient(100deg,#1a0c08,#1e1008);border-color:#3a1808}
+.ir-hash-ori:hover{border-color:#502010}
+.ir-hash-ori .inm{color:#d08050}
+
+/* hash moderno — grigio platino */
+.ir-hash-mod{background:linear-gradient(100deg,#101214,#0e1016);border-color:#202428}
+.ir-hash-mod:hover{border-color:#303438}
+.ir-hash-mod .inm{color:#b0c0d0}
+
+/* potenti — rosso scuro */
+.ir-potente{background:linear-gradient(100deg,#180808,#1c0808);border-color:#400808}
+.ir-potente:hover{border-color:#581010}
+.ir-potente .inm{color:#f08080}
+
+/* done state */
+.ir.done{opacity:.6}
+.ir.done .inm{text-decoration:line-through}
+.ir.hdone{opacity:.6}
+.ir.hdone .inm{text-decoration:line-through}
+.ir.strd .inm::after{content:' ★';color:var(--A);font-size:9px}
+
+/* check circle */
+.cc{width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;line-height:1;position:relative;z-index:1}
+.done .cc{opacity:.4}
+.hdone .cc{opacity:.4}
+.cc svg{display:none}
+
+
+/* text */
+.inm{font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'Chakra Petch',sans-serif;letter-spacing:.01em;min-width:0;position:relative;z-index:1}
+.itags{display:flex;gap:2px;flex-shrink:0;overflow:hidden;position:relative;z-index:1}
+.itag{font-family:'Kanit',sans-serif;font-size:10px;padding:3px 8px;border-radius:99px;border:1px solid;white-space:nowrap;flex-shrink:0}
+.ts{color:var(--A);border-color:#2a1e06;background:#100a02}
+.ti{color:var(--P);border-color:#220e52;background:#0e0828}
+.th{color:#5ee8b2;border-color:#083020;background:#04180e}
+.tf{color:#fb923c;border-color:#381206;background:#160802}
+.tz{color:var(--BL);border-color:#081e38;background:#040c18}
+.tc{color:#888;border-color:#222;background:#0c0c0c}
+.thh{color:var(--B);border-color:#361806;background:#160c02}
+.tp{color:#f08080;border-color:#3a0808;background:#180404}
+.irt{display:flex;flex-direction:column;align-items:flex-end;gap:0;flex-shrink:0;position:relative;z-index:1}
+.ithc{font-family:'Kanit',sans-serif;font-size:11px;color:var(--m2);line-height:1.2}
+.irat{font-family:'Chakra Petch',sans-serif;font-size:15px;font-weight:700;line-height:1.2}
+.iarr{font-size:9px;color:var(--m2);flex-shrink:0}
+
+/* ══════════════════════════════════════
+   SHOP CARDS — stilizzate per personalità
+══════════════════════════════════════ */
+.sc{display:flex;align-items:flex-start;gap:.4rem;padding:.55rem .6rem;border-radius:var(--r2);margin-bottom:.25rem;cursor:pointer;transition:opacity .12s;border:1px solid transparent;position:relative;overflow:hidden}
+.sc:active{opacity:.85}
+
+.sc-top{background:linear-gradient(110deg,#091809,#0b1a08);border-color:#154012}
+.sc-top:hover{border-color:#1e5018}
+.sc-top .sc-nm{color:#80e880}
+
+.sc-hash{background:linear-gradient(110deg,#1a1008,#1e1208);border-color:var(--Bb)}
+.sc-hash:hover{border-color:#503010}
+.sc-hash .sc-nm{color:#e0a060}
+
+.sc-chill{background:linear-gradient(110deg,#081018,#08121e);border-color:#0e2040}
+.sc-chill:hover{border-color:#183060}
+.sc-chill .sc-nm{color:#80b8f8}
+
+.sc-local{background:linear-gradient(110deg,#161208,#1a160a);border-color:#382a08}
+.sc-local:hover{border-color:#503a10}
+.sc-local .sc-nm{color:#d0b060}
+
+.sc-old{background:linear-gradient(110deg,#101010,#141414);border-color:#2a2a2a}
+.sc-old:hover{border-color:#3a3a3a}
+.sc-old .sc-nm{color:#b0b0b0}
+
+.sc-warn{background:linear-gradient(110deg,#180808,#1c0a0a);border-color:#401010}
+.sc-warn:hover{border-color:#581818}
+.sc-warn .sc-nm{color:#f08080}
+
+.sc-nm{font-size:16px;font-weight:700;margin-bottom:.06rem;font-family:'Chakra Petch',sans-serif;letter-spacing:.01em;line-height:1.2}
+.sc-ar{font-family:'Kanit',sans-serif;font-size:12px;color:var(--m2);margin-bottom:.1rem}
+.sc-pv{font-family:'Kanit',sans-serif;font-size:12px;color:#c0bcb4;line-height:1.45;margin-bottom:.15rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sc-mt{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.sc-rt{font-family:'Chakra Petch',sans-serif;font-size:14px;font-weight:700}
+.sc-hr{font-family:'Kanit',sans-serif;font-size:12px;color:var(--m2)}
+.sbdg{font-family:'Kanit',sans-serif;font-size:10px;padding:2px 8px;border-radius:99px;border:1px solid;align-self:start;white-space:nowrap}
+.sb-top{color:var(--G);border-color:var(--Gb)}
+.sb-hash{color:var(--B);border-color:var(--Bb)}
+.sb-chill{color:var(--BL);border-color:#082038}
+.sb-local{color:var(--A);border-color:var(--Ab)}
+.sb-old{color:#a0a0a0;border-color:#3a3a3a}
+.sb-warn{color:var(--R);border-color:#3a0a0a}
+
+/* ══════════════════════════════════════
+   WISHLIST CARDS — stilizzate + rimozione
+══════════════════════════════════════ */
+.wcard{border-radius:var(--r2);margin-bottom:.28rem;border:1px solid transparent;overflow:hidden;position:relative}
+.wcard-inner{display:grid;grid-template-columns:minmax(0,1fr) 44px;align-items:stretch}
+.wcard-main{display:flex;align-items:center;gap:.5rem;padding:.5rem .6rem;cursor:pointer;min-width:0}
+.wcard-rm{display:flex;align-items:center;justify-content:center;background:rgba(255,80,80,.12);border-left:1px solid rgba(255,80,80,.2);color:var(--R);font-size:18px;cursor:pointer;transition:background .15s;flex-shrink:0;min-width:44px}
+.wcard-rm:hover{background:rgba(255,80,80,.25)}
+.wcard-rm:active{background:rgba(255,80,80,.4)}
+
+/* wishlist card types */
+.wc-weed{background:linear-gradient(110deg,#0a1408,#0c180a);border-color:#1a3010}
+.wc-hash{background:linear-gradient(110deg,#1a1008,#1e1208);border-color:var(--Bb)}
+.wc-shop{background:linear-gradient(110deg,#0a0e14,#0c1018);border-color:#183050}
+.wc-shop .wcard-nm{color:#80b8f8}
+.wc-weed .wcard-nm{color:#90d870}
+.wc-hash .wcard-nm{color:#d09050}
+.wcard-nm{font-size:15px;font-weight:700;font-family:'Chakra Petch',sans-serif;letter-spacing:.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.wcard-sub{font-family:'Kanit',sans-serif;font-size:12px;color:var(--m1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.wcard-r{font-family:'Chakra Petch',sans-serif;font-size:14px;font-weight:700;flex-shrink:0}
+.wcard-done{opacity:.55}
+.wcard-done .wcard-nm{text-decoration:line-through}
+
+/* wish tabs */
+.wtabs{display:flex;gap:3px;padding:0 .75rem .3rem}
+.wtab{flex:1;font-family:'Kanit',sans-serif;font-size:13px;padding:.4rem;border-radius:99px;border:1px solid var(--b2);background:transparent;color:var(--m1);cursor:pointer;text-align:center;transition:all .15s}
+.wtab.wt-g{border-color:var(--Gb);background:var(--Gd);color:var(--G)}
+.wtab.wt-b{border-color:var(--Bb);background:var(--Bd);color:var(--B)}
+.wtab.wt-bl{border-color:#183050;background:#0a1020;color:var(--BL)}
+
+/* OVERLAY */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:600;display:flex;flex-direction:column;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .18s}
+.ov.show{opacity:1;pointer-events:all}
+.pop{background:var(--s1);border-radius:var(--r3) var(--r3) 0 0;border-top:1px solid var(--b2);border-left:1px solid var(--b2);border-right:1px solid var(--b2);max-height:86vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 1rem 2rem;transform:translateY(16px);transition:transform .18s ease}
+.ov.show .pop{transform:translateY(0)}
+.pop-h{width:30px;height:3px;background:var(--b3);border-radius:99px;margin:8px auto .7rem}
+.ph2{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.2rem}
+.pn{font-size:1.4rem;font-weight:700;font-family:'Chakra Petch',sans-serif;line-height:1.2;flex:1;padding-right:.35rem}
+.px{font-size:18px;color:var(--m1);cursor:pointer;background:none;border:none;line-height:1;padding:0;flex-shrink:0}
+.psub{font-family:'Kanit',sans-serif;font-size:13px;color:var(--m1);margin-bottom:.3rem}
+.par{font-family:'Kanit',sans-serif;font-size:12px;color:var(--m2);padding:.2rem .5rem;background:var(--s2);border-radius:99px;display:inline-block;margin-bottom:.4rem}
+.ptags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:.45rem}
+.ptag{font-family:'Kanit',sans-serif;font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid}
+.pt-s{color:var(--A);border-color:#2a1e06;background:#0e0802}
+.pt-i{color:var(--P);border-color:#220e52;background:#0e0828}
+.pt-h{color:#5ee8b2;border-color:#083020;background:#04180e}
+.pt-f{color:#fb923c;border-color:#381206;background:#160802}
+.pt-z{color:var(--BL);border-color:#081e38;background:#040c18}
+.pt-c{color:#888;border-color:#222;background:#0c0c0c}
+.pt-hh{color:var(--B);border-color:#361806;background:#160c02}
+.pt-p{color:#f08080;border-color:#3a0808;background:#180404}
+.pdesc{font-family:'Kanit',sans-serif;font-size:13px;color:var(--m1);line-height:1.65;margin-bottom:.4rem}
+.pdet{font-family:'Kanit',sans-serif;font-size:13px;color:#c0bcb4;line-height:1.65;margin-bottom:.55rem}
+.pdiv{height:1px;background:var(--b1);margin:.45rem 0}
+.plbl{font-family:'Kanit',sans-serif;font-size:11px;letter-spacing:.12em;color:var(--m2);text-transform:uppercase;margin-bottom:.25rem}
+.rrow{display:flex;align-items:center;gap:.35rem;margin-bottom:.38rem}
+.rsl{-webkit-appearance:none;appearance:none;flex:1;height:3px;background:var(--b2);border-radius:99px;outline:none;cursor:pointer}
+.rsl::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;cursor:pointer}
+.rsl.rg::-webkit-slider-thumb{background:var(--G)}
+.rsl.rb::-webkit-slider-thumb{background:var(--B)}
+.rsl.ra::-webkit-slider-thumb{background:var(--A)}
+.rv{font-family:'Kanit',sans-serif;font-size:12px;font-weight:700;min-width:27px;text-align:right}
+.rv-g{color:var(--G)}.rv-b{color:var(--B)}.rv-a{color:var(--A)}
+.ni{font-family:'Kanit',sans-serif;font-size:13px;background:var(--bg);border:1px solid var(--b2);color:var(--m1);border-radius:var(--r2);padding:5px 8px;width:100%;outline:none;resize:none;line-height:1.5;margin-bottom:.38rem}
+.ni:focus{border-color:var(--b3);color:var(--t)}
+.ni::placeholder{color:var(--m2)}
+.pacts{display:flex;gap:.28rem;flex-wrap:wrap}
+.pa{font-family:'Kanit',sans-serif;font-size:13px;font-weight:600;padding:.45rem .5rem;border-radius:var(--r2);border:1px solid var(--b2);background:var(--s2);color:var(--m1);cursor:pointer;transition:all .15s;text-align:center;flex:1;min-width:80px}
+.pa.pg{border-color:var(--Gb);background:var(--Gd);color:var(--G)}
+.pa.pa2{border-color:var(--Ab);background:var(--Ad);color:var(--A)}
+.pa.pb{border-color:var(--Bb);background:var(--Bd);color:var(--B)}
+.pa.pr{border-color:#3a0a0a;background:#160606;color:var(--R)}
+.pa.pbl{border-color:#183050;background:var(--BLd);color:var(--BL)}
+.rlp{display:inline-flex;align-items:center;gap:.28rem;background:var(--s2);border:1px solid var(--b1);border-radius:99px;padding:.12rem .45rem;margin-bottom:.3rem}
+.rlp-v{font-family:'Chakra Petch',sans-serif;font-size:15px;color:var(--A);font-weight:500}
+.rlp-src{font-family:'Kanit',sans-serif;font-size:11px;color:var(--m2)}
+
+/* SHOP POPUP */
+.map-btn{display:flex;align-items:center;justify-content:center;gap:.25rem;width:100%;padding:.55rem;background:var(--BLd);border:1px solid #0c2438;border-radius:var(--r2);font-family:'Kanit',sans-serif;font-size:13px;color:var(--BL);text-decoration:none;margin-bottom:.25rem}
+.srch-btn{display:flex;align-items:center;justify-content:center;gap:.25rem;width:100%;padding:.55rem;background:var(--s2);border:1px solid var(--b2);border-radius:var(--r2);font-family:'Kanit',sans-serif;font-size:13px;color:var(--m1);margin-bottom:.2rem;cursor:pointer}
+.sh-rr{display:flex;align-items:center;gap:.35rem;margin:.25rem 0}
+.sh-rsl{-webkit-appearance:none;appearance:none;flex:1;height:3px;background:var(--b2);border-radius:99px;outline:none;cursor:pointer}
+.sh-rsl::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--A);cursor:pointer}
+.sh-rv{font-family:'Chakra Petch',sans-serif;font-size:15px;font-weight:700;color:var(--A);min-width:27px;text-align:right}
+.spop-spec{font-family:'Kanit',sans-serif;font-size:13px;color:var(--m1);line-height:1.7;margin-bottom:.45rem}
+
+/* GUIDA */
+.ghero{background:linear-gradient(135deg,#091809,#050e05);border:1px solid var(--Gb);border-radius:var(--r3);padding:.7rem .85rem;margin:.28rem .75rem .45rem;position:relative;overflow:hidden}
+.ghero::after{content:'';position:absolute;top:-35px;right:-35px;width:80px;height:80px;background:#4eff3810;border-radius:50%;filter:blur(20px)}
+.gh-l{font-family:'Kanit',sans-serif;font-size:7px;letter-spacing:.3em;color:var(--G);text-transform:uppercase;margin-bottom:.15rem}
+.gh-t{font-size:.85rem;font-weight:800;margin-bottom:.18rem}
+.gh-b{font-family:'Kanit',sans-serif;font-size:9px;color:#5a8a5a;line-height:1.55}
+.rg2{display:grid;grid-template-columns:1fr 1fr;gap:.2rem;margin-bottom:.32rem}
+.ri2{background:var(--s2);border:1px solid var(--b1);border-radius:var(--r2);padding:.38rem .48rem}
+.ri2-n{font-family:'Kanit',sans-serif;font-size:12px;color:var(--m2);line-height:1;margin-bottom:.08rem}
+.ri2-t{font-family:'Kanit',sans-serif;font-size:8.5px;color:var(--m1);line-height:1.5}
+.ri2-t strong{color:var(--t);font-weight:500}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:.2rem;margin-bottom:.32rem}
+.di{background:var(--s2);border:1px solid var(--b1);border-radius:var(--r2);padding:.38rem .48rem}
+.di-l{font-family:'Kanit',sans-serif;font-size:7px;color:var(--m2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.06rem}
+.di-n{font-size:10px;font-weight:700;margin-bottom:.06rem}
+.di-d{font-family:'Kanit',sans-serif;font-size:10px;color:var(--G);font-weight:500}
+.di-nt{font-family:'Kanit',sans-serif;font-size:8px;color:var(--m2);margin-top:.06rem;line-height:1.4}
+.tit{background:var(--s2);border:1px solid var(--b1);border-radius:var(--r2);padding:.42rem .55rem;margin-bottom:.2rem}
+.ti-q{font-size:10.5px;font-weight:700;margin-bottom:.1rem}
+.ti-a{font-family:'Kanit',sans-serif;font-size:9px;color:var(--m1);line-height:1.6}
+.ti-a strong{color:var(--t);font-weight:500}
+.wbox{background:#100606;border:1px solid #3a0a0a;border-radius:var(--r2);padding:.42rem .55rem;margin-bottom:.32rem}
+.wb-t{font-family:'Kanit',sans-serif;font-size:7px;letter-spacing:.2em;color:var(--R);text-transform:uppercase;margin-bottom:.1rem}
+.wb-b{font-family:'Kanit',sans-serif;font-size:9px;color:#8a5050;line-height:1.6}
+.gsect{font-size:.76rem;font-weight:700;display:flex;align-items:center;gap:.32rem;margin-bottom:.28rem}
+.gsect::before{content:'';width:3px;height:10px;background:var(--G);border-radius:99px;display:block}
+
+/* AI */
+.aibox{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden;margin:0 .75rem .4rem}
+.aim-w{padding:.42rem;max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:.25rem;scrollbar-width:none}
+.aim-w::-webkit-scrollbar{display:none}
+.aim{padding:.38rem .55rem;border-radius:var(--r2);font-family:'Kanit',sans-serif;font-size:9.5px;line-height:1.6;max-width:93%}
+.aim-u{background:var(--s3);border:1px solid var(--b2);color:var(--t);align-self:flex-end;border-radius:var(--r2) var(--r2) 3px var(--r2)}
+.aim-a{background:#060e08;border:1px solid #102814;color:#62a868;align-self:flex-start;border-radius:3px var(--r2) var(--r2) var(--r2)}
+.aim-a.ld{opacity:.5;font-style:italic}
+.qbtns{display:flex;gap:3px;flex-wrap:wrap;padding:.25rem .42rem .1rem}
+.qb{font-family:'Kanit',sans-serif;font-size:7.5px;padding:2px 6px;border-radius:99px;border:1px solid var(--b2);background:var(--s2);color:var(--m1);cursor:pointer;white-space:nowrap}
+.qb:hover{border-color:var(--G);color:var(--G)}
+.airow{display:flex;gap:.28rem;padding:.32rem .42rem;border-top:1px solid var(--b1)}
+.aiin{flex:1;font-family:'Kanit',sans-serif;font-size:10px;background:transparent;border:none;color:var(--t);outline:none}
+.aiin::placeholder{color:var(--m2)}
+.aisend{font-family:'Kanit',sans-serif;font-size:8.5px;background:var(--Gd);border:1px solid var(--Gb);color:var(--G);border-radius:6px;padding:.16rem .45rem;cursor:pointer;white-space:nowrap}
+.aisend:disabled{opacity:.4;cursor:not-allowed}
+
+.empty-st{text-align:center;padding:2rem 1rem;font-family:'Kanit',sans-serif;font-size:14px;color:var(--m2);line-height:1.7}
+.no-res{display:none;text-align:center;padding:1rem;font-family:'Kanit',sans-serif;font-size:13px;color:var(--m2)}
+.pb10{height:90px}
+.grams-inp{font-family:'Kanit',sans-serif;font-size:11px;background:var(--bg);border:1px solid var(--b2);border-radius:var(--r2);padding:3px 7px;width:56px;text-align:center;outline:none;text-align:center}
+.grams-inp:focus{border-color:var(--b3)}
+
+.type-toggle{display:flex;gap:6px;padding:.25rem .75rem .15rem}
+.tt{flex:1;font-family:'Chakra Petch',sans-serif;font-size:15px;font-weight:600;padding:.5rem .6rem;border-radius:8px;border:1px solid var(--b2);background:transparent;color:var(--m1);cursor:pointer;transition:all .18s;text-align:center;-webkit-tap-highlight-color:transparent}
+.tt-weed.active{background:var(--Gd);border-color:var(--Gb);color:var(--G)}
+.tt-hash.active{background:var(--Bd);border-color:var(--Bb);color:var(--B)}
+.istar{background:none;border:none;font-size:22px;color:var(--m2);cursor:pointer;padding:0;flex-shrink:0;line-height:1;transition:color .15s;width:36px;height:36px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+.istar.on{color:var(--A)}
+.sh-star{background:none;border:none;font-size:24px;color:var(--m2);cursor:pointer;padding:0;line-height:1;transition:color .15s;width:40px;height:40px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;flex-shrink:0}
+.sh-star.on{color:var(--A)}
+.sc-visited .sc-nm::after{content:' ✓';color:var(--G);font-size:11px}
+.sc-visited{opacity:.65}
+.ir{position:relative;overflow:hidden}
+.ir::before{content:attr(data-ico);position:absolute;right:2px;top:50%;transform:translateY(-50%);font-size:46px;opacity:.07;line-height:1;pointer-events:none;z-index:0}
+.ir-sativa::after,.ir-indica::after,.ir-hybrid::after,.ir-fruity::after,.ir-haze::after,.ir-hash-mar::after,.ir-hash-ori::after,.ir-hash-mod::after,.ir-potente::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0}
+.ir-sativa::after{background:radial-gradient(ellipse at 0% 50%,rgba(120,220,60,.07),transparent 70%)}
+.ir-indica::after{background:radial-gradient(ellipse at 0% 50%,rgba(140,80,240,.08),transparent 70%)}
+.ir-hybrid::after{background:radial-gradient(ellipse at 0% 50%,rgba(60,200,160,.07),transparent 70%)}
+.ir-fruity::after{background:radial-gradient(ellipse at 0% 50%,rgba(240,130,60,.08),transparent 70%)}
+.ir-haze::after{background:radial-gradient(ellipse at 0% 50%,rgba(60,160,255,.08),transparent 70%)}
+.ir-hash-mar::after{background:radial-gradient(ellipse at 0% 50%,rgba(220,160,60,.07),transparent 70%)}
+.ir-hash-ori::after{background:radial-gradient(ellipse at 0% 50%,rgba(200,100,60,.08),transparent 70%)}
+.ir-hash-mod::after{background:radial-gradient(ellipse at 0% 50%,rgba(140,180,210,.06),transparent 70%)}
+.ir-potente::after{background:radial-gradient(ellipse at 0% 50%,rgba(255,60,60,.09),transparent 70%)}
+.wcs{position:relative;overflow:hidden}
+.wcs::before{content:attr(data-ico);position:absolute;right:-2px;top:50%;transform:translateY(-50%);font-size:44px;opacity:.07;line-height:1;pointer-events:none}
+.wcs.ir-sativa{background:linear-gradient(110deg,#0e1a0a,#121a08);border-color:#1a3010}.wcs.ir-sativa .wcard-nm{color:#c8e88a}
+.wcs.ir-indica{background:linear-gradient(110deg,#0e0a1a,#120a1e);border-color:#281060}.wcs.ir-indica .wcard-nm{color:#c4a0f4}
+.wcs.ir-hybrid{background:linear-gradient(110deg,#081814,#0a1e18);border-color:#103828}.wcs.ir-hybrid .wcard-nm{color:#80e0c0}
+.wcs.ir-fruity{background:linear-gradient(110deg,#1a0e08,#1e1008);border-color:#402010}.wcs.ir-fruity .wcard-nm{color:#f0a060}
+.wcs.ir-haze{background:linear-gradient(110deg,#080e1a,#08101e);border-color:#0e2040}.wcs.ir-haze .wcard-nm{color:#80c0f8}
+.wcs.ir-hash-mar{background:linear-gradient(110deg,#1a1208,#1e1608);border-color:#402808}.wcs.ir-hash-mar .wcard-nm{color:#e0b060}
+.wcs.ir-hash-ori{background:linear-gradient(110deg,#1a0c08,#1e1008);border-color:#3a1808}.wcs.ir-hash-ori .wcard-nm{color:#d08050}
+.wcs.ir-hash-mod{background:linear-gradient(110deg,#101214,#0e1016);border-color:#202428}.wcs.ir-hash-mod .wcard-nm{color:#b0c0d0}
+.wcs.ir-potente{background:linear-gradient(110deg,#180808,#1c0808);border-color:#400808}.wcs.ir-potente .wcard-nm{color:#f08080}
+.wcs.ir-default{background:var(--s2);border-color:var(--b1)}.wcs.ir-default .wcard-nm{color:var(--t)}
+.wcard-done{opacity:.5}.wcard-done .wcard-nm{text-decoration:line-through}
+
+</style>
+<meta name="theme-color" content="#070707">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AMS Green">
+<link rel="manifest" id="pwa-manifest">
+<script>
+(function(){
+  var m=JSON.stringify({name:"AMS Green Guide",short_name:"AMS Green",start_url:".",display:"standalone",background_color:"#070707",theme_color:"#070707",orientation:"portrait",icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='34' fill='%23070707'/%3E%3Crect x='4' y='4' width='184' height='184' rx='30' fill='none' stroke='%234eff38' stroke-width='8'/%3E%3Ctext x='96' y='118' text-anchor='middle' font-size='90' font-family='sans-serif'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml",purpose:"any maskable"}]});
+  var el=document.getElementById("pwa-manifest");
+  if(el) el.href=URL.createObjectURL(new Blob([m],{type:"application/json"}));
+})();
+</script>
+</head>
+<body>
+
+<!-- PAGE: LISTA -->
+<div class="page on" id="pg-list">
+  <div class="hero"><div class="hl">Amsterdam Green Guide 2025-26</div><div class="ht ht-g">AMS ◈</div></div>
+  <div class="ss">
+    <div class="sp"><span class="sn" style="color:var(--t)" id="s-tot">0</span><span class="sl">totali</span></div>
+    <div class="sp"><span class="sn" style="color:var(--P)" id="s-wish">0</span><span class="sl">wishlist</span></div>
+  </div>
+  <div class="rbar"><div class="rb-s" id="rb-s"></div><div class="rb-h" id="rb-h" style="width:0"></div><div class="rb-i"></div></div>
+  <div class="rlbl">
+    <span class="rl" style="color:var(--A)" id="rl-s">SAT 0%</span>
+    <span class="rl" style="color:#5ee8b2" id="rl-h">HYB 0%</span>
+    <span class="rl" style="color:var(--P)" id="rl-i">IND 0%</span>
+  </div>
+  <div class="sb"><span class="sb-ico">⌕</span><input id="list-q" placeholder="nome, aroma, effetto, tag..." oninput="onSrch(this.value)"><span class="sb-clr" id="list-clr" onclick="clrSrch()">✕</span></div>
+  <div class="type-toggle">
+    <button class="tt tt-weed active" id="tt-weed" onclick="setTypeTab('weed',this)">🌿 Erbe</button>
+    <button class="tt tt-hash" id="tt-hash" onclick="setTypeTab('hash',this)">🟤 Hash</button>
+  </div>
+  <div class="frow" id="lf-row"></div>
+  <div class="sfilt">
+    <span class="sfilt-l">THC min %</span>
+    <input type="range" class="sfilt-s" id="thc-sl" min="0" max="30" step="1" value="0" oninput="V('thc-v',this.value+'%');renderList()">
+    <span class="sfilt-v" id="thc-v">0%</span>
+  </div>
+  <div id="list-body"></div>
+  <div class="no-res" id="list-nores">nessun risultato con questi filtri</div>
+  <button style="display:block;margin:.5rem auto 0;font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--m2);background:none;border:1px solid var(--b1);border-radius:99px;padding:.28rem 1rem;cursor:pointer" onclick="if(confirm('Reset lista?')){ALL.forEach(i=>rm(i.id));renderList()}">reset lista</button>
+  <div class="pb10"></div>
+</div>
+
+<!-- PAGE: WISHLIST -->
+<div class="page" id="pg-wish">
+  <div class="hero"><div class="hl">da trovare</div><div class="ht ht-a">Wish ★</div></div>
+  <div class="ss">
+    <div class="sp"><span class="sn" style="color:var(--A)" id="w-tot">0</span><span class="sl">totali</span></div>
+    <div class="sp"><span class="sn" style="color:var(--G)" id="w-fnd">0</span><span class="sl">trovate</span></div>
+    <div class="sp"><span class="sn" style="color:var(--BL)" id="w-sh">0</span><span class="sl">shop</span></div>
+  </div>
+  <div class="wtabs" id="wish-tabs">
+    <button class="wtab wt-g" onclick="setWT(this,'weed')">🌿 Erbe (0)</button>
+    <button class="wtab" onclick="setWT(this,'hash')">🍫 Hash (0)</button>
+    <button class="wtab" onclick="setWT(this,'shop')">☕ Shop (0)</button>
+  </div>
+  <div id="wish-body"></div>
+  <div class="pb10"></div>
+</div>
+
+<!-- PAGE: SHOPS -->
+<div class="page" id="pg-shops">
+  <div class="hero"><div class="hl">dove andare</div><div class="ht ht-a">Shops ☕</div></div>
+  <div class="sb"><span class="sb-ico">⌕</span><input id="shop-q" placeholder="nome, zona, specialità..." oninput="renderShops()"></div>
+  <div class="frow" id="sf-row">
+    <button class="fc on" onclick="setSF(this,'all')">tutti</button>
+    <button class="fc on" onclick="setSF(this,'top')">🏆 top</button>
+    <button class="fc on-b" onclick="setSF(this,'hash')">hash specialist</button>
+    <button class="fc" onclick="setSF(this,'chill')">chill</button>
+    <button class="fc" onclick="setSF(this,'local')">local</button>
+    <button class="fc" onclick="setSF(this,'old')">storici</button>
+    <button class="fc" onclick="setSF(this,'centrum')">centrum</button>
+    <button class="fc" onclick="setSF(this,'jordaan')">jordaan</button>
+    <button class="fc" onclick="setSF(this,'west')">west</button>
+    <button class="fc" onclick="setSF(this,'east')">oost</button>
+    <button class="fc" onclick="setSF(this,'south')">de pijp/south</button>
+    <button class="fc on-a" onclick="setSF(this,'rated')">★ top rated</button>
+  </div>
+  <div class="sfilt">
+    <span class="sfilt-l">Rating min</span>
+    <input type="range" class="sfilt-s" id="sh-sl" min="0" max="10" step="0.5" value="0" oninput="V('sh-v',this.value);renderShops()">
+    <span class="sfilt-v" id="sh-v">0</span>
+  </div>
+  <div class="sec" id="shops-body"></div>
+  <div class="pb10"></div>
+</div>
+
+<!-- OVERLAY -->
+<div class="ov" id="ov" onclick="maybeClose(event)">
+  <div class="pop" id="pop"><div class="pop-h"></div><div id="pop-cnt"></div></div>
+</div>
+
+<!-- NAV -->
+<nav class="bnav">
+  <button class="nb ag" onclick="nav('list',this,'ag')" id="nb-list"><span class="ic">◈</span><span class="lb">Lista</span></button>
+  <button class="nb" onclick="nav('wish',this,'aa');renderWish()" id="nb-wish"><span class="ic">★</span><span class="lb">Wishlist</span></button>
+  <button class="nb" onclick="nav('shops',this,'aa')" id="nb-shops"><span class="ic">☕</span><span class="lb">Shops</span></button>
+</nav>
+
+<script>
+const ALL=[
+// ─── MUST TRY: CLASSICI ────────────────────────────────────────────────────
+{id:'white-widow',name:'White Widow',cat:'Must Try — I Classici',type:'weed',style:'ir-sativa',tags:['hybrid','classic'],thc:'~20%',thcN:20,rd:9.2,aroma:'Terroso, legnoso, dolce, resina',desc:'Ibrida olandese anni \'90 da Shantibaba — simbolo assoluto dei coffeeshop. Boccioli ricoperti di cristalli bianchi di resina. Ancora oggi il ceppo più riconoscibile al mondo.',det:'Effetto: euforia esplosiva 5-10 min, poi creatività sostenuta per ore. Non sedativa — ottima per musei, bici, conversazioni. Stone bilanciato, durata 2-3h.'},
+{id:'og-kush',name:'OG Kush',cat:'Must Try — I Classici',type:'weed',style:'ir-indica',tags:['indica','classic'],thc:'~23%',thcN:23,rd:9.1,aroma:'Pino, limone, diesel, terra',desc:'Indica dominante cult da Hindu Kush afghano e Chemdawg. Tra le più imitate — l\'originale nei top shop è un\'altra storia. Resinosa, densa, potente.',det:'Effetto: inizia cerebrale ed euforico, poi scende pesante e caldo sul corpo. Per la sera. Hunger attack garantito. Non adatta come prima esperienza.'},
+{id:'amnesia-haze',name:'Amnesia Haze',cat:'Must Try — I Classici',type:'weed',style:'ir-haze',tags:['sativa','haze','classic'],thc:'~22%',thcN:22,rd:9.4,aroma:'Citrus, limone, speziato, floreale',desc:'Sativa pura da Haze, Hawaiian e South Asian genetics. Vince Cannabis Cup Amsterdam quasi ogni anno. LA bandiera dei coffeeshop olandesi.',det:'Effetto: cerebrale potentissimo, espansivo, quasi psichedelico. Euforia lunga e intensa, memoria a breve in pausa. Dura 2-3h. Per esperti.'},
+{id:'super-silver-haze',name:'Super Silver Haze',cat:'Must Try — I Classici',type:'weed',style:'ir-haze',tags:['sativa','haze','classic'],thc:'~21%',thcN:21,rd:9.0,aroma:'Speziato, erbaceo, limone, pino',desc:'Sativa da NL#1, Skunk#1 e Haze originale. 3 Cannabis Cup consecutive 1997-1999 — record imbattuto. Energizzante per eccellenza dei coffeeshop olandesi.',det:'Effetto: uplifting progressivo, body buzz vibrante. Mattina-pomeriggio, Van Gogh Museum, bici. Prima scelta dei locali per uso diurno. Lunga durata.'},
+{id:'jack-herer',name:'Jack Herer',cat:'Must Try — I Classici',type:'weed',style:'ir-sativa',tags:['sativa','classic'],thc:'~18%',thcN:18,rd:8.8,aroma:'Pino, spezie, resina, legno',desc:'Sativa da Sensi Seeds, dedicata all\'attivista Jack Herer. 11+ Cannabis Cup wins. Ancora coltivata in forma originale — è un\'istituzione di Amsterdam.',det:'Effetto: cerebrale chiaro, focalizzato, speziato al palato. THC moderato per restare produttivi. Tra i più amati dagli olandesi per uso quotidiano.'},
+{id:'northern-lights',name:'Northern Lights',cat:'Must Try — I Classici',type:'weed',style:'ir-indica',tags:['indica','classic'],thc:'~18%',thcN:18,rd:8.7,aroma:'Dolce, terroso, pino, muffa dolce',desc:'Indica pura afghana portata in Olanda nel 1985. Tra le più stabili geneticamente. Base di centinaia di varietà moderne.',det:'Effetto: rilassamento fisico profondo, euforia dolce e calmante, mente leggera. Ottima sera tardi e per dormire. Stone classico senza sorprese.'},
+{id:'skunk-1',name:'Skunk #1',cat:'Must Try — I Classici',type:'weed',style:'ir-hybrid',tags:['hybrid','classic'],thc:'~16%',thcN:16,rd:8.3,aroma:'Pungente, terroso, fruttato, erbaceo',desc:'Ibrida storica del 1978 da Sam the Skunkman — madre genetica di centinaia di varietà. Odore inconfondibile. La madre della scena olandese.',det:'Effetto: bilanciato e accessibile. Euforia allegra, body relaxation progressivo. Ottima per effetto classico autentico. Porta diretta alla scena old school.'},
+{id:'cheese',name:'Cheese',cat:'Must Try — I Classici',type:'weed',style:'ir-hybrid',tags:['hybrid','classic'],thc:'~18%',thcN:18,rd:8.5,aroma:'Formaggio stagionato, fruttato, terroso',desc:'Ibrida UK nata da mutazione di Skunk #1 anni \'90. Aroma pungente di formaggio invecchiato — divisivo ma iconico. Generazioni di fan devoti.',det:'Effetto: euforico e rilassante in parallelo. Stone bilanciato ottimo per sera. O la ami o non la sopporti — ma va provata almeno una volta.'},
+{id:'ak47',name:'AK-47',cat:'Must Try — I Classici',type:'weed',style:'ir-hybrid',tags:['hybrid','classic'],thc:'~20%',thcN:20,rd:8.6,aroma:'Dolce, floreale, terroso, legno',desc:'Ibrida da Colombia, Mexico, Thailand e Afghanistan. 16+ Cannabis Cup. Il nome contrasta con l\'effetto rilassante e pacifico. Una delle più premiate della storia.',det:'Effetto: stone stabile e lungo, cerebrale iniziale poi fisico. Ottima per serate tranquille. Produce fumo denso e persistente. Molto fumosa.'},
+{id:'critical-mass',name:'Critical Mass',cat:'Must Try — I Classici',type:'weed',style:'ir-indica',tags:['indica','classic'],thc:'~19%',thcN:19,rd:8.4,aroma:'Dolce, mela, erbaceo, terroso',desc:'Indica da Afghani e Skunk #1. Boccioli così pesanti che i rami si piegano — da cui il nome. Tra le più produttive. Coltivata in Olanda da decenni.',det:'Effetto: rilassamento fisico progressivo e profondo, euforia dolce. Ottima per sera. Non sopraffacente — perfetta per chi cerca indica senza overdrive.'},
+{id:'kali-mist',name:'Kali Mist',cat:'Must Try — I Classici',type:'weed',style:'ir-sativa',tags:['sativa','classic'],thc:'~18%',thcN:18,rd:8.5,aroma:'Erbaceo dolce, speziato, legno',desc:'Sativa pura da Serious Seeds — Cannabis Cup winner 1995. Ceppo thai/vietnamese con effetto cerebrale molto pronunciato. Ricercata dagli intenditori.',det:'Effetto: cerebrale espansivo, euforia quasi meditativa. Lunga durata. Ottima per sessioni creative o passeggiate nei canali. Non adatta a neofiti.'},
+{id:'haze-original',name:'Original Haze',cat:'Must Try — I Classici',type:'weed',style:'ir-haze',tags:['sativa','haze','classic'],thc:'~17%',thcN:17,rd:8.7,aroma:'Speziato terroso, agrume, legno, incenso',desc:'La madre di tutti le haze — ceppo originale californiano degli anni \'60 arrivato in Olanda. L\'aroma di spezie e incenso è unico nel panorama cannabis mondiale.',det:'Effetto: cerebrale profondo e meditativo, espansivo. Lunga durata fino a 4h. THC non altissimo ma qualitativo. La più storica delle sative da provare.'},
+
+// ─── FRUITY SATIVAS ───────────────────────────────────────────────────────
+{id:'tropicana-cookies',name:'Tropicana Cookies',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['sativa','fruity'],thc:'~22%',thcN:22,rd:9.1,aroma:'Mandarino, mango, passion fruit, pesca',desc:'Incrocio GSC e Tangie — profilo aromatico esplosivo. Boccioli arancio-dorati coperti di trichomi. Apri la bag e l\'agrume riempie la stanza.',det:'Effetto: uplifting immediato e potente, mood boost esplosivo, risate facili. Sativa dominante con body relax piacevole. Ottima per Vondelpark, mercati.'},
+{id:'zkittlez',name:'Zkittlez',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['hybrid','fruity'],thc:'~20%',thcN:20,rd:8.9,aroma:'Uva, fragola, caramella, arcobaleno',desc:'Ibrida da Grape Ape e Grapefruit — più Cannabis Cup. Ogni tiro è un arcobaleno di sapori. Boccioli con sfumature viola e arancio spettacolari.',det:'Effetto: rilassante dolce senza sedazione. Mood elevato, mente svuotata appagante. Perfetta dopo cena lungo i canali. Ok anche per meno esperti.'},
+{id:'mimosa',name:'Mimosa',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['sativa','fruity'],thc:'~22%',thcN:22,rd:8.8,aroma:'Arancia, limone, champagne, agrumi',desc:'Incrocio Clementine e Purple Punch. Profilo di prosecco fruttato — spumeggiante, agrumato, freschissimo. Molto ricercata nei coffeeshop premium.',det:'Effetto: luminoso, ottimista, migliora l\'umore rapidamente. Ideale come "colazione" mattutina — ti mette in moto. Ottima creatività.'},
+{id:'tangie',name:'Tangie',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['sativa','fruity'],thc:'~19%',thcN:19,rd:8.7,aroma:'Mandarino puro, buccia agrume, dolce',desc:'Reinterpretazione moderna del California Orange anni \'90. Aroma di mandarino così intenso da sembrare artificiale — eppure è naturale al 100%.',det:'Effetto: sativa creativa — pensieri veloci, ispirazione, conversazioni. Ottima per gallerie, street art, mercatini. Non pesante né ansiogena.'},
+{id:'orange-bud',name:'Orange Bud',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['hybrid','fruity','classic'],thc:'~17%',thcN:17,rd:8.4,aroma:'Arancio dolce, cedro, erbaceo',desc:'Varietà olandese classica Dutch Passion Seeds anni \'80. Quasi impossibile trovare fuori dall\'Olanda. Presenza fissa nei coffeeshop storici.',det:'Effetto: euforico e leggero, più gestibile delle haze. THC moderato — ideale pomeriggio. Ottima se vuoi restare funzionale mentre giri la città.'},
+{id:'pineapple-express',name:'Pineapple Express',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['hybrid','fruity'],thc:'~19%',thcN:19,rd:8.5,aroma:'Ananas fresco, cedro, menta, fieno',desc:'Ibrida da Trainwreck e Hawaiian. Nei top shop l\'autentica è superiore ad ogni aspettativa. Boccioli densi con trichomi visibili.',det:'Effetto: mente sveglia e corpo rilassato in contemporanea — equilibrio perfetto. Lunga durata. Difficile sbagliare. Ottima per quasi ogni situazione.'},
+{id:'papaya',name:'Papaya',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['indica','fruity'],thc:'~20%',thcN:20,rd:8.4,aroma:'Papaya matura, mango, spezie tropicali',desc:'Indica fruttata da Citral #13 e Ice #2. Foglie verde-viola, boccioli densi e resinosi. Meno conosciuta ma apprezzatissima dagli intenditori.',det:'Effetto: rilassante profondo con euforia iniziale dolce. Per la sera — divano col sorriso. Hunger intenso garantito. Scegli dove trovarti dopo.'},
+{id:'strawberry-cough',name:'Strawberry Cough',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['sativa','fruity'],thc:'~18%',thcN:18,rd:8.6,aroma:'Fragola fresca, frutta rossa, dolce',desc:'Sativa dall\'aroma di fragola appena raccolta — inconfondibile. Kyle Kushman anni \'90. Il fumo espande i polmoni — da qui il nome.',det:'Effetto: uplifting sociale e paradossalmente anti-ansia. Ottima per situazioni sociali. Favorita nelle serate fuori.'},
+{id:'lemon-haze',name:'Lemon Haze',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['sativa','haze','fruity'],thc:'~20%',thcN:20,rd:8.5,aroma:'Limone fresco, agrume, erbaceo',desc:'Sativa da Silver Haze e Lemon Skunk. L\'aroma di limone fresco è potente e immediato — invade la stanza appena apri il barattolo.',det:'Effetto: energizzante, uplifting cerebrale, ottimismo. Ottima per mattine, bici, mercatini del Waterlooplein. Tra le più amate dai turisti.'},
+{id:'super-lemon-haze',name:'Super Lemon Haze',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['sativa','haze','fruity'],thc:'~20%',thcN:20,rd:8.7,aroma:'Limone candito, agrume dolce, floreale',desc:'Da Lemon Skunk e Super Silver Haze. Vince Cannabis Cup 2008 e 2009. Il Lemon Haze portato al livello successivo, profilo più complesso.',det:'Effetto: cerebrale luminoso e motivante, ottimismo, energia creativa. Un gradino sopra al normale Lemon Haze in tutto. Ottima mattina-pomeriggio.'},
+{id:'chocolope',name:'Chocolope',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['sativa','fruity'],thc:'~21%',thcN:21,rd:8.6,aroma:'Cioccolato fondente, caffè, melone dolce',desc:'Sativa da Chocolate Thai e Cannalope Haze — DNA Genetics. Cioccolato e caffè in una sativa: combinazione rarissima e unica nel panorama.',det:'Effetto: cerebrale motivante, ottimismo espansivo, creatività attivata. Fumo dolce-amaro di lunga durata. Ricercata dagli intenditori per unicità.'},
+{id:'mango-haze',name:'Mango Haze',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['sativa','haze','fruity'],thc:'~18%',thcN:18,rd:8.4,aroma:'Mango maturo, tropicale, haze speziato',desc:'Sativa da NL#5, Skunk e Haze. Aroma di mango tropicale che si combina con le note speziate della Haze. Molto apprezzata dagli intenditori.',det:'Effetto: uplifting cerebrale con corpo leggero e rilassato. Ottima per pomeriggi di esplorazione o serate sociali. Durata buona.'},
+{id:'grapefruit',name:'Grapefruit',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['sativa','fruity'],thc:'~17%',thcN:17,rd:8.3,aroma:'Pompelmo fresco, agrume, erbaceo',desc:'Sativa da Cinderella 99. Aroma di pompelmo fresco caratteristico. Ceppo underrated amato dagli intenditori locali dei coffeeshop olandesi.',det:'Effetto: uplifting leggero e sostenuto, ottimismo senza ansia, conversazione facilitata. Ottima sativa fruttata con THC gestibile.'},
+{id:'shiskaberry',name:'Shiskaberry',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['indica','fruity'],thc:'~18%',thcN:18,rd:8.3,aroma:'Frutti di bosco, mirtillo, dolce',desc:'Indica fruttata da Afghani e Blueberry. Profilo aromatico ricco di frutti di bosco. Visivamente bellissima con foglie viola e boccioli compatti.',det:'Effetto: rilassamento dolce con euforia iniziale piacevole. Ottima indica fruttata per serate tranquille. Alternativa più leggera alla Granddaddy Purple.'},
+{id:'tangie-dream',name:'Tangerine Dream',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['sativa','fruity'],thc:'~21%',thcN:21,rd:8.6,aroma:'Mandarino dolcissimo, agrume tropicale, vaniglia',desc:'Ibrida Barney\'s Farm da G13 e Afghani — Cannabis Cup winner. Aroma di mandarino dolcissimo con punte vanigliose. Esclusiva di Barney\'s Farm.',det:'Effetto: euforia dolce e sostenuta, corpo leggermente rilassato. Ottima per chi ama la Tangie ma vuole un po\' più di corpo. Durata media.'},
+{id:'cream-caramel',name:'Cream Caramel',cat:'Fruity Sativas',type:'weed',style:'ir-fruity',tags:['indica','fruity'],thc:'~20%',thcN:20,rd:8.4,aroma:'Caramello dolce, vaniglia, frutti esotici',desc:'Indica da BlueBlack, Maple Leaf Indica e White Rhino. Aroma dolcissimo di caramello e vaniglia. Cannabis Cup winner 2010.',det:'Effetto: corpo rilassato e caldo, euforia dolce iniziale. Perfetta sera e notte. Stone lungo e piacevole. Ottima indica fruttata con profilo aromatico memorabile.'},
+
+// ─── POTENTI & PREMIATI ───────────────────────────────────────────────────
+{id:'blue-dream',name:'Blue Dream',cat:'Potenti & Premiati',type:'weed',style:'ir-hybrid',tags:['hybrid','fruity'],thc:'~20%',thcN:20,rd:8.9,aroma:'Mirtilli, vaniglia, dolce floreale',desc:'Ibrida californiana da Blueberry e Haze. Il ceppo più venduto in California per anni. Combine il meglio di sativa e indica senza eccessi.',det:'Effetto: euforia dolce e accessibile, corpo rilassato, mente lucida. Porta d\'ingresso perfetta prima di varietà più potenti.'},
+{id:'gelato',name:'Gelato',cat:'Potenti & Premiati',type:'weed',style:'ir-hybrid',tags:['hybrid'],thc:'~25%',thcN:25,rd:9.0,aroma:'Frutti di bosco, menta, cremoso, dolce',desc:'Ibrida da Sunset Sherbet e Thin Mint GSC. Alta potenza, profilo da dessert cremoso. Boccioli viola-arancio spettacolari.',det:'Effetto: colpo mentale intenso, poi corpo che si scioglie. Potente. Stone profondo fino a 4h. Se la trovi nei top shop, vale ogni euro.'},
+{id:'gelato-41',name:'Gelato #41',cat:'Potenti & Premiati',type:'weed',style:'ir-potente',tags:['hybrid'],thc:'~26%',thcN:26,rd:9.1,aroma:'Gelato dolce, frutti di bosco, cremoso',desc:'Phenotype 41 — la più pregiata della Gelato. Boccioli lavanda e arancione, trichomi strabilianti. Considerata dalla community internazionale la Gelato definitiva.',det:'Effetto: rush mentale potente poi rilassamento fisico totale. Più intensa della Gelato standard. Se un coffeeshop ce l\'ha, è segnale di qualità altissima.'},
+{id:'wedding-cake',name:'Wedding Cake',cat:'Potenti & Premiati',type:'weed',style:'ir-indica',tags:['indica'],thc:'~25%',thcN:25,rd:8.8,aroma:'Vaniglia, terra bagnata, pepe dolce',desc:'Indica dominante da Triangle Kush e Animal Mints. Tra i più potenti nei top shop. Aroma complesso di vaniglia, terra e spezie dolci.',det:'Effetto: stone fisico intenso, rilassamento muscolare profondo, mente sognante. Perfetta ultima serata del viaggio. Dura 3+h.'},
+{id:'gorilla-glue',name:'Gorilla Glue #4',cat:'Potenti & Premiati',type:'weed',style:'ir-potente',tags:['hybrid'],thc:'~27%',thcN:27,rd:8.9,aroma:'Pino, diesel, cioccolato, terra',desc:'Ibrida da Chem\'s Sister, Sour Dubb e Chocolate Diesel. Tra i più resinosi e potenti mai creati. La resina incolla le dita alle forbici.',det:'Effetto: stone totale e immediato, corpo incollato al divano per ore. Non per chi non ha esperienza. Serata totalmente dedicata.'},
+{id:'runtz',name:'Runtz',cat:'Potenti & Premiati',type:'weed',style:'ir-fruity',tags:['hybrid','fruity'],thc:'~24%',thcN:24,rd:9.0,aroma:'Caramella fruttata, uva, zucchero filato',desc:'Ibrida da Zkittlez e Gelato. Colori pazzeschi: viola, verde, arancio. Aromi di caramella fruttata intensissima. Difficile trovarne autentica.',det:'Effetto: euforia intensa seguita da rilassamento profondo — il meglio di sativa e indica in sequenza. Alta potenza. Se è in menu in un coffeeshop serio, compralo.'},
+{id:'mac1',name:'MAC 1',cat:'Potenti & Premiati',type:'weed',style:'ir-hybrid',tags:['hybrid'],thc:'~23%',thcN:23,rd:9.2,aroma:'Floreale, speziato, cremoso, burro',desc:'Ibrida rara da Alien Cookies e Miracle 15. Richiede coltivatori esperti. Trichomi tra i più densi in assoluto. Aroma floreale-cremoso unico.',det:'Effetto: bilanciato perfetto — mente espansa e focalizzata, corpo rilassato. Se è in menu, è garanzia di qualità del coffeeshop.'},
+{id:'granddaddy-purple',name:'Granddaddy Purple',cat:'Potenti & Premiati',type:'weed',style:'ir-indica',tags:['indica','fruity'],thc:'~20%',thcN:20,rd:8.8,aroma:'Uva nera, mirtilli, dolce, muschio',desc:'Indica californiana iconica da Purple Urkle e Big Bud. Colori viola intensissimi. Tra le più fotografate al mondo.',det:'Effetto: sedazione dolce progressiva, corpo pesante e caldo. Perfetta ultima notte del viaggio. Ottima per dormire.'},
+{id:'cereal-milk',name:'Cereal Milk',cat:'Potenti & Premiati',type:'weed',style:'ir-fruity',tags:['hybrid','fruity'],thc:'~23%',thcN:23,rd:8.7,aroma:'Latte zuccherato, cereali, vaniglia, crema',desc:'Ibrida da Y Life e Snowman (Cookies Fam). Aroma di latte dei cereali la mattina. Sempre più presente in Europa.',det:'Effetto: elevazione mentale dolce e luminosa, corpo rilassato, umore alto. Perfetta mattina lenta al coffeeshop.'},
+{id:'purple-punch',name:'Purple Punch',cat:'Potenti & Premiati',type:'weed',style:'ir-indica',tags:['indica','fruity'],thc:'~20%',thcN:20,rd:8.6,aroma:'Kool-Aid uva, mirtillo, vaniglia, dolce',desc:'Indica da Larry OG e Granddaddy Purple. Colori viola magnifici. Aroma fruttato intenso e persistente.',det:'Effetto: potente rilassamento fisico progressivo, euforia dolce, stonatura serale. Ottima dopo cena o come ultimo joint.'},
+{id:'durban-poison',name:'Durban Poison',cat:'Potenti & Premiati',type:'weed',style:'ir-sativa',tags:['sativa','classic'],thc:'~20%',thcN:20,rd:8.9,aroma:'Anice, liquirizia dolce, pino, terroso',desc:'Sativa pura sudafricana — una delle poche landrace sativa autenticamente reperibili. Purezza genetica di decenni.',det:'Effetto: energizzante estremo e immediato — euphoria vivace, pensieri accelerati, focus acuto. Non provare a dormire dopo.'},
+{id:'bubba-kush',name:'Bubba Kush',cat:'Potenti & Premiati',type:'weed',style:'ir-indica',tags:['indica','classic'],thc:'~22%',thcN:22,rd:8.7,aroma:'Caffè, cioccolato fondente, spezie, dolce',desc:'Indica quasi pura origini afghane. Old-school immortale — stone fisico totale. Aroma di caffè e cioccolato inconfondibile.',det:'Effetto: couch lock garantito e profondo, mente sognante. Non progettare nulla dopo. Ottima per dolori muscolari.'},
+{id:'sour-diesel',name:'Sour Diesel',cat:'Potenti & Premiati',type:'weed',style:'ir-sativa',tags:['sativa','classic'],thc:'~22%',thcN:22,rd:8.8,aroma:'Diesel, benzina, limone, erbaceo pungente',desc:'Sativa cult americana con aroma di carburante e limone — inconfondibile. Tra le sativa più potenti della storia.',det:'Effetto: cerebrale energizzante e rapido, euforia prolungata. Per creatività, conversazioni, esplorazione. Aroma fortissimo.'},
+{id:'gsc',name:'Girl Scout Cookies',cat:'Potenti & Premiati',type:'weed',style:'ir-potente',tags:['hybrid'],thc:'~25%',thcN:25,rd:9.0,aroma:'Dolce biscotto, terroso, menta, spezie',desc:'Ibrida da OG Kush e Durban Poison. Base genetica di decine di ceppi moderni. Responsabile della Cookies revolution dal 2012.',det:'Effetto: potente rush cerebrale poi sedazione fisica progressiva. Rilassamento corpo-mente in sequenza. Non per neofiti.'},
+{id:'bruce-banner',name:'Bruce Banner #3',cat:'Potenti & Premiati',type:'weed',style:'ir-potente',tags:['hybrid'],thc:'~28%',thcN:28,rd:8.8,aroma:'Dolce, diesel, frutti di bosco, terroso',desc:'Ibrida da OG Kush e Strawberry Diesel. THC tra i più alti mai registrati in lab. Nominata come il personaggio Marvel per la doppia natura.',det:'Effetto: rush cerebrale intensissimo e immediato, poi rilassamento fisico pesante. Inizia con pochissimo. La #3 è la più gettonata.'},
+{id:'wedding-glue',name:'Wedding Glue',cat:'Potenti & Premiati',type:'weed',style:'ir-potente',tags:['hybrid'],thc:'~25%',thcN:25,rd:8.7,aroma:'Vaniglia, diesel, pino, dolce',desc:'Incrocio tra Wedding Cake e Gorilla Glue — prende il meglio di entrambi. Potente, resinosa, aromatica.',det:'Effetto: stone totale bilanciato — cerebrale iniziale poi fisico pesante. Lunga durata. Per serate di completo relax.'},
+{id:'do-si-dos',name:'Do-Si-Dos',cat:'Potenti & Premiati',type:'weed',style:'ir-potente',tags:['indica'],thc:'~28%',thcN:28,rd:8.9,aroma:'Dolce floreale, menta, terra, calce',desc:'Indica dominante da GSC e Face Off OG. THC altissimo, aroma floreale-dolce con note di menta. Tra le indicate più potenti regolarmente disponibili.',det:'Effetto: stone fisico immediato e pesante, mente sognante e introspettiva. Per esperti alta tolleranza. Couch lock profondo. 4+h.'},
+{id:'mimosa-evo',name:'Mimosa Evo',cat:'Potenti & Premiati',type:'weed',style:'ir-fruity',tags:['sativa','fruity'],thc:'~24%',thcN:24,rd:8.8,aroma:'Arancia sanguinella, fragola, champagne',desc:'Evoluzione della classica Mimosa — più potente e aromatica. Selezione phenotype superiore. Nei top shop come Boerejongens.',det:'Effetto: uplifting sativa esplosivo con corpo leggermente rilassato. Più intensa della Mimosa standard con durata maggiore.'},
+{id:'black-widow',name:'Black Widow',cat:'Potenti & Premiati',type:'weed',style:'ir-sativa',tags:['sativa','classic'],thc:'~20%',thcN:20,rd:8.6,aroma:'Speziato, pino, cioccolato, dolce',desc:'Sativa da Mr. Nice Seeds (Shantibaba), cugina della White Widow. Cannabis Cup winner 1995. Spesso proposta come alternativa alla White.',det:'Effetto: cerebrale potente e creativo, espansivo. Euforia sostenuta. Ottima per chi vuole salire un gradino rispetto alla White Widow.'},
+{id:'vanilla-kush',name:'Vanilla Kush',cat:'Potenti & Premiati',type:'weed',style:'ir-indica',tags:['indica'],thc:'~21%',thcN:21,rd:8.5,aroma:'Vaniglia, lavanda, dolce, speziato',desc:'Indica da Barney\'s Farm — Kashmir e Afghan genetics. Aroma di vaniglia e lavanda straordinariamente dolce. Cannabis Cup winner. Esclusiva Barney\'s.',det:'Effetto: rilassamento fisico profondo, euforia dolce, mente rilassata. Ottima per sera. Aroma dolce persistente nel fumo.'},
+{id:'purple-haze',name:'Purple Haze',cat:'Potenti & Premiati',type:'weed',style:'ir-haze',tags:['sativa','haze'],thc:'~20%',thcN:20,rd:8.5,aroma:'Frutti di bosco, floreale, speziato, dolce',desc:'Sativa leggendaria resa immortale da Jimi Hendrix. Colori viola-blu magnifici. Effetto cerebrale caratteristico.',det:'Effetto: cerebrale espansivo e quasi psichedelico, ottimismo, senso di benessere. Ottima per esperienze sensoriali ed esplorazioni. Icona assoluta.'},
+{id:'trainwreck',name:'Trainwreck',cat:'Potenti & Premiati',type:'weed',style:'ir-sativa',tags:['sativa','classic'],thc:'~21%',thcN:21,rd:8.6,aroma:'Pino, limone, mentolo, spezie',desc:'Sativa californiana da Mexican, Thai e Afghani. Effetto immediato e devastante — da cui il nome "treno deraglia". Cannabis Cup winner.',det:'Effetto: rush cerebrale immediato e potente, poi rilassamento fisico. Ottima combinazione per chi cerca sativa con corpo. Durata media-lunga.'},
+{id:'super-skunk',name:'Super Skunk',cat:'Potenti & Premiati',type:'weed',style:'ir-hybrid',tags:['hybrid','classic'],thc:'~19%',thcN:19,rd:8.4,aroma:'Pungente intenso, terroso, dolce',desc:'Ibrida da Skunk #1 e Afghani. Cannabis Cup winner 1990. Più potente e aromatica dello Skunk #1. Coltivata in Olanda da 35 anni.',det:'Effetto: bilanciato e potente, euforia allegra poi rilassamento fisico. Ottima per chi ha amato lo Skunk #1 e vuole qualcosa in più.'},
+{id:'white-rhino',name:'White Rhino',cat:'Potenti & Premiati',type:'weed',style:'ir-indica',tags:['indica','classic'],thc:'~20%',thcN:20,rd:8.4,aroma:'Dolce, vaniglia, terroso, legno',desc:'Indica da White Widow e North American Indica. Boccioli massicci e resinosi — ricorda il corno di rinoceronte. Great White Shark Award winner.',det:'Effetto: stone fisico molto potente, rilassamento muscolare profondo, mente sognante. Perfetta sera. Più intensa della White Widow.'},
+
+// ─── HASH: MAROCCHINO ─────────────────────────────────────────────────────
+{id:'h-pollen',name:'Pollen Hash',cat:'Hash — Marocchino Classico',type:'hash',style:'ir-hash-mar',tags:['hash'],thc:'~45%',thcN:45,rd:8.8,aroma:'Floreale delicato, speziato, fresco',desc:'La forma più pura di hashish marocchino a secco — cristalli di trichoma setacciati con il setaccio più fine e pressati a freddo. Colore giallo-dorato chiaro.',det:'Effetto: cerebrale e sativa, molto pulito. Ottimo vaporizzato o in joint. Tra i più ricercati per purezza. Da chiedere esplicitamente a Boerejongens o Paradox.'},
+{id:'h-zerozero',name:'Zero Zero (00)',cat:'Hash — Marocchino Classico',type:'hash',style:'ir-hash-mar',tags:['hash'],thc:'~55%',thcN:55,rd:9.3,aroma:'Delicato, floreale, miele d\'acacia',desc:'Top del hashish marocchino artigianale — setaccio 00, il più fine. Colore beige-biondo chiaro. Prodotto con la primissima setacciatura dei trichomi maturi.',det:'Effetto: bilanciato e sofisticato, cerebrale con rilassamento fisico piacevole. Aroma delicato, fumo freschissimo. Rarità — chiedilo e aspettati di pagare di più.'},
+{id:'h-ketama',name:'Ketama Gold',cat:'Hash — Marocchino Classico',type:'hash',style:'ir-hash-mar',tags:['hash'],thc:'~55%',thcN:55,rd:9.1,aroma:'Spezie calde, miele ambrato, legno secco',desc:'Hash marocchino premium dalla regione storica del Rif (Ketama). Gold = colore ambrato caldo. Tecniche tradizionali a freddo con pressatura manuale da generazioni.',det:'Effetto: euforia morbida e progressiva, rilassamento graduale. Sapore di spezie, miele e legno secco inconfondibili.'},
+{id:'h-softblack',name:'Soft Black Hash',cat:'Hash — Marocchino Classico',type:'hash',style:'ir-hash-mar',tags:['hash'],thc:'~40%',thcN:40,rd:7.8,aroma:'Speziato, morbido, dolciastro',desc:'Hash pressato morbido nord-africano. Il più trovabile nei coffeeshop. Cremoso, profumato, si lavora facilmente a temperatura ambiente.',det:'Effetto: bilanciato e piacevole, rilassante. Ottimo da mescolare in joint con erba. Il classico space cake di Amsterdam usa tipicamente questo.'},
+{id:'h-caramello',name:'Caramello Hash',cat:'Hash — Marocchino Classico',type:'hash',style:'ir-hash-mar',tags:['hash'],thc:'~50%',thcN:50,rd:8.4,aroma:'Caramello bruciato, spezie calde, miele',desc:'Hash marocchino morbido color caramello — texture come plastilina. Storico degli anni \'80-\'90. Molto ricercato dai nostalgici della scena old school.',det:'Effetto: cerebrale iniziale, poi rilassamento fisico dolce. Sapore di caramello e spezie calde distintivo.'},
+{id:'h-super-pollen',name:'Super Pollen',cat:'Hash — Marocchino Classico',type:'hash',style:'ir-hash-mar',tags:['hash'],thc:'~50%',thcN:50,rd:9.0,aroma:'Floreale intenso, speziato, freschissimo',desc:'Versione premium del Pollen — da varietà selezionate e setacciato a basse temperature. Colore dorato brillante. Qualità superiore rispetto al pollen standard.',det:'Effetto: cerebrale e sativa pronunciato, molto pulito, ottimismo e chiarezza mentale. Eccellente vaporizzato. Per i veri appassionati di hash a secco.'},
+{id:'h-golden',name:'Golden Moroccan',cat:'Hash — Marocchino Classico',type:'hash',style:'ir-hash-mar',tags:['hash'],thc:'~48%',thcN:48,rd:8.7,aroma:'Miele, spezie dolci, fieno asciutto',desc:'Hash marocchino color oro intenso, prodotto con metodi semi-tradizionali. Più compatto del super pollen ma morbido e malleabile. Ottimo rapporto qualità-prezzo.',det:'Effetto: bilanciato tra sativa e indica, durata media. Aroma caldo di miele e spezie. Ottima introduzione all\'hash marocchino di qualità.'},
+{id:'h-king-hassan',name:'King Hassan',cat:'Hash — Marocchino Classico',type:'hash',style:'ir-hash-mar',tags:['hash'],thc:'~45%',thcN:45,rd:8.9,aroma:'Spezie reali, miele, tabacco dolce, legno',desc:'Hash marocchino di altissima qualità — nome storico nel mercato olandese. Prodotto con canapaio selezionato dalla regione di Hassan II. Colore marrone-ambrato.',det:'Effetto: cerebrale dolce con rilassamento fisico progressivo. Sapore complesso di spezie e miele. Spesso il migliore disponibile per qualità-prezzo nel Second Room.'},
+
+// ─── HASH: ORIENTALE ──────────────────────────────────────────────────────
+{id:'h-charas',name:'Charas / Malana Cream',cat:'Hash — Orientale',type:'hash',style:'ir-hash-ori',tags:['hash'],thc:'~55%',thcN:55,rd:9.5,aroma:'Terroso profondo, cioccolato fondente, spezie indiane',desc:'Hash fatto a mano strofinando piante vive in India (Malana Valley, 2000m slm). Il Malana Cream è tra i migliori hash al mondo. Morbidissimo, nero fuori e verde scuro dentro.',det:'Effetto: indica pesante e avvolgente, stonatura profonda e corporea, mente sognante. Raramente autentico — chiedilo a Paradox, 1e Hulp o Dolores.'},
+{id:'h-afghan',name:'Afghan Black Hash',cat:'Hash — Orientale',type:'hash',style:'ir-hash-ori',tags:['hash'],thc:'~50%',thcN:50,rd:9.0,aroma:'Spezie antiche, terracotta, legno bruciato',desc:'Hash tradizionale afghano con tecniche ancestrali — pressato a caldo con le mani dopo setacciatura manuale. Il metodo più antico al mondo. Nero lustro fuori, verde-marrone dentro.',det:'Effetto: stone fisico potente e duraturo, sedazione profonda, calore al corpo. Perfetto sera tarda. Non mescolare con sativa se sei nuovo.'},
+{id:'h-nepal',name:'Nepalese Temple Ball',cat:'Hash — Orientale',type:'hash',style:'ir-hash-ori',tags:['hash'],thc:'~55%',thcN:55,rd:9.3,aroma:'Sandalo, spezie himalayane, fumo dolce',desc:'Formato sferico tradizionale nepalese — arrotolato a mano in palline durante la raccolta. Texture pastosa che si scioglie col calore del pollice. Rarissimo autentico fuori dall\'Asia.',det:'Effetto: cerebrale nelle prime fasi poi profondamente rilassante e fisico. Note di sandalo e spezie himalayane. Una delle esperienze hashish più caratteristiche di Amsterdam.'},
+{id:'h-leb',name:'Lebanese Red Hash',cat:'Hash — Orientale',type:'hash',style:'ir-hash-ori',tags:['hash'],thc:'~45%',thcN:45,rd:8.6,aroma:'Erbaceo dolce, legno rosso, speziato',desc:'Red Lebanese Hash — prodotto in Libano con essiccazione al sole prolungata. Colore rosso-ambrato caratteristico per l\'ossidazione. Presenza storica nei coffeeshop olandesi.',det:'Effetto: uplifting cerebrale con corpo rilassato e caldo. Aroma di legno rosso e spezie dolci. Apprezzato dagli intenditori più anziani.'},
+{id:'h-turkish',name:'Turkish Hash',cat:'Hash — Orientale',type:'hash',style:'ir-hash-ori',tags:['hash'],thc:'~35%',thcN:35,rd:8.0,aroma:'Erbaceo leggero, polvere di spezie, dolce',desc:'Hash turco tradizionale — colore verde-marrone, consistenza compatta ma malleabile. Meno concentrato degli altri orientali, profilo dolce e accessibile.',det:'Effetto: più leggero degli altri hash orientali — ottimo per iniziare a esplorare il mondo dell\'hash. Cerebrale leggero e rilassamento moderato.'},
+{id:'h-shiraz',name:'Persian Shiraz Hash',cat:'Hash — Orientale',type:'hash',style:'ir-hash-ori',tags:['hash'],thc:'~48%',thcN:48,rd:8.5,aroma:'Rose, spezie orientali, miele floreale',desc:'Hash iraniano raro prodotto nella regione di Shiraz. Profilo floreale unico con note di rosa che lo distingue da tutti gli altri. Rarissimo fuori dall\'Iran.',det:'Effetto: cerebrale delicato e floreale, rilassamento progressivo. L\'aroma di rosa nel fumo è un\'esperienza sensoriale unica. Da cercare nei coffeeshop specializzati.'},
+
+// ─── HASH: MODERNO ────────────────────────────────────────────────────────
+{id:'h-bubble',name:'Bubble Hash Ice Water',cat:'Hash — Moderno Solventless',type:'hash',style:'ir-hash-mod',tags:['hash'],thc:'~60%',thcN:60,rd:9.0,aroma:'Varia con la strain base — fedele all\'originale',desc:'Hash estratto con acqua ghiacciata e sacchi filtro a diversi micron — zero solventi. "Bubble" dalle bolle che forma fumando quando è di qualità.',det:'Effetto: molto pulito e potente. Sapore fedele alla varietà originale. Gradi medi (73u-90u) i migliori per qualità-potenza.'},
+{id:'h-rosin',name:'Rosin Hash',cat:'Hash — Moderno Solventless',type:'hash',style:'ir-hash-mod',tags:['hash'],thc:'~70%',thcN:70,rd:9.4,aroma:'Intenso, varietale puro, resina viva',desc:'Hash per pressione e calore — zero solventi, zero additivi. Il metodo più puro in assoluto. Texture appiccicosa e lucida color ambrato.',det:'Effetto: salita rapida e intensa, il THC più biodisponibile. Non per neofiti — inizia con pochissimo. Solo nei coffeeshop premium.'},
+{id:'h-drysift',name:'Dry Sift Premium',cat:'Hash — Moderno Solventless',type:'hash',style:'ir-hash-mod',tags:['hash'],thc:'~65%',thcN:65,rd:9.1,aroma:'Varietale puro, pulito, speziato',desc:'Setacciatura a secco meccanica con micron multipli. Risultato quasi bianco e polveroso, altissima concentrazione di trichomi puri senza materia vegetale.',det:'Effetto: cerebrale potente e pulito, salita rapida. Ottimo aggiunto al joint di una sativa. Nei coffeeshop premium come "full melt" — si scioglie completamente.'},
+{id:'h-live-rosin',name:'Live Rosin',cat:'Hash — Moderno Solventless',type:'hash',style:'ir-hash-mod',tags:['hash'],thc:'~75%',thcN:75,rd:9.5,aroma:'Terpeni vivi, fresco, varietale puro',desc:'Il massimo dell\'estrazione moderna: rosin da fiori freschi congelati (live). Preserva il 100% dei terpeni originali. Solo nei top shop con relazioni dirette con i coltivatori.',det:'Effetto: il più completo e complesso disponibile. Salita immediata, terpeni intatti (entourage effect massimo). Per veri intenditori. Se Boerejongens ce l\'ha, è il migliore quel giorno.'},
+{id:'h-ice-cream',name:'Ice Cream Hash',cat:'Hash — Moderno Solventless',type:'hash',style:'ir-hash-mod',tags:['hash'],thc:'~55%',thcN:55,rd:8.7,aroma:'Cremoso, vaniglia, dolce, strain-specific',desc:'Bubble hash da varietà dolci e cremose (Gelato, Ice Cream Cake o simili). L\'aroma del dessert è preservato nel processo a freddo con acqua ghiacciata.',det:'Effetto: bilanciato e raffinato, note dolci persistenti nel fumo. Combina euforia e rilassamento fisico. Molto apprezzato dagli intenditori.'},
+{id:'h-charas-fresh',name:'Charas Fresh (Green)',cat:'Hash — Moderno Solventless',type:'hash',style:'ir-hash-mod',tags:['hash'],thc:'~60%',thcN:60,rd:9.2,aroma:'Spezie fresche, incenso, tropicale',desc:'Charas fresco da piante vive anziché essiccate — tecnica indiana tradizionale su canapaio di qualità superiore. Colore verde più chiaro e consistenza più morbida del classico.',det:'Effetto: più cerebrale e terpene-ricco del Charas classico, con meno sedazione fisica. Terpeni meglio preservati. Ottimo per chi vuole l\'esperienza charas con effetto più pulito.'},
+{id:'h-full-melt',name:'Full Melt Bubble',cat:'Hash — Moderno Solventless',type:'hash',style:'ir-hash-mod',tags:['hash'],thc:'~68%',thcN:68,rd:9.3,aroma:'Fresco e varietale, resinoso, speziato',desc:'Gradi 5-6 stelle di bubble hash — si scioglie completamente senza lasciare residuo (full melt). Il top della categoria ice water extraction. Rarissimo a questi livelli di purezza.',det:'Effetto: molto vicino al rosin in potenza e pulizia. Ottimo vaporizzato o su pipa d\'acqua. Solo nei migliori coffeeshop. Si scioglie completamente sul calore.'},
+{id:'h-pressed-rosin',name:'Pressed Rosin Hash',cat:'Hash — Moderno Solventless',type:'hash',style:'ir-hash-mod',tags:['hash'],thc:'~65%',thcN:65,rd:9.0,aroma:'Intenso e concentrato, terpenico, varietale',desc:'Rosin che viene poi "aged" e pressato in un formato solido simile all\'hash classico. Combina la purezza del rosin con la maneggiabilità dell\'hash tradizionale.',det:'Effetto: molto potente e pulito come il rosin standard ma più facile da usare nel joint. Ottimo per chi vuole la qualità del rosin senza usare vaporizzatore.'},
+{id:"rs11",name:"RS11",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["hybrid"],thc:"~29%",thcN:29,rd:9.1,aroma:"Agrume dolce, rosa, cremoso, candy",desc:"Pink Guava x OZK. Tra le strain piu ricercate. THC record. Rarissima ad Amsterdam, solo nei top shop con connessioni USA dirette.",det:"Effetto: rush cerebrale immediato e intensissimo, poi stone fisico pesante. One-hitter quitter. Solo per esperti assoluti."}
+,{id:"jealousy",name:"Jealousy",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["hybrid"],thc:"~27%",thcN:27,rd:8.9,aroma:"Cremoso, dolce, frutta, diesel leggero",desc:"Sherbert Bx1 x Gelato 41. Seed Junky Genetics. Terpeni eccezionali, effetto bilanciato ma potente. Tra le strain moderne piu apprezzate.",det:"Effetto: cerebrale euphorico e creativo, poi corpo caldo progressivo. Piu bilanciata rispetto ad altre potenti. Ottima per serate. 3-4h."}
+,{id:"zkittlez-og",name:"Zkittlez OG",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["indica"],thc:"~26%",thcN:26,rd:8.8,aroma:"Caramelle colorate, uva, tropicale, dolce",desc:"Indica da Grape Ape e Grapefruit. Emerald Cup winner. THC elevato con profilo aromatico da caramelle. Sempre nei top shop olandesi.",det:"Effetto: stone fisico potente e progressivo, euforia dolce iniziale. Couch lock garantito. Per sera avanzata. Durata 4h+."}
+,{id:"slurricane",name:"Slurricane",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["indica"],thc:"~28%",thcN:28,rd:8.9,aroma:"Frutta tropicale, dolce, cremoso, uva",desc:"Indica da Do-Si-Dos e Purple Punch. THC massiccio. Boccioli viola-verde con tricomi densissimi. Menu esclusivi come Grey Area.",det:"Effetto: stone devastante e immediato. Prima cerebrale poi fisico totale. Solo per alta tolleranza. Couch lock profondo."}
+,{id:"biscotti",name:"Biscotti",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["indica"],thc:"~25%",thcN:25,rd:8.7,aroma:"Biscotto, dolce, caffe, gasolio leggero",desc:"Indica da GSC e Gelato 25. Cookies family. Profilo cookies con retrogusto gasolio. Boccioli compatti e ultra resinosi.",det:"Effetto: stone fisico progressivo con euforia dolce. Rilassamento profondo dalla seconda ora. Ottima per chi ama le indica."}
+,{id:"kush-mints",name:"Kush Mints",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["hybrid"],thc:"~26%",thcN:26,rd:8.8,aroma:"Menta fresca, kush, caffe, cremoso",desc:"Animal Mints x Bubba Kush. Aroma di menta e kush con retrogusto caffe. Tricomi spettacolari. Stagionale nei top shop.",det:"Effetto: stone bilanciato, cerebrale iniziale poi fisico progressivo. Menta nel fumo caratteristica. Per esperti."}
+,{id:"obama-runtz",name:"Obama Runtz",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["hybrid"],thc:"~27%",thcN:27,rd:8.9,aroma:"Candy, frutta esotica, cremoso, speziato",desc:"Ibrida premium da Afghani e Runtz. Nome cult nella scena americana. Boccioli densi viola-verde. Sempre piu nei top shop europei.",det:"Effetto: euforia immediata e intensa, poi stone fisico progressivo. Bilanciata nonostante il THC alto. Ottima per serate."}
+,{id:"ice-cream-cake",name:"Ice Cream Cake",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["indica"],thc:"~25%",thcN:25,rd:8.8,aroma:"Vaniglia, cremoso, dolce, gelato, spezie",desc:"Wedding Cake x Gelato 33. Indica con aroma da dessert eccezionale. Boccioli densi e pastosi. Nei migliori menu olandesi.",det:"Effetto: stone fisico profondo con euforia dolce. Rilassamento totale. Ottima per sera. Durata 4h+."}
+,{id:"tropicana-cherry",name:"Tropicana Cherry",cat:"Potenti & Premiati",type:"weed",style:"ir-fruity",tags:["sativa","fruity"],thc:"~24%",thcN:24,rd:8.8,aroma:"Ciliegia, agrume, frutti tropicali, floreale",desc:"Incrocio da Tropicana Cookies e Black Cherry Pie. Profilo terpeninico spettacolare. Stagionale nei top shop Amsterdam.",det:"Effetto: uplifting sativa potente e fresco, poi corpo leggero. Ottima per pomeriggi. Aroma persistente."}
+,{id:"sunset-sherbert",name:"Sunset Sherbert",cat:"Potenti & Premiati",type:"weed",style:"ir-hybrid",tags:["hybrid"],thc:"~19%",thcN:19,rd:8.5,aroma:"Sherbet, frutti di bosco, menta, dolce",desc:"GSC x Pink Panties. Profilo aromatico da dessert. Colori arancio-viola. Presente nei menu di Boerejongens e Dampkring.",det:"Effetto: euforia mentale dolce, rilassamento corpo progressivo. Bilanciata e accessibile. 2-3h."}
+,{id:"banana-kush",name:"Banana Kush",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["indica","fruity"],thc:"~20%",thcN:20,rd:8.3,aroma:"Banana matura, dolce, tropicale, vaniglia",desc:"Indica da OG Kush e Skunk Haze. Aroma di banana matura tropicale inconfondibile. Resinosa e aromatica.",det:"Effetto: rilassamento fisico progressivo con euforia dolce iniziale. Stone piacevole e bilanciato. Ottima sera."}
+,{id:"watermelon-zkittlez",name:"Watermelon Zkittlez",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["indica","fruity"],thc:"~21%",thcN:21,rd:8.5,aroma:"Anguria, dolce caramellato, frutti rossi",desc:"Indica fruttata da Watermelon e Zkittlez. Aroma dolcissimo quasi dessert. Colori viola intensi. Stagionale premium nei top shop.",det:"Effetto: rilassamento fisico dolce, euforia positiva. Stone piacevole da sera."}
+,{id:"lemon-cookies",name:"Lemon Cookies",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["hybrid","fruity"],thc:"~22%",thcN:22,rd:8.4,aroma:"Limone zucchero, biscotto, vaniglia, agrume",desc:"Incrocio tra GSC e Lemon Haze. Combina il profilo cookies con la freschezza agrumata. Sempre nei menu premium olandesi.",det:"Effetto: cerebrale iniziale energizzante, poi corpo caldo e rilassato. Bilanciata e aromatica."}
+,{id:"pink-runtz",name:"Pink Runtz",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["hybrid","fruity"],thc:"~23%",thcN:23,rd:8.7,aroma:"Caramella rosa, zucchero, frutti tropicali",desc:"Variante della Runtz con profilo ancora piu dolce e fruttato. Colori pastello rosa-viola spettacolari. Grey Area e Boerejongens.",det:"Effetto: euforia dolce e immediata, poi rilassamento fisico graduale. Ottima per serate sociali."}
+,{id:"sweet-tooth",name:"Sweet Tooth",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["hybrid","fruity"],thc:"~19%",thcN:19,rd:8.2,aroma:"Caramello, fiori, dolce, fruttato",desc:"Barney Farm Cannabis Cup winner 2001. Da Afghan, Hawaiian e Nepali. Aroma floreale-dolce eccezionale. Classico olandese.",det:"Effetto: euforia dolce e uplifting, poi rilassamento moderato. Ottima per neofiti che vogliono qualcosa di aromatico."}
+,{id:"wedding-pie",name:"Wedding Pie",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["hybrid","fruity"],thc:"~24%",thcN:24,rd:8.6,aroma:"Frutti di bosco, torta, dolce, cremoso",desc:"Incrocio tra Wedding Cake e Grape Pie. Profilo aromatico da dessert sofisticato. Resinosa, densa, colori violacei.",det:"Effetto: euforia creativa e cerebrale poi stone fisico progressivo. Potente nonostante il profilo dolce."}
+,{id:"strawnana",name:"Strawnana",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["indica","fruity"],thc:"~22%",thcN:22,rd:8.4,aroma:"Fragola, banana, dolce tropicale, cremoso",desc:"Banana Kush x Strawberry Banana. DNA Genetics. Aroma di fragola e banana inconfondibile. Stagionale nei top shop.",det:"Effetto: stone fisico dolce e progressivo. Indica dominante ma non pesante. Ottima per rilassarsi in serata."}
+,{id:"chiesel",name:"Chiesel",cat:"Must Try — I Classici",type:"weed",style:"ir-hybrid",tags:["hybrid","classic"],thc:"~20%",thcN:20,rd:8.7,aroma:"Diesel, formaggio, agrume, spezie",desc:"Incrocio tra Big Buddha Cheese e NYC Diesel. Cup winner Highlife. Popolare nei coffeeshop del Jordaan.",det:"Effetto: cerebrale immediato, euforia energizzante poi corpo rilassato. Bilanciata tra rush diesel e comfort cheese. 2-3h."}
+,{id:"chronic",name:"Chronic",cat:"Must Try — I Classici",type:"weed",style:"ir-hybrid",tags:["hybrid","classic"],thc:"~18%",thcN:18,rd:8.3,aroma:"Dolce, floreale, miele, speziato",desc:"Serious Seeds Cannabis Cup 1994. Tra le piu vendute nei coffeeshop olandesi anni 90-2000. Classico intramontabile.",det:"Effetto: bilanciato, uplifting progressivo poi corpo caldo. Stone di qualita senza sorprese."}
+,{id:"nl5-haze",name:"NL5 x Haze",cat:"Must Try — I Classici",type:"weed",style:"ir-haze",tags:["sativa","haze","classic"],thc:"~19%",thcN:19,rd:8.6,aroma:"Speziato, terroso, haze classico, legno",desc:"Incrocio storico tra Northern Lights 5 e Original Haze. Sensi Seeds. Combina la potenza indica con il cerebrale haze. Cup winner.",det:"Effetto: salita rapida e cerebrale, poi corpo caldo. Il meglio dei due mondi. Lunga durata."}
+,{id:"g13-haze",name:"G13 Haze",cat:"Must Try — I Classici",type:"weed",style:"ir-haze",tags:["sativa","haze"],thc:"~22%",thcN:22,rd:8.8,aroma:"Haze speziato, miele, pino, dolce",desc:"Barney Farm Cannabis Cup winner 2007. Incrocio tra la leggendaria G13 e Haze. Esclusiva da 15+ anni. Aromatica e potente.",det:"Effetto: cerebrale euphorico e creativo, corpo vibrante. Ottima per musei e passeggiate. Durata 3h+."}
+,{id:"blue-cheese",name:"Blue Cheese",cat:"Must Try — I Classici",type:"weed",style:"ir-hybrid",tags:["indica","classic"],thc:"~19%",thcN:19,rd:8.4,aroma:"Formaggio, mirtilli, dolce, terroso",desc:"Big Buddha Cheese x Blueberry. Cannabis Cup winner. Aroma di formaggio e mirtilli unico. Presenza storica nei coffeeshop olandesi.",det:"Effetto: stone bilanciato, euforia dolce poi rilassamento corpo. Per chi ama il Cheese ma vuole qualcosa in piu. 2-3h."}
+,{id:"wonder-woman",name:"Wonder Woman",cat:"Must Try — I Classici",type:"weed",style:"ir-sativa",tags:["sativa","classic"],thc:"~18%",thcN:18,rd:8.4,aroma:"Dolce, fruttato, agrume, erbaceo",desc:"Sativa da Nirvana Seeds. Presente nei menu olandesi da oltre 20 anni. Affidabile e costante. Effetto uplifting pulito.",det:"Effetto: euforia dolce e progressiva, corpo leggero. Ottima per pomeriggi di esplorazione. Non sopraffacente."}
+,{id:"super-bud",name:"Super Bud",cat:"Must Try — I Classici",type:"weed",style:"ir-indica",tags:["indica","classic"],thc:"~19%",thcN:19,rd:8.2,aroma:"Dolce, fruttato, terroso, speziato",desc:"Green House Seeds. Cannabis Cup winner. Boccioli massicci e aromatici. Presenza costante nei menu dei coffeeshop olandesi.",det:"Effetto: rilassamento fisico profondo con euforia dolce. Stone classico e affidabile. Ottima per la sera."},
+{id:"h-malawi-gold",name:"Malawi Gold Hash",cat:"Hash — Orientale",type:"hash",style:"ir-hash-ori",tags:["hash"],thc:"~40%",thcN:40,rd:8.4,aroma:"Terroso, speziato africano, legnoso, dolciastro",desc:"Hash africano raro da canapaio landrace del Malawi. Colore verde-marrone. Introvabile fuori dal circuito specializzato.",det:"Effetto: cerebrale sativa molto pronunciato, uplifting e energizzante. Profilo diverso dagli hash orientali classici. Rarita assoluta."}
+,{id:"h-manali-cream",name:"Manali Cream",cat:"Hash — Orientale",type:"hash",style:"ir-hash-ori",tags:["hash"],thc:"~52%",thcN:52,rd:9.1,aroma:"Spezie himalayane, crema, sandalo, incenso",desc:"Charas dalla valle di Manali, Himachal Pradesh. Piu cremoso e chiaro del Malana. Fatto a mano su piante fresche ad alta quota.",det:"Effetto: indica profonda e avvolgente. Rilassamento fisico totale. Spezie himalayane nel fumo. Rarissimo autentico."}
+,{id:"h-pakhtun",name:"Pakhtun Hash",cat:"Hash — Orientale",type:"hash",style:"ir-hash-ori",tags:["hash"],thc:"~48%",thcN:48,rd:8.7,aroma:"Spezie intense, legno scuro, terracotta, fumo",desc:"Hash afghano-pakistano da tribu Pashtun. Metodi tradizionali millenari. Nero fuori, marrone-verde dentro.",det:"Effetto: stone fisico pesante e caldo, sedazione progressiva. Aroma di spezie scure intenso. Per sera avanzata."}
+,{id:"h-morocco-slabs",name:"Moroccan Slabs",cat:"Hash — Marocchino Classico",type:"hash",style:"ir-hash-mar",tags:["hash"],thc:"~42%",thcN:42,rd:8.3,aroma:"Terroso, speziato, morbido, erba secca",desc:"Hash marocchino pressato in lastre piatte. Formato tipico del commercio storico. Qualita media ma autentica e molto diffusa.",det:"Effetto: bilanciato e accessibile. Ottimo per chi si avvicina al mondo hash. Mescola bene in joint."}
+,{id:"h-moroccan-blonde",name:"Moroccan Blonde",cat:"Hash — Marocchino Classico",type:"hash",style:"ir-hash-mar",tags:["hash"],thc:"~44%",thcN:44,rd:8.5,aroma:"Biondo, floreale leggero, miele, fresco",desc:"Hash marocchino biondo-dorato chiaro. Qualita intermedia tra soft black e pollen. Ottimo rapporto qualita-prezzo.",det:"Effetto: cerebrale leggero e piacevole. Ottima introduzione al hash marocchino di qualita. Aroma floreale delicato."}
+,{id:"h-temple-ball-old",name:"Temple Ball Old Style",cat:"Hash — Orientale",type:"hash",style:"ir-hash-ori",tags:["hash"],thc:"~50%",thcN:50,rd:9.0,aroma:"Musk, spezie antiche, sandalo, incenso",desc:"Versione old style del Temple Ball nepalese fermentato per mesi. Texture quasi liquida al calore. Rarissimo.",det:"Effetto: indica profonda e meditativa. Musk e spezie nel fumo con retrogusto di incenso. Esperienza unica."}
+,{id:"h-red-lebanese-v",name:"Red Lebanese Vintage",cat:"Hash — Orientale",type:"hash",style:"ir-hash-ori",tags:["hash"],thc:"~38%",thcN:38,rd:8.4,aroma:"Rosso-ambrato, legno antico, erbaceo dolce",desc:"Red Lebanese invecchiato naturalmente. Colore rosso intenso per ossidazione prolungata. Rarissimo vintage.",det:"Effetto: uplifting cerebrale con note nostalgiche. Profilo vintage della scena anni 80. Leggero ma caratteristico."}
+,{id:"h-ice-o-lator",name:"Ice-O-Lator Premium",cat:"Hash — Moderno Solventless",type:"hash",style:"ir-hash-mod",tags:["hash"],thc:"~62%",thcN:62,rd:9.1,aroma:"Varietale puro, fresco, resinoso, pulito",desc:"Ice water hash di altissima purezza da selezione micron 73-90u. Variante premium del bubble hash. Nei top shop come alternativa al full melt.",det:"Effetto: pulito e potente, terpeni intatti. Piu facile da usare del rosin, piu potente del bubble standard. Ottimo vaporizzato."}
+,{id:"h-hifi-4g",name:"HiFi 4G Bubble Hash",cat:"Hash — Moderno Solventless",type:"hash",style:"ir-hash-mod",tags:["hash"],thc:"~65%",thcN:65,rd:9.0,aroma:"Terpeni vivi, dolce, varietale specifico",desc:"Bubble hash 4 stelle da varieta HiFi selezionate. Processo a freddo controllato. Disponibile stagionalmente nei top shop premium.",det:"Effetto: molto pulito e terpenitico. Ottimo vaporizzato a bassa temperatura. Per intenditori."}
+,{id:"h-solventless-wax",name:"Solventless Wax",cat:"Hash — Moderno Solventless",type:"hash",style:"ir-hash-mod",tags:["hash"],thc:"~72%",thcN:72,rd:9.2,aroma:"Intenso, ceroso, terpeni concentrati, varietale",desc:"Rosin processato in formato wax. Consistenza cerosa e friabile. Piu facile da dosare del rosin liquido. Solo nei top shop con laboratorio interno.",det:"Effetto: salita rapidissima. Inizia con quantita minime. Vaporizzatore necessario. Solo esperti."}
+,{id:"h-kief-pressed",name:"Kief Pressed Premium",cat:"Hash — Moderno Solventless",type:"hash",style:"ir-hash-mod",tags:["hash"],thc:"~60%",thcN:60,rd:8.8,aroma:"Varietale puro, pulito, speziato, fresco",desc:"Kief di qualita superiore pressato a freddo senza solventi. Transizione tra dry sift e rosin. Presente in alcuni coffeeshop premium.",det:"Effetto: cerebrale e pulito. Piu potente del dry sift ma piu facile del rosin. Ottimo aggiunto al joint."}
+,{id:"moonrock",name:"Moonrock",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["hybrid","potente"],thc:"~50%",thcN:50,rd:9.3,aroma:"Hash, olio di cannabis, terpeni concentrati, dolce",desc:"Boccioli di OG Kush immersi in olio di hash e ricoperti di kief. Il prodotto piu potente disponibile nei coffeeshop. THC intorno al 50%. Solo nei top shop.",det:"Effetto: salita immediata e devastante. Non per neofiti assoluti. Inizia con pochissimo — meno di un quarto di quello che fumeresti normalmente. Durata 4-6h."}
+,{id:"power-plant",name:"Power Plant",cat:"Must Try — I Classici",type:"weed",style:"ir-sativa",tags:["sativa","classic"],thc:"~20%",thcN:20,rd:8.5,aroma:"Erbaceo intenso, speziato, legno, resina",desc:"Sativa sudafricana da Dutch Passion. Cannabis Cup winner. Presenza storica nei coffeeshop olandesi da oltre 25 anni. Energizzante e produttiva.",det:"Effetto: cerebrale energizzante e focalizzato, corpo leggero. Ottima per attivita diurne. Una delle sativa piu affidabili del mercato olandese."}
+,{id:"tangerine-dream",name:"Tangerine Dream",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["sativa","fruity"],thc:"~19%",thcN:19,rd:8.6,aroma:"Mandarino, agrume dolce, speziato, floreale",desc:"Barney Farm Cannabis Cup winner 2010. Esclusiva Barney Farm. Aroma di mandarino intensissimo e reale. Tra le piu premiate nel mondo fruity.",det:"Effetto: uplifting sativa brillante, euforia agrumata. Ottima per giornate di esplorazione. Chiedila direttamente da Barney Farm per garantirne l'autenticita."}
+,{id:"pineapple-chunk",name:"Pineapple Chunk",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["indica","fruity"],thc:"~20%",thcN:20,rd:8.3,aroma:"Ananas, vaniglia, formaggio, dolce",desc:"Barney Farm. Da Pineapple, Skunk e Cheese. Profilo aromatico insolito che mescola dolce tropicale e note di formaggio. Indica dominante.",det:"Effetto: stone fisico rilassante con euforia dolce. Ottima per la sera. L'aroma ananas-formaggio e divisivo ma caratteristico."}
+,{id:"amnesia",name:"Amnesia",cat:"Must Try — I Classici",type:"weed",style:"ir-haze",tags:["sativa","haze","classic"],thc:"~20%",thcN:20,rd:8.9,aroma:"Citrus, limone, haze speziato, dolce",desc:"La versione originale prima della Haze — piu indica e meno esplosiva. Sempre presente nei coffeeshop come alternativa alla Amnesia Haze per chi vuole qualcosa di meno intenso.",det:"Effetto: cerebrale e uplifting ma piu gestibile della Haze. Ottima introduzione al mondo Amnesia. Molto presente nei menu come opzione di qualita."}
+,{id:"h-nederhash",name:"Nederhash",cat:"Hash — Moderno Solventless",type:"hash",style:"ir-hash-mod",tags:["hash"],thc:"~35%",thcN:35,rd:8.1,aroma:"Erbaceo fresco, resina olandese, speziato delicato",desc:"Hash prodotto localmente in Olanda da coltivazioni indoor olandesi. Unico nel panorama mondiale — hash europeo di qualita crescente. Colore verde-marrone chiaro.",det:"Effetto: cerebrale e pulito, tipicamente piu sativa rispetto agli hash orientali. Rappresenta la nuova generazione del hash made in Netherlands."}
+,{id:"h-polm",name:"Polm Hash",cat:"Hash — Marocchino Classico",type:"hash",style:"ir-hash-mar",tags:["hash"],thc:"~38%",thcN:38,rd:8.2,aroma:"Erbaceo, speziato, delicato, fresco",desc:"Hashish marocchino premium a bassa pressione — conserva meglio i terpeni rispetto al pressed classico. Colore giallo-verde chiaro. Presente nei coffeeshop storici.",det:"Effetto: cerebrale leggero e piacevole, ottimo per iniziare. Fumo pulito e fresco. Buona introduzione al hash marocchino di qualita."}
+,{id:"white-widow-x",name:"White Widow x Big Bud",cat:"Must Try — I Classici",type:"weed",style:"ir-hybrid",tags:["hybrid","classic"],thc:"~18%",thcN:18,rd:8.3,aroma:"Resina dolce, legno, muffa classica",desc:"Incrocio tra White Widow e Big Bud. Boccioli massicci con la firma resinosa della Widow. Presente in molti coffeeshop classici come variante della storica.",det:"Effetto: stone bilanciato classico, euforia iniziale poi rilassamento fisico. Per chi conosce la White Widow e vuole qualcosa di leggermente diverso."}
+,{id:"pure-kush",name:"Pure Kush",cat:"Must Try — I Classici",type:"weed",style:"ir-indica",tags:["indica","classic"],thc:"~22%",thcN:22,rd:8.6,aroma:"Kush terroso, pino, spezie, dolce",desc:"Indica pura da OG Kush californiana. Senza ibridazioni moderne. Una delle indicate piu rappresentative del profilo kush autentico. Presente nei top shop.",det:"Effetto: stone indica classico e profondo. Rilassamento muscolare totale, mente sognante. Ottima per chi vuole il profilo kush piu autentico disponibile."}
+,{id:"mazar",name:"Mazar",cat:"Must Try — I Classici",type:"weed",style:"ir-indica",tags:["indica","classic"],thc:"~20%",thcN:20,rd:8.4,aroma:"Afghano terroso, spezie antiche, dolce, resina",desc:"Indica da Dutch Passion, genetica Mazar-i-Sharif afghana. Una delle piu storiche e genuine varietà afghane coltivate in Olanda da decenni.",det:"Effetto: stone fisico pesante e puro afghano. Sedazione profonda, mente tranquilla. Per chi vuole un viaggio nel profilo indica piu tradizionale."}
+,{id:"dutch-treat",name:"Dutch Treat",cat:"Must Try — I Classici",type:"weed",style:"ir-hybrid",tags:["hybrid","classic"],thc:"~18%",thcN:18,rd:8.4,aroma:"Dolce, pineta, menta, erbaceo fresco",desc:"Ibrida olandese classica con effetto bilanciato. Nome e concetto squisitamente olandesi. Molto presente nei menu dei coffeeshop locali come scelta sicura.",det:"Effetto: euforia mentale pulita e sostenuta, corpo leggermente rilassato. Ideale per musei, bici, passeggiate lungo i canali. La quintessenza della scelta local."}
+,{id:"belladonna",name:"Belladonna",cat:"Potenti & Premiati",type:"weed",style:"ir-sativa",tags:["sativa"],thc:"~25%",thcN:25,rd:8.6,aroma:"Dolce, floreale, fruttato, speziato",desc:"Sativa da Paradise Seeds. Cannabis Cup winner. Nonostante il nome il profilo e uplifting e positivo. Presente nei menu dei coffeeshop storici come scelta premium.",det:"Effetto: cerebrale potente e sostenuto, euforia prolungata. Ottima creativita e socialita. Una delle sativa premiate piu affidabili sui menu olandesi."}
+,{id:"medusa",name:"Medusa",cat:"Potenti & Premiati",type:"weed",style:"ir-sativa",tags:["sativa"],thc:"~22%",thcN:22,rd:8.3,aroma:"Dolce, fruttato, floreale, spezie leggere",desc:"Sativa da Mandala Seeds. Effetto leggero e duraturo, molto apprezzata per uso prolungato. Presenza discreta ma fedele nei menu dei coffeeshop storici.",det:"Effetto: euforia dolce e costante, senza picchi brutali. Ottima per sessioni lunghe senza overdrive. Per chi cerca una sativa gentile ma di qualita."}
+,{id:"top-44",name:"Top 44",cat:"Must Try — I Classici",type:"weed",style:"ir-hybrid",tags:["hybrid","classic"],thc:"~17%",thcN:17,rd:8.1,aroma:"Dolce, erbaceo, fruttato, classico olandese",desc:"Ibrida velocissima da coltivare. Presenza storica nei coffeeshop olandesi come simbolo della coltivazione indoor. Accessibile e di qualita costante.",det:"Effetto: bilanciato e accessibile. Euforia allegra e rilassamento moderato. Ottima per chi si avvicina al mondo dei coffeeshop senza voler partire dall'intenso."}
+,{id:"silver-haze",name:"Silver Haze",cat:"Must Try — I Classici",type:"weed",style:"ir-haze",tags:["sativa","haze","classic"],thc:"~20%",thcN:20,rd:8.5,aroma:"Haze speziato, agrume, pino, fresco",desc:"Sativa da Sensi Seeds. Sorella della Super Silver Haze con profilo leggermente piu morbido. Cannabis Cup winner. Presenza costante nei coffeeshop Sensi-affiliated.",det:"Effetto: cerebrale espansivo e creativo ma meno devastante della SSH. Ottima via di mezzo per chi vuole haze senza l'intensita massima."}
+,{id:"exodus-cheese",name:"Exodus Cheese",cat:"Must Try — I Classici",type:"weed",style:"ir-hybrid",tags:["hybrid","classic"],thc:"~18%",thcN:18,rd:8.5,aroma:"Formaggio intensissimo, fruttato, dolciastro, erbaceo",desc:"Il Cheese originale UK da Big Buddha Seeds — il clone autentico degli anni 90. Aroma di formaggio piu intenso rispetto alle versioni commerciali. Cult assoluto.",det:"Effetto: stone bilanciato con rush euforico iniziale, poi rilassamento profondo. Per i fan del Cheese questa e l'esperienza autentica da cercare."}
+,{id:"mother-of-all-buds",name:"Mother of All Buds",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["indica"],thc:"~23%",thcN:23,rd:8.4,aroma:"Kush dolce, terroso, speziato, resina intensa",desc:"Indica da BOG Seeds. Boccioli enormi e ultra resinosi — da qui il nome. Profilo indica classico con potenza superiore. Presente in alcuni coffeeshop selezionati.",det:"Effetto: stone fisico immediato e progressivo. Rilassamento totale, mente quieta. Per gli amanti delle indica pure senza fronzoli."}
+,{id:"c99",name:"Cinderella 99",cat:"Potenti & Premiati",type:"weed",style:"ir-sativa",tags:["sativa","fruity"],thc:"~22%",thcN:22,rd:8.8,aroma:"Ananas, agrume tropicale, dolce, fruttato intenso",desc:"Sativa cult da Mr. Soul. Aroma di ananas e agrumi tropicali intensissimo. Una delle sativa piu cercate dagli intenditori. Presente occasionalmente nei top shop.",det:"Effetto: cerebrale esplosivo e fruttato, euforia immediata e sostenuta. Ottima per esperienze sensoriali. Quando la trovi nei menu non esitare."}
+,{id:"zkittlez-original",name:"Zkittlez Original",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["indica","fruity"],thc:"~22%",thcN:22,rd:8.9,aroma:"Caramelle, uva, frutta tropicale, dolcissimo",desc:"L'originale Zkittlez da 3rd Gen Family. Cups winner. L'aroma di caramelle colorate e frutta mista e senza rivali. Riferimento assoluto del profilo fruity.",det:"Effetto: euforia dolce e rilassamento fisico bilanciato. Una delle esperienze aromatiche piu iconiche disponibili. Cerca l'originale non le imitazioni."}
+,{id:"berry-white",name:"Berry White",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["hybrid","fruity"],thc:"~20%",thcN:20,rd:8.4,aroma:"Frutti di bosco, dolce, floreale, mirtilli",desc:"Incrocio tra Blueberry e White Widow. Profilo floreale-fruttato con la firma resinosa della Widow. Ottimo equilibrio tra aroma e potenza.",det:"Effetto: euforia dolce iniziale poi rilassamento fisico progressivo. Bilanciata e aromatica. Ottima introduzione al mondo delle indica fruttate."}
+,{id:"lemon-skunk",name:"Lemon Skunk",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["hybrid","fruity"],thc:"~20%",thcN:20,rd:8.5,aroma:"Limone intenso, skunk pungente, agrume, erbaceo",desc:"Da DNA Genetics. Incrocio di due Skunk selezionate per il profilo limone. Cannabis Cup winner. Profilo citrico molto piu pulito dello Skunk classico.",det:"Effetto: uplifting e cerebrale con note fruttate. Ottima energia e socialita. Per chi ama le sativa citriche ma vuole qualcosa di piu caratteriale della Lemon Haze."}
+,{id:"caramel-candy",name:"Caramel Candy Kush",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["indica","fruity"],thc:"~19%",thcN:19,rd:8.2,aroma:"Caramello dolce, vaniglia, speziato, cremoso",desc:"Indica da World of Seeds. Profilo aromatico da dessert al caramello. Boccioli densi e cremosi. Presente stagionalmente in alcuni coffeeshop selezionati.",det:"Effetto: rilassamento fisico dolce e progressivo, mente leggera. Ottima per chi ama le indica aromatiche senza overdrive. Stone piacevole e gestibile."}
+
+,{id:"h-super-critical",name:"Super Critical Hash",cat:"Hash — Marocchino Classico",type:"hash",style:"ir-hash-mar",tags:["hash"],thc:"~48%",thcN:48,rd:8.6,aroma:"Intenso, speziato, resina pura, floreale",desc:"Hash marocchino premium da varieta Super Critical ad alta produzione di resina. Qualita superiore allo standard, produzione selezionata. Colore ambrato brillante.",det:"Effetto: bilanciato e potente, cerebrale con corpo caldo progressivo. Ottimo per chi vuole qualcosa sopra il soft black ma non vuole spendere per il pollen."}
+,{id:"h-double-zero",name:"Double Zero Marocco",cat:"Hash — Marocchino Classico",type:"hash",style:"ir-hash-mar",tags:["hash"],thc:"~58%",thcN:58,rd:9.2,aroma:"Miele biondo, floreale purissimo, delicato",desc:"La versione piu raffinata del Zero Zero — doppia setacciatura a freddo. Colore quasi bianco-avorio. Rarissimo fuori dai top shop specializzati. Il pinnacolo del hash a secco.",det:"Effetto: cerebrale sofisticato, molto pulito. Aroma quasi assente nel fumo — segno di purezza totale. Per intenditori seri. Valore museale."}
+,{id:"h-cream-caramel-hash",name:"Cream Caramel Hash",cat:"Hash — Marocchino Classico",type:"hash",style:"ir-hash-mar",tags:["hash"],thc:"~46%",thcN:46,rd:8.5,aroma:"Caramello cremoso, spezie dolci, miele ambrato",desc:"Hash marocchino morbido con profilo aromatico da dessert. Cremoso e malleabile. Aroma di caramello e miele persistente nel fumo. Molto apprezzato dai neofiti.",det:"Effetto: dolce e progressivo, ottimo per chi si avvicina al hash. Cerebrale leggero poi corpo caldo. Uno dei piu accessibili tra i premium."}
+,{id:"h-amnesia-hash",name:"Amnesia Hash",cat:"Hash — Moderno Solventless",type:"hash",style:"ir-hash-mod",tags:["hash"],thc:"~55%",thcN:55,rd:9.0,aroma:"Limone, citrus, haze speziato, fresco",desc:"Hash estratto dalla strain Amnesia Haze. L'aroma della Amnesia concentrato e potenziato. Colore chiaro, consistenza semifluida. Disponibile in alcuni top shop.",det:"Effetto: cerebrale e uplifting come la Amnesia ma amplificato. Salita piu rapida. Ottimo vaporizzato. Per chi ama l'effetto Amnesia al massimo livello."}
+,{id:"h-og-kush-rosin",name:"OG Kush Rosin",cat:"Hash — Moderno Solventless",type:"hash",style:"ir-hash-mod",tags:["hash"],thc:"~68%",thcN:68,rd:9.3,aroma:"Pino, limone, diesel, kush concentrato",desc:"Rosin estratto dalla genetica OG Kush. Il profilo terpeninico della OG puro e amplificato. Disponibile stagionalmente da Boerejongens e Grey Area quando hanno la materia prima.",det:"Effetto: rush cerebrale OG intensissimo poi stone fisico. Tutto cio che ami della OG Kush moltiplicato per tre. Solo per esperti."}
+,{id:"h-lemon-hash",name:"Lemon Hash Ice Water",cat:"Hash — Moderno Solventless",type:"hash",style:"ir-hash-mod",tags:["hash"],thc:"~58%",thcN:58,rd:8.9,aroma:"Limone concentrato, agrume, citrus vivo, fresco",desc:"Bubble hash da varieta citriche selezionate. L'aroma di limone e agrume si conserva perfettamente nel processo a freddo. Colore dorato con sfumature gialle.",det:"Effetto: cerebrale e fresco, uplifting con nota agrumata nel fumo. Molto piu interessante aromaticamente di un hash standard. Per chi ama le sativa citriche."}
+,{id:"h-hash-afghano-premium",name:"Afghan Premium Pressed",cat:"Hash — Orientale",type:"hash",style:"ir-hash-ori",tags:["hash"],thc:"~45%",thcN:45,rd:8.8,aroma:"Afghano puro, spezie antiche, legno scuro, dolce",desc:"Hash afghano pressato con metodi tradizionali ma materia prima di qualita superiore. Nero brillante fuori, marrone-verde dentro. Selezione migliore rispetto all'Afghan standard.",det:"Effetto: indica puro e profondo, stone fisico progressivo. L'esperienza afghana classica con una qualita di partenza superiore. Per gli amanti della tradizione."}
+,{id:"h-malana-original",name:"Malana Cream Originale",cat:"Hash — Orientale",type:"hash",style:"ir-hash-ori",tags:["hash"],thc:"~60%",thcN:60,rd:9.6,aroma:"Spezie indiane rare, muschio, cioccolato fondente, sandalo",desc:"Il vero Malana Cream dalla valle Parvati, Himachal Pradesh a 2000m. Fatto a mano sfregando le piante vive. Il migliore hash al mondo per molti intenditori. Rarissimo autentico.",det:"Effetto: indica profondissima e avvolgente, stonatura totale corpo-mente. Fumo denso e speziato. Quando lo trovi autentico — da Paradox o 1e Hulp — non esitare mai."}
+,{id:"gary-payton",name:"Gary Payton",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["hybrid"],thc:"~24%",thcN:24,rd:9.0,aroma:"Diesel, spezie, cremoso, gas leggero",desc:"The Cookies x Snowman. Collab Cookies x Powerzzz Genetics. Profilo unico diesel-speziato. Nei top shop come Grey Area e The Plug quando disponibile.",det:"Effetto: cerebrale immediato e potente, poi corpo caldo progressivo. Bilanciata ma non per neofiti. Durata 3-4h. Terpeni molto caratteristici."}
+,{id:"london-pound-cake",name:"London Pound Cake",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["indica"],thc:"~26%",thcN:26,rd:8.8,aroma:"Uva, limone, dolce, cremoso, frutta",desc:"Indica da Cookies. Genetics Sunset Sherbert x Unknown Heavy Hitter. Boccioli viola scuro densissimi. Molto ricercata. Presente nei menu premium.",det:"Effetto: stone fisico profondo con euforia dolce iniziale. Rilassamento totale. Ottima per sera avanzata. Durata 4h+."}
+,{id:"gorilla-cookies",name:"Gorilla Cookies",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["hybrid"],thc:"~25%",thcN:25,rd:8.7,aroma:"Terra, pino, cookies, diesel dolce",desc:"Gorilla Glue 4 x Thin Mint GSC. Combina la potenza della GG4 con il profilo cookies. Resinosa al massimo. Menu Boerejongens e Dampkring.",det:"Effetto: stone bilanciato ma potente, partenza cerebrale poi couch lock progressivo. Per esperti. Tricomi spettacolari."}
+,{id:"forbidden-fruit",name:"Forbidden Fruit",cat:"Fruity Sativas",type:"weed",style:"ir-fruity",tags:["indica","fruity"],thc:"~23%",thcN:23,rd:8.8,aroma:"Ciliegia nera, passion fruit, mango, tropicale",desc:"Cherry Pie x Tangie. Profilo aromatico esotico-tropicale tra i piu intensi disponibili. Colori viola-arancio spettacolari. Stagionale nei top shop.",det:"Effetto: stone fisico profondo con euforia fruttata. Indica dominante ma il profilo aromatico la rende unica. Ottima sera."}
+,{id:"la-confidential",name:"LA Confidential",cat:"Must Try — I Classici",type:"weed",style:"ir-indica",tags:["indica","classic"],thc:"~21%",thcN:21,rd:8.6,aroma:"Pino, terra, kush, speziato, dolce",desc:"Indica pura OG Kush x Afghani. DNA Genetics. Cannabis Cup winner. Profilo indica classico californiano. Presente stabilmente in molti coffeeshop.",det:"Effetto: stone indica puro, rilassamento profondo e progressivo. Ottima per chi vuole un indica solido senza sorprese. Durata 3-4h."}
+,{id:"animal-cookies",name:"Animal Cookies",cat:"Potenti & Premiati",type:"weed",style:"ir-potente",tags:["indica"],thc:"~23%",thcN:23,rd:8.7,aroma:"Cookies dolce, vaniglia, terra, hash leggero",desc:"Animal Mints x GSC. Cookies family. Boccioli ultra resinosi con aroma cookies e vanilla intensa. Presente nei menu premium come Boerejongens.",det:"Effetto: stone fisico progressivo con rush euforico cookies. Couch lock da seconda ora. Ottima per serate intime."}
+,{id:"mac-cheese",name:"MAC and Cheese",cat:"Potenti & Premiati",type:"weed",style:"ir-hybrid",tags:["hybrid"],thc:"~22%",thcN:22,rd:8.6,aroma:"Formaggio acido, cream, agrume, gas",desc:"MAC 1 x Alien Cheese. Unisce il profilo cremoso MAC con il carattere formaggio intenso. Terpeni molto riconoscibili. Stagionale nei top shop.",det:"Effetto: cerebrale uplifting MAC con rilassamento cheese. Bilanciata e aromatica. Per chi ama entrambi i profili."}
+,{id:"purple-haze-x",name:"Purple Haze x Malawi",cat:"Must Try — I Classici",type:"weed",style:"ir-haze",tags:["sativa","haze"],thc:"~18%",thcN:18,rd:8.5,aroma:"Frutti di bosco, haze speziato, violetta, dolce",desc:"Incrocio tra Purple Haze e landrace Malawi. Acido Seeds. Sativa fruttata-haze con colori viola spettacolari. Presenza stagionale in alcuni coffeeshop.",det:"Effetto: cerebrale espansivo sativa, colori intensificati, creativita. Uplifting e positivo. Ottima per musei e canali."}
+,{id:"critical-kush",name:"Critical Kush",cat:"Must Try — I Classici",type:"weed",style:"ir-indica",tags:["indica","classic"],thc:"~20%",thcN:20,rd:8.4,aroma:"Kush terroso, limone, pino, spezie",desc:"Barney Farm. Critical Mass x OG Kush. Combina la resa massiva della Critical con il profilo kush californiano. Cannabis Cup winner. Nei menu classici.",det:"Effetto: stone fisico progressivo ma meno pesante della OG pura. Rilassamento dolce. Ottima per neofiti che vogliono iniziare con le indica."}
+,{id:"h-moroccan-primero",name:"Moroccan Primero",cat:"Hash — Marocchino Classico",type:"hash",style:"ir-hash-mar",tags:["hash"],thc:"~50%",thcN:50,rd:8.7,aroma:"Floreale intenso, speziato, miele ambrato, dolce",desc:"La qualita piu alta del hash marocchino — setacciatura singola fine. Colore dorato-ambrato brillante, texture morbida. Solo nei top shop come Paradox e Dolores.",det:"Effetto: cerebrale sofisticato e pulito. Aroma floreale persistente nel fumo. Il gradino tra Zero Zero e pollen standard. Per intenditori del marocchino."}
+,{id:"h-charas-kerala",name:"Charas Kerala",cat:"Hash — Orientale",type:"hash",style:"ir-hash-ori",tags:["hash"],thc:"~40%",thcN:40,rd:8.5,aroma:"Spezie dolci indiane, legno, fiori tropicali, musk",desc:"Charas dalla regione Kerala, India del Sud. Genetica diversa dall'himalayano — piante piu sativa, profilo aromatico floreale-speziato unico. Rarissimo.",det:"Effetto: cerebrale sativa con note warm indiane. Profilo molto diverso dal charas himalayano classico. Rarita per veri intenditori dell'hash orientale."}
+,{id:"h-live-hash-rosin",name:"Live Hash Rosin",cat:"Hash — Moderno Solventless",type:"hash",style:"ir-hash-mod",tags:["hash"],thc:"~75%",thcN:75,rd:9.5,aroma:"Terpeni vivi ultra concentrati, varietale puro, fresco",desc:"Il pinnacolo del solventless — rosin da ice water hash di piante fresche non essiccate. Terpeni al 100% intatti. Solo Boerejongens e Grey Area occasionalmente.",det:"Effetto: il piu pulito e completo disponibile. Ogni strain si sente in modo unico e amplificato. Necessario vaporizzatore. Solo top esperti. Capolavoro assoluto."}
+,{id:"h-beldi",name:"Beldi Cream Hash",cat:"Hash — Marocchino Classico",type:"hash",style:"ir-hash-mar",tags:["hash"],thc:"~45%",thcN:45,rd:8.6,aroma:"Crema, spezie dolci, morbido, latte",desc:"Hash marocchino tradizionale lavorato a mano con tecnica beldi locale. Colore chiaro quasi biondo, consistenza molto cremosa. Produzione artigianale autentica.",det:"Effetto: dolce e progressivo, ottimo per iniziare con il hash. Cerebrale leggero poi corpo caldo. Uno dei piu accessibili nel panorama premium."}
+
+
+];
+
+const SHOPS=[
+// ─── TOP QUALITY ──────────────────────────────────────────────────────────
+{id:'boer-centrum',name:'Boerejongens Centrum',badge:'#1 Amsterdam',bdg:'sb-top',zone:'centrum',area:'Utrechtsestraat 21 — Centrum',hours:'10:00–00:00',rd:9.6,gm:4.8,pays:'Accetta carta',map:'https://maps.google.com/?q=Boerejongens+Utrechtsestraat+Amsterdam',prev:'Il coffeeshop #1 secondo quasi ogni classifica. Staff in bombetta nera e tre-pezzi. Vince Amsterdam Coffeeshop Awards e Jack Herer Cup. Menu sempre freschissimo.',spec:'<strong>Meglio per:</strong> tutto il menu premium, hash artigianale, varietà rare<br><strong>Tip:</strong> Chiedi "menu hash del giorno" — cambia ogni settimana<br><strong>Prezzi:</strong> €14-20/g'}
+,{id:'boer-baars',name:'Boerejongens Baarsjesweg',badge:'Top qualità',bdg:'sb-top',zone:'west',area:'Baarsjesweg 239 — West',hours:'10:00–00:00',rd:9.5,gm:4.8,pays:'Accetta carta',map:'https://maps.google.com/?q=Boerejongens+Baarsjesweg+239+Amsterdam',prev:'Sede storica e più autentica. Meno turistica, più raccolta e locale. Menu diverso dalla sede centrum — sempre qualcosa in rotazione diversa.',spec:'<strong>Meglio per:</strong> hash artigianale, sativa top, Zero Zero, stagionali<br><strong>Prezzi:</strong> €14-18/g'}
+,{id:'boer-west',name:'Boerejongens West',badge:'Top qualità',bdg:'sb-top',zone:'west',area:'Jan van Galenstraat 6 — West',hours:'10:00–00:00',rd:9.4,gm:4.7,pays:'Accetta carta',map:'https://maps.google.com/?q=Boerejongens+Jan+van+Galenstraat+Amsterdam',prev:'La più moderna delle tre sedi. Stessa qualità imbattibile, meno affollata. Buona scelta se le altre hanno fila.',spec:'<strong>Meglio per:</strong> qualità premium, meno folla, ambiente moderno<br><strong>Prezzi:</strong> €14-18/g'}
+,{id:'boer-bij',name:'Boerejongens BIJ',badge:'Top qualità',bdg:'sb-top',zone:'centrum',area:'Binnen Bantammerstraat 12 — Centrum',hours:'10:00–23:00',rd:9.3,gm:4.7,pays:'Accetta carta',map:'https://maps.google.com/?q=Boerejongens+BIJ+Amsterdam',prev:'La quarta sede Boerejongens — più raccolta e meno conosciuta dai turisti. Qualità identica alle altre tre sedi. Menu personalizzato.',spec:'<strong>Meglio per:</strong> qualità Boerejongens senza la coda delle sedi principali<br><strong>Prezzi:</strong> €14-18/g'}
+,{id:'grey-area',name:'Grey Area',badge:'Cult USA',bdg:'sb-top',zone:'jordaan',area:'Oude Leliestraat 2 — Jordaan',hours:'12:00–20:00',rd:9.4,gm:4.7,pays:'Solo contanti',map:'https://maps.google.com/?q=Grey+Area+Amsterdam',prev:'Gestito da americani, massimo 6 persone, leggendario a livello mondiale. Snoop Dogg e Willie Nelson ci sono stati. Importa varietà USA rare — le uniche autentiche in città.',spec:'<strong>Meglio per:</strong> OG Kush autentica, ceppi californiani, Gelato, MAC1<br><strong>Tip:</strong> Arriva 30 min prima dell\'apertura<br><strong>Prezzi:</strong> €16-22/g'}
+,{id:'paradox',name:'Paradox',badge:'Hash sanctuary',bdg:'sb-hash',zone:'jordaan',area:'Eerste Bloemdwarsstraat 2 — Jordaan',hours:'10:00–23:00',rd:9.2,gm:4.6,pays:'Contanti prefer.',map:'https://maps.google.com/?q=Paradox+Coffeeshop+Amsterdam',prev:'Aperto dal 1982, stessa famiglia 40+ anni. Piccolo, tranquillo, rispettatissimo. Menu hash tra i migliori in assoluto — charas autentico frequente.',spec:'<strong>Meglio per:</strong> Charas, Zero Zero, Pollen, Nepal Temple Ball<br><strong>Tip:</strong> Siediti al bancone — è un\'educazione sull\'hash<br><strong>Prezzi:</strong> €10-16/g hash'}
+,{id:'dolores',name:'Dolores',badge:'Hash specialist',bdg:'sb-hash',zone:'jordaan',area:'Westerstraat 230 — Jordaan',hours:'10:00–22:00',rd:9.0,gm:4.6,pays:'Contanti',map:'https://maps.google.com/?q=Dolores+Coffeeshop+Amsterdam',prev:'Specializzato esclusivamente in hashish di alta qualità. Staff molto preparato e appassionato. Tiene spesso Zero Zero e Ketama Gold.',spec:'<strong>Meglio per:</strong> Zero Zero, Ketama Gold, hash orientali rari<br><strong>Tip:</strong> Chiedi il menu hash del giorno<br><strong>Prezzi:</strong> €10-16/g hash'}
+,{id:'dampkring',name:'Dampkring Centrum',badge:'Storico premium',bdg:'sb-top',zone:'centrum',area:'Handboogstraat 29 — Centrum',hours:'10:00–01:00',rd:9.0,gm:4.6,pays:'Accetta carta',map:'https://maps.google.com/?q=Dampkring+Handboogstraat+Amsterdam',prev:'Decorazione psichedelica iconica e Ocean\'s Twelve. Nonostante la fama turistica, qualità alta. Vince Cannabis Cup regolarmente. Staff formato.',spec:'<strong>Meglio per:</strong> Amnesia Haze, White Widow, ceppi Cup winners<br><strong>Prezzi:</strong> €12-18/g'}
+,{id:'dampkring-w',name:'Dampkring West',badge:'Storico premium',bdg:'sb-top',zone:'west',area:'Baarsjesweg 270 — West',hours:'10:00–00:00',rd:8.8,gm:4.5,pays:'Accetta carta',map:'https://maps.google.com/?q=Dampkring+West+Amsterdam',prev:'La seconda sede del leggendario Dampkring — stessa qualità ma meno turistica. Preferita dai locali.',spec:'<strong>Meglio per:</strong> stessa qualità Dampkring senza la coda<br><strong>Prezzi:</strong> €12-17/g'}
+,{id:'barney-farm',name:"Barney's Farm",badge:'Cup winner — strains esclusivi',bdg:'sb-top',zone:'centrum',area:'Haarlemmerstraat 102 — Centrum',hours:'10:00–00:00',rd:8.8,gm:4.5,pays:'Accetta carta',map:'https://maps.google.com/?q=Barneys+Farm+Coffeeshop+Haarlemmerstraat+102+Amsterdam',prev:'La seed bank piu famosa al mondo ha il suo coffeeshop. G13 Haze, Tangerine Dream, Violator Kush — tutte varietà esclusive. Must-visit per gli appassionati.',spec:"<strong>Meglio per:</strong> ceppi esclusivi Barney's, Tangerine Dream, Vanilla Kush, G13 Haze<br><strong>Tip:</strong> Chiedi le \"house specials\"<br><strong>Prezzi:</strong> €14-20/g"}
+,{id:'hunters',name:"Hunter's Downtown",badge:'Highlife Cup 2025 + Bar',bdg:'sb-top',zone:'centrum',area:'Utrechtsestraat 14 — Rembrandtplein',hours:'10:00–01:00',rd:8.7,gm:4.5,pays:'Accetta carta',map:'https://maps.google.com/?q=Hunters+Coffeeshop+Utrechtsestraat+14+Amsterdam',prev:'Storico dal 1985. Vicino Rembrandtplein. Winner Highlife Cup 2025 con Super Silver Haze. Unico: Hunter Bar adiacente dove fumare con un drink.',spec:'<strong>Meglio per:</strong> SSH Cup winner, qualita classica, Hunter Bar<br><strong>Prezzi:</strong> 12-17 euro/g'}
+,{id:'bluebird',name:'The Bluebird',badge:'Nieuwmarkt — jungle decor',bdg:'sb-top',zone:'centrum',area:'Sint Antoniesbreestraat 71 — Nieuwmarkt',hours:'09:30–01:00',rd:8.7,gm:4.5,pays:'Accetta carta',map:'https://maps.google.com/?q=Bluebird+coffeeshop+Sint+Antoniesbreestraat+71+Amsterdam',prev:'Due piani con decor jungle. Ottimo hash marocchino e dry sift. Space cakes famosi. A 5 min da Nieuwmarkt, meno turistico del centro.',spec:'<strong>Meglio per:</strong> sativa di qualità, Amnesia Haze, hash marocchino<br><strong>Prezzi:</strong> €12-16/g'}
+,{id:'relax-centrum',name:'Relax Centrum',badge:'Best Hash 2020',bdg:'sb-hash',zone:'centrum',area:'Binnen Oranjestraat 9 — Centrum',hours:'10:00–00:00',rd:8.8,gm:4.5,pays:'Accetta carta',map:'https://maps.google.com/?q=Relax+Centrum+Coffeeshop+Amsterdam',prev:'Vince Best Hash 2020 e 2° posto HighLife Cup 2022 con Amnesia G13. Atmosfera tranquilla, personale competente. Buona espresso e pasticcini freschi.',spec:'<strong>Meglio per:</strong> hash di qualità, Amnesia G13 premiata<br><strong>Unico:</strong> ottimo caffè espresso + pasticcini<br><strong>Prezzi:</strong> €11-16/g'}
+,{id:'easy-times',name:'Easy Times',badge:'Best Indica 2025',bdg:'sb-top',zone:'centrum',area:'Prinsengracht 476 — Leidseplein',hours:'10:00–23:00',rd:8.6,gm:4.4,pays:'Accetta carta',map:'https://maps.google.com/?q=Easy+Times+Coffeeshop+Prinsengracht+476+Amsterdam',prev:'Vince Best Indica Flower al Jack Herer Cup 2025 con Purple Kosher Kush. Atmosfera bilanciata tra professionale e rilassata.',spec:'<strong>Meglio per:</strong> indica di qualità, Purple Kosher Kush Cup winner<br><strong>Prezzi:</strong> €11-16/g'}
+,{id:'the-plug',name:'The Plug',badge:'Cali strains premium',bdg:'sb-top',zone:'centrum',area:'Nieuwezijds Voorburgwal 132 — Centrum',hours:'10:00–23:00',rd:8.8,gm:4.5,pays:'Contanti',map:'https://maps.google.com/?q=The+Plug+coffeeshop+Nieuwezijds+Voorburgwal+132+Amsterdam',prev:'Il coffeeshop Cali-style per eccellenza di Amsterdam. Strains americane top. Aperto dalle 18 feriali, dalle 9 weekend. Prezzi premium ma qualita massima.',spec:'<strong>Meglio per:</strong> Cali strains autentiche, OG Kush, varietà americane rare<br><strong>Prezzi:</strong> €16-22/g'}
+,{id:'amnesia-shop',name:'Amnesia Coffeeshop',badge:'Top Jordaan',bdg:'sb-top',zone:'jordaan',area:'Bergstraat 11-1 — Jordaan',hours:'10:00–00:00',rd:8.7,gm:4.5,pays:'Accetta carta',map:'https://maps.google.com/?q=Amnesia+Coffeeshop+Amsterdam',prev:'Trendy, fuori dal percorso turistico principale nel Jordaan. Ottima selezione tra contemporanei e varietà locali. Staff preparato e disponibile. Buoni milkshake.',spec:'<strong>Meglio per:</strong> contemporanei e locali, buona selezione equilibrata<br><strong>Prezzi:</strong> €12-16/g'}
+,{id:'rusland',name:'Rusland',badge:'Storico 1975',bdg:'sb-old',zone:'centrum',area:'Rusland 16 — Centrum',hours:'10:00–23:00',rd:8.1,gm:4.2,pays:'Contanti',map:'https://maps.google.com/?q=Rusland+Coffeeshop+Amsterdam',prev:'Aperto nel 1975 — tra i più vecchi ancora operativi. Piccolo, autentico, storico. Frequentato da generazioni.',spec:'<strong>Meglio per:</strong> storia dei coffeeshop, atmosfera anni \'70, classici olandesi<br><strong>Prezzi:</strong> €9-13/g'}
+,{id:'mellow-yellow',name:'Mellow Yellow',badge:'Il primo (1972)',bdg:'sb-old',zone:'centrum',area:'Vijzelgracht 33 — Centrum',hours:'09:00–23:00',rd:7.9,gm:4.1,pays:'Contanti',map:'https://maps.google.com/?q=Mellow+Yellow+Vijzelgracht+Amsterdam',prev:'IL primo coffeeshop di Amsterdam — aperto nel 1972 da Wernard Bruining. Atmosfera anni \'70 completamente autentica. Apre presto.',spec:'<strong>Meglio per:</strong> storia assoluta, il primo coffeeshop del mondo<br><strong>Prezzi:</strong> €9-12/g'}
+,{id:'tweede-kamer',name:'Tweede Kamer',badge:'Storico 1985',bdg:'sb-old',zone:'centrum',area:'Heisteeg 6 — Centrum',hours:'10:00–01:00',rd:8.3,gm:4.3,pays:'Contanti',map:'https://maps.google.com/?q=Tweede+Kamer+Coffeeshop+Amsterdam',prev:'Aperto nel 1985, nome significa "Camera dei Deputati". Uno dei più piccoli e autentici del centro. Molto locale.',spec:'<strong>Meglio per:</strong> autenticità olandese, classici, atmosfera vintage<br><strong>Prezzi:</strong> €10-14/g'}
+,{id:'prix-dami',name:"Prix d'Ami",badge:'Storico anni 80',bdg:'sb-old',zone:'centrum',area:"Haringpakkerssteeg 5 — Centrum",hours:'10:00–00:00',rd:8.2,gm:4.2,pays:'Contanti',map:"https://maps.google.com/?q=Prix+d%27Ami+Coffeeshop+Amsterdam",prev:'Uno dei più antichi ancora in attività. Atmosfera autentica anni \'80. Selezione classica e onesta.',spec:'<strong>Meglio per:</strong> esperienza storica, classici olandesi anni \'80<br><strong>Prezzi:</strong> €10-14/g'}
+,{id:'jo-in',name:'Jo-In',badge:'Storico anni 70',bdg:'sb-old',zone:'centrum',area:'Warmoesstraat 25 — Centrum',hours:'10:00–23:00',rd:7.8,gm:4.0,pays:'Contanti',map:'https://maps.google.com/?q=Jo-In+coffeeshop+Warmoesstraat+Amsterdam',prev:'Tra i più vecchi ancora attivi. Piccolo, senza fronzoli. Cannabis di qualità a prezzi giusti. Nessuna pretesa.',spec:'<strong>Meglio per:</strong> storia autentica, prezzi base<br><strong>Prezzi:</strong> €9-12/g'}
+,{id:'de-kade',name:'Coffeeshop De Kade',badge:'OG 30+ anni',bdg:'sb-old',zone:'south',area:'Stadionkade 107 — Amsterdam Zuid',hours:'10:00–23:00',rd:8.2,gm:4.3,pays:'Accetta carta',map:'https://maps.google.com/?q=Coffeeshop+De+Kade+Stadionkade+107+Amsterdam',prev:'OG della scena cannabis olandese da 30+ anni. Top 10 secondo RQS. Esperienza, classe e sofisticazione accumulata in decenni.',spec:'<strong>Meglio per:</strong> esperienza storica premium, qualità costante<br><strong>Prezzi:</strong> €11-16/g'}
+,{id:'1e-hulp',name:'1e Hulp',badge:'Local classic',bdg:'sb-local',zone:'centrum',area:'Zeedijk 129 — Centrum',hours:'10:00–23:00',rd:8.6,gm:4.4,pays:'Contanti prefer.',map:'https://maps.google.com/?q=Eerste+Hulp+Coffeeshop+Amsterdam+Zeedijk',prev:'Meno conosciuto dai turisti ma amatissimo dai locali. Menu curato e prezzi onesti. Staff disponibile. Top 10 RQS.',spec:'<strong>Meglio per:</strong> varietà olandesi classiche, hash marocchino<br><strong>Prezzi:</strong> €10-15/g'}
+,{id:'bernies',name:"Bernie's",badge:'Local Jordaan',bdg:'sb-local',zone:'jordaan',area:'Brouwersgracht 27 — Jordaan',hours:'10:00–23:00',rd:8.0,gm:4.1,pays:'Contanti',map:'https://maps.google.com/?q=Bernie+coffeeshop+Brouwersgracht+Amsterdam',prev:'Frequentato dai locali del Jordaan. Selezione onesta e prezzi corretti. Nessuna pretesa turistica.',spec:'<strong>Meglio per:</strong> esperienza olandese autentica, classici<br><strong>Prezzi:</strong> €9-13/g'}
+,{id:'bushdocter',name:'Bushdocter',badge:'Local Jordaan',bdg:'sb-local',zone:'centrum',area:'Thorbeckeplein 28 — Rembrandtplein',hours:'10:00–23:00',rd:8.0,gm:4.1,pays:'Contanti',map:'https://maps.google.com/?q=Bushdocter+Thorbeckeplein+28+Amsterdam',prev:'Frequentato dai locali del Jordaan. Selezione decente. Atmosfera autentica e tranquilla.',spec:'<strong>Meglio per:</strong> quartiere Jordaan, esperienza locale<br><strong>Prezzi:</strong> €9-13/g'}
+,{id:'popeye',name:'Popeye',badge:'West locale',bdg:'sb-local',zone:'west',area:'Haarlemmerplein 33 — West',hours:'10:00–22:00',rd:7.8,gm:4.0,pays:'Contanti',map:'https://maps.google.com/?q=Popeye+Coffeeshop+Amsterdam',prev:'Zona residenziale West. Frequentato dagli olandesi del quartiere. Zero turisti caotici.',spec:'<strong>Meglio per:</strong> esperienza locale pura, no turisti<br><strong>Prezzi:</strong> €9-12/g'}
+,{id:'free-i',name:'Free-I',badge:'West local',bdg:'sb-local',zone:'centrum',area:'Reguliersdwarsstraat 70 — Centrum',hours:'10:00–22:00',rd:7.7,gm:4.0,pays:'Contanti',map:'https://maps.google.com/?q=Free-I+coffeeshop+Reguliersdwarsstraat+70+Amsterdam',prev:'Piccolo shop di quartiere West. Nessun turista, prezzi onesti, personale diretto.',spec:'<strong>Meglio per:</strong> esperienza locale, prezzi accessibili<br><strong>Prezzi:</strong> €8-12/g'}
+,{id:'noon-west',name:'Noon West',badge:'Università',bdg:'sb-local',zone:'west',area:'Zieseniskade 22 — Leidseplein West',hours:'10:00–23:00',rd:7.8,gm:4.0,pays:'Contanti',map:'https://maps.google.com/?q=The+Noon+coffeeshop+Zieseniskade+22+Amsterdam',prev:'Zona universitaria West. Frequentato da studenti locali e residenti. Prezzi accessibili.',spec:'<strong>Meglio per:</strong> zona West, prezzi accessibili<br><strong>Prezzi:</strong> €9-12/g'}
+,{id:'katsu',name:'Katsu',badge:'Local south',bdg:'sb-local',zone:'south',area:'Eerste van der Helststraat 70 — De Pijp',hours:'10:00–23:00',rd:8.2,gm:4.3,pays:'Contanti',map:'https://maps.google.com/?q=Katsu+coffeeshop+Eerste+van+der+Helststraat+70+Amsterdam',prev:'Esterno accattivante e menu impressionante che mescola old-school e strain moderni. Molto apprezzato dalla community locale di De Pijp.',spec:'<strong>Meglio per:</strong> zona De Pijp, menu bilanciato tra classici e moderni<br><strong>Prezzi:</strong> €10-15/g'}
+,{id:'the-stud',name:'The Stud',badge:'Oost local',bdg:'sb-local',zone:'east',area:'Niasstraat 31 — Amsterdam Oost',hours:'10:00–22:00',rd:8.0,gm:4.2,pays:'Contanti',map:'https://maps.google.com/?q=The+Stud+coffeeshop+Niasstraat+31+Amsterdam',prev:'Local favourite vicino al Flevopark. Menu digitale interattivo. Prezzi competitivi. Accogliente per tutti.',spec:'<strong>Meglio per:</strong> zona Oost, menu digitale interattivo, prezzi<br><strong>Prezzi:</strong> €9-13/g'}
+,{id:'stout',name:'Stout!',badge:'Bio & artigianale',bdg:'sb-chill',zone:'jordaan',area:'Haarlemmerstraat 73 — Jordaan',hours:'11:00–23:00',rd:8.4,gm:4.3,pays:'Accetta carta',map:'https://maps.google.com/?q=Stout+Coffeeshop+Amsterdam',prev:'Specializzato in varietà biologiche e locali olandesi. Staff appassionato. Autentico e non commerciale.',spec:'<strong>Meglio per:</strong> sativa fruttate bio, varietà artigianali olandesi<br><strong>Prezzi:</strong> €11-15/g'}
+,{id:'siberie',name:'Siberie',badge:'Vista canale',bdg:'sb-chill',zone:'jordaan',area:'Brouwersgracht 11 — Jordaan',hours:'11:00–23:00',rd:8.2,gm:4.3,pays:'Contanti',map:'https://maps.google.com/?q=Siberie+Coffeeshop+Amsterdam',prev:'Vista magnifica sul canale Brouwersgracht. Anche barista di qualità — sapete il loro caffè. Uno dei più belli visivamente.',spec:'<strong>Meglio per:</strong> vista canale, barista ottimo, atmosfera unica<br><strong>Prezzi:</strong> €11-15/g'}
+,{id:'abraxas',name:'Abraxas',badge:'Artistico 3 piani',bdg:'sb-chill',zone:'centrum',area:'Jonge Roelensteeg 12-14 — Centrum',hours:'10:00–23:00',rd:8.3,gm:4.3,pays:'Contanti',map:'https://maps.google.com/?q=Abraxas+Coffeeshop+Amsterdam',prev:'Tre piani di ambiente artistico e decorazioni elaborate surrealiste. Tra i più fotografati di Amsterdam. Atmosfera assolutamente unica.',spec:'<strong>Meglio per:</strong> esperienza visiva unica su 3 piani, gruppi, foto<br><strong>Prezzi:</strong> €11-15/g'}
+,{id:'la-tertulia',name:'La Tertulia',badge:'Bio + gatti',bdg:'sb-chill',zone:'jordaan',area:'Prinsengracht 312 — Jordaan',hours:'11:00–19:00',rd:8.4,gm:4.4,pays:'Contanti',map:'https://maps.google.com/?q=La+Tertulia+Coffeeshop+Amsterdam',prev:'Biologico dal 1983. Due gatti residenti, piante sul tetto, cristalli, decorazioni artigianali. Vista canale. Atmosfera bohémien unica.',spec:'<strong>Meglio per:</strong> esperienza unica, bio, gatti, bohémien, Van Gogh painting esterno<br><strong>Orari:</strong> chiude presto!<br><strong>Prezzi:</strong> €11-15/g'}
+
+,{id:'pax',name:'Pax',badge:'Quieto e onesto',bdg:'sb-chill',zone:'centrum',area:'Nieuwezijds Armsteeg 11 — Centrum',hours:'10:00–00:00',rd:8.1,gm:4.2,pays:'Contanti',map:'https://maps.google.com/?q=Pax+coffeeshop+Nieuwezijds+Armsteeg+Amsterdam',prev:'Piccolo e tranquillo. Ottima atmosfera per sessioni solitarie o in coppia. Staff non pressante.',spec:'<strong>Meglio per:</strong> sessioni tranquille, sativa moderate<br><strong>Prezzi:</strong> €10-14/g'}
+,{id:'soma',name:'Soma',badge:'Alternative',bdg:'sb-chill',zone:'centrum',area:'Oudezijds Achterburgwal 110 — Red Light',hours:'10:00–23:00',rd:8.1,gm:4.2,pays:'Contanti',map:'https://maps.google.com/?q=Soma+coffeeshop+Amsterdam+Oudezijds+Achterburgwal',prev:'Atmosfera alternativa e rilassata. Staff appassionato. Selezione curata con qualche varietà fuori dagli standard.',spec:'<strong>Meglio per:</strong> sativa selezionate, atmosfera alternativa<br><strong>Prezzi:</strong> €11-15/g'}
+,{id:'zaza',name:"Zaza's",badge:'Intimo canale',bdg:'sb-chill',zone:'jordaan',area:'Westerkade 2 — Jordaan',hours:'11:00–22:00',rd:8.0,gm:4.2,pays:'Contanti',map:'https://maps.google.com/?q=Zaza+coffeeshop+Westerkade+Amsterdam+Jordaan',prev:'Piccolo e intimo, molto locale. Vista sul canale Westerkade. Selezione curata anche se limitata.',spec:'<strong>Meglio per:</strong> intimità, vista canale, locale autentico<br><strong>Prezzi:</strong> €10-14/g'}
+,{id:'rock-city',name:'Rock-It',badge:'Nieuwmarkt — 9-1',bdg:'sb-chill',zone:'centrum',area:'Nieuwmarkt 12 — Centrum',hours:'09:00–01:00',rd:7.8,gm:4.0,pays:'Contanti',map:'https://maps.google.com/?q=Rock-It+Amsterdam+Nieuwmarkt+12',prev:'Sul bordo di Nieuwmarkt. Aperto dalle 9 all 01. Atmosfera rilassata, clientela mista locale-turistica. Ottima posizione per il quartiere storico.',spec:'<strong>Meglio per:</strong> zona Nieuwmarkt, orari lunghi, prezzi onesti<br><strong>Prezzi:</strong> 9-13 euro/g'}
+,{id:'happy-feelings',name:'Happy Feelings',badge:'Friendly',bdg:'sb-chill',zone:'centrum',area:'Kloveniersburgwal 53 — Centrum',hours:'10:00–00:00',rd:7.9,gm:4.1,pays:'Accetta carta',map:'https://maps.google.com/?q=Happy+Feelings+Coffeeshop+Amsterdam',prev:'Atmosfera allegra e accogliente. Staff amichevole.',spec:'<strong>Meglio per:</strong> atmosfera amichevole, niente pressione<br><strong>Prezzi:</strong> €9-13/g'}
+,{id:'greenhouse',name:'Greenhouse Centrum',badge:'GH Red Light — celebrity spot',bdg:'sb-local',zone:'centrum',area:'Oudezijds Voorburgwal 191 — Red Light',hours:'09:00–01:00',rd:8.0,gm:4.2,pays:'Accetta carta',map:'https://maps.google.com/?q=Greenhouse+Centrum+Oudezijds+Voorburgwal+191+Amsterdam',prev:'Nella casa canale del 600 nel Red Light. Snoop, Cypress Hill, ASAP Rocky fumano qui. Apertura 8-1. Terrace sul canale. Icona assoluta di Amsterdam.',spec:'<strong>Meglio per:</strong> affidabilità garantita, orari lunghi, classici<br><strong>Prezzi:</strong> €11-15/g'}
+,{id:'greenhouse-nam',name:'Greenhouse Namaste',badge:'Relax theme',bdg:'sb-chill',zone:'centrum',area:'Waterlooplein 345 — Centrum',hours:'10:00–23:00',rd:7.8,gm:4.1,pays:'Accetta carta',map:'https://maps.google.com/?q=Greenhouse+Namaste+Amsterdam',prev:'Sede Greenhouse con tema orientale/namaste. Relax garantito.',spec:'<strong>Meglio per:</strong> atmosfera rilassata, indica, hashish<br><strong>Prezzi:</strong> €10-14/g'}
+,{id:'greenhouse-effect',name:'Greenhouse Effect',badge:'Juice bar',bdg:'sb-chill',zone:'centrum',area:'Warmoesstraat 53 — Centrum',hours:'10:00–01:00',rd:8.0,gm:4.2,pays:'Accetta carta',map:'https://maps.google.com/?q=Greenhouse+Effect+Warmoesstraat+53+Amsterdam',prev:'Unico mix di juice bar e coffeeshop. Gourmet snacks, succhi freschi e dessert. Area fumatori interna + seduta sul marciapiede di Nieuwmarkt.',spec:'<strong>Meglio per:</strong> succhi freschi, snack gourmet, Nieuwmarkt location<br><strong>Prezzi:</strong> €11-15/g'}
+,{id:'coffeeshop-oost',name:'Coffeeshop Oost',badge:'Nuovo (2023)',bdg:'sb-chill',zone:'east',area:'Derde Oosterparkstraat 73H — Oost',hours:'10:00–23:00',rd:8.1,gm:4.3,pays:'Accetta carta',map:'https://maps.google.com/?q=Coffeeshop+Oost+Amsterdam',prev:'"La nuova oasi di relax" aperta luglio 2023. Interior moderno stile café, non stoner hangout stereotipato. California strains impressionanti. DutchReview: "consigliato senza riserve".',spec:'<strong>Meglio per:</strong> esperienza moderna, zona Oost alternativa, California strains<br><strong>Prezzi:</strong> €11-15/g'}
+,{id:'kadinsky',name:'Kadinsky',badge:'Centrale rilassato',bdg:'sb-chill',zone:'centrum',area:'Rosmarijnsteeg 9 — Centrum',hours:'10:00–23:00',rd:8.0,gm:4.2,pays:'Accetta carta',map:'https://maps.google.com/?q=Kadinsky+Coffeeshop+Amsterdam',prev:'Rilassante e calmante. Buona scelta per una pausa dal caos del centro. Personale amichevole e disponibile.',spec:'<strong>Meglio per:</strong> tranquillità centrale, selezione equilibrata<br><strong>Prezzi:</strong> €10-14/g'}
+,{id:'hill-street',name:'Hill Street Blues',badge:'Apre alle 8!',bdg:'sb-local',zone:'centrum',area:'Warmoesstraat 52 — Centrum',hours:'08:00–01:00',rd:7.9,gm:4.1,pays:'Accetta carta',map:'https://maps.google.com/?q=Hill+Street+Blues+Amsterdam',prev:'Apre alle 8 del mattino — paradiso degli early birds. Stile americano informale.',spec:'<strong>Meglio per:</strong> mattina prestissimo, orari lunghissimi<br><strong>Prezzi:</strong> €10-14/g'}
+,{id:'baba',name:'Baba',badge:'Hippy anni 70',bdg:'sb-chill',zone:'centrum',area:'Warmoesstraat 64 — Centrum',hours:'10:00–23:00',rd:7.7,gm:4.0,pays:'Contanti',map:'https://maps.google.com/?q=Baba+Coffeeshop+Amsterdam',prev:'Decorazione vintage anni \'70 hippy. Atmosfera autentica e colorata.',spec:'<strong>Meglio per:</strong> nostalgia hippy, classici, atmosfera vintage<br><strong>Prezzi:</strong> €9-13/g'}
+,{id:'phoenix',name:'Phoenix',badge:'Affidabile',bdg:'sb-local',zone:'centrum',area:'Kloveniersburgwal 74 — Centrum',hours:'10:00–23:00',rd:7.9,gm:4.1,pays:'Accetta carta',map:'https://maps.google.com/?q=Phoenix+coffeeshop+Kloveniersburgwal+Amsterdam',prev:'Affidabile e costante. Non sorprende mai ma non delude mai. Classica scelta sicura.',spec:'<strong>Meglio per:</strong> affidabilità, niente brutte sorprese<br><strong>Prezzi:</strong> €10-14/g'}
+,{id:'7th-heaven',name:'7th Heaven',badge:'Gay district',bdg:'sb-chill',zone:'jordaan',area:'Brouwersgracht 137 — Jordaan',hours:'10:00–23:00',rd:7.8,gm:4.1,pays:'Accetta carta',map:'https://maps.google.com/?q=7th+Heaven+coffeeshop+Brouwersgracht+137+Amsterdam',prev:'Zona gay district. Atmosfera molto aperta e inclusiva. Mix eterogeneo di clientela.',spec:'<strong>Meglio per:</strong> atmosfera inclusiva, zona Reguliers<br><strong>Prezzi:</strong> €10-14/g'}
+,{id:'jolly-joker',name:'Jolly Joker',badge:'Zeedijk pub',bdg:'sb-local',zone:'centrum',area:'Zeedijk 32 — Centrum',hours:'10:00–23:00',rd:7.7,gm:4.0,pays:'Contanti',map:'https://maps.google.com/?q=Jolly+Joker+coffeeshop+Zeedijk+Amsterdam',prev:'Pannelli in legno, stile British pub. Atmosfera familiare e confortevole. Clienti abituali che tornano per l\'atmosfera.',spec:'<strong>Meglio per:</strong> atmosfera pub, comfort, classici<br><strong>Prezzi:</strong> €9-13/g'}
+,{id:'blue-lagoon',name:'Blue Lagoon',badge:'Centrale',bdg:'sb-local',zone:'west',area:'Overtoom 342 — Oud-West',hours:'10:00–23:00',rd:7.8,gm:4.0,pays:'Contanti',map:'https://maps.google.com/?q=Blue+Lagoon+coffeeshop+Overtoom+342+Amsterdam',prev:'Shop tranquillo nel centro. Selezione base solida. Staff disponibile.',spec:'<strong>Meglio per:</strong> tranquillità, classici, prezzi onesti<br><strong>Prezzi:</strong> €9-13/g'}
+,{id:'black-star',name:'Black Star',badge:'Centrale',bdg:'sb-local',zone:'jordaan',area:'Rozengracht 1a — Jordaan',hours:'10:00–00:00',rd:7.9,gm:4.1,pays:'Contanti',map:'https://maps.google.com/?q=African+Blackstar+Coffeeshop+Rozengracht+1a+Amsterdam',prev:'Shop ben posizionato con selezione decente. Atmosfera tranquilla.',spec:'<strong>Meglio per:</strong> posizione, selezione base<br><strong>Prezzi:</strong> €9-13/g'}
+,{id:'de-republiek',name:'De Republiek',badge:'Locale',bdg:'sb-local',zone:'west',area:'2e Nassaustraat 1a — Amsterdam West',hours:'10:00–23:00',rd:7.8,gm:4.0,pays:'Contanti',map:'https://maps.google.com/?q=De+Republiek+coffeeshop+2e+Nassaustraat+1a+Amsterdam',prev:'Shop locale apprezzato dalla comunità del quartiere. Selezione onesta a prezzi giusti.',spec:'<strong>Meglio per:</strong> esperienza locale, prezzi<br><strong>Prezzi:</strong> €9-13/g'}
+,{id:'coffeeshop-noord',name:'Coffeeshop Noord',badge:'Noord',bdg:'sb-local',zone:'east',area:'Buiksloterweg 5 — Amsterdam Noord',hours:'10:00–22:00',rd:7.8,gm:4.1,pays:'Contanti',map:'https://maps.google.com/?q=Coffeeshop+Noord+Buiksloterweg+5+Amsterdam',prev:'Nel quartiere Noord, accessibile via traghetto gratuito da Centraal. Frequentato dai locali del quartiere.',spec:'<strong>Meglio per:</strong> zona Noord, esperienza fuori dai circuiti turistici<br><strong>Prezzi:</strong> €9-12/g'}
+,{id:'best-friends-oost',name:'Best Friends Oost',badge:'Oost locale',bdg:'sb-local',zone:'east',area:'Middenweg 130 — Amsterdam Oost',hours:'10:00–22:00',rd:7.9,gm:4.1,pays:'Contanti',map:'https://maps.google.com/?q=Best+Friends+Oost+Middenweg+130+Amsterdam',prev:'Catena locale molto apprezzata dagli olandesi. Selezione decente, prezzi onesti, staff cordiale.',spec:'<strong>Meglio per:</strong> zona Oost, locale, prezzi<br><strong>Prezzi:</strong> €9-13/g'}
+,{id:'best-friends-oud-z',name:"Best Friends Oud-Zuid",badge:'Zuid locale',bdg:'sb-local',zone:'south',area:'Van Baerlestraat 7 — Oud-Zuid',hours:'10:00–22:00',rd:7.9,gm:4.1,pays:'Contanti',map:'https://maps.google.com/?q=Best+Friends+coffeeshop+Van+Baerlestraat+7+Amsterdam',prev:'Sede Oud-Zuid della catena Best Friends. Frequentato da residenti della zona museo e Vondelpark.',spec:'<strong>Meglio per:</strong> zona Vondelpark/Museum Quarter, locale<br><strong>Prezzi:</strong> €9-13/g'}
+,{id:'de-supermarkt',name:'De Supermarkt',badge:'Alternativo',bdg:'sb-chill',zone:'west',area:'Frederik Hendrikstraat 69 — West',hours:'10:00–23:00',rd:8.0,gm:4.2,pays:'Contanti',map:'https://maps.google.com/?q=Coffeeshop+De+Supermarkt+Frederik+Hendrikstraat+69+Amsterdam',prev:'Concept originale — il nome è ironico, l\'atmosfera è tutt\'altro che un supermarket. Alternativo e creativo.',spec:'<strong>Meglio per:</strong> concept originale, atmosfera alternativa<br><strong>Prezzi:</strong> €10-14/g'}
+,{id:'coffeeshop-sloterdijk',name:'Boerejongens Sloterdijk',badge:'Top qualità',bdg:'sb-top',zone:'west',area:'Humberweg 2 — Sloterdijk',hours:'09:00–22:00',rd:9.1,gm:4.7,pays:'Accetta carta',map:'https://maps.google.com/?q=Boerejongens+Sloterdijk+Humberweg+2+Amsterdam',prev:'"Cannabis sommeliers" sul posto per guidarti — nome usato dalla DutchReview. Moderno, luminoso, quasi da dispensary americano. Quarta sede Boerejongens.',spec:'<strong>Meglio per:</strong> esperienza dispensary moderna, personale esperto<br><strong>Prezzi:</strong> €14-18/g'}
+,{id:'bulldog-leiden',name:'The Bulldog Leidseplein',badge:'Solo foto',bdg:'sb-warn',zone:'centrum',area:'Leidseplein 15 — Centrum',hours:'10:00–02:00',rd:6.5,gm:3.8,pays:'Accetta carta',map:'https://maps.google.com/?q=Bulldog+Leidseplein+Amsterdam',prev:'Il più famoso per nome ma tra i meno consigliati. Qualità media, prezzi altissimi. Va solo per la foto ricordo.',spec:'<strong>Attenzione:</strong> qualità nettamente inferiore ai prezzi<br><strong>Prezzi:</strong> €13-18/g — sopravvalutato'}
+,{id:'bulldog-dam',name:'The Bulldog Dam',badge:'Solo foto',bdg:'sb-warn',zone:'centrum',area:'Oudezijds Voorburgwal 90 — Red Light',hours:'10:00–02:00',rd:6.5,gm:3.8,pays:'Accetta carta',map:'https://maps.google.com/?q=Bulldog+Dam+Amsterdam',prev:'Sede originale su Dam Square. Storica come landmark ma qualità media. Mega-affollata e caotica.',spec:'<strong>Attenzione:</strong> qualità non all\'altezza dei prezzi<br><strong>Prezzi:</strong> €12-17/g'}
+,{id:"coffeeshop-amsterdam-cs",name:"Coffeeshop Amsterdam",badge:"Ex Dampkring 3 piani",bdg:"sb-top",zone:"centrum",area:"Haarlemmerstraat 44 — Centrum",hours:"10:00–00:00",rd:8.8,gm:4.5,pays:"Accetta carta",map:"https://maps.google.com/?q=Coffeeshop+Amsterdam+Haarlemmerstraat+44",prev:"Tre piani, 90 posti. Ex Dampkring 2 — stessa qualita, nuovo nome. A 5 minuti da Centraal. Milkshake leggendari, menu ampio, staff super disponibile.",spec:"<strong>Meglio per:</strong> primo stop da Centraal, tre piani, milkshake + weed<br><strong>Prezzi:</strong> €11-16/g"}
+,{id:"dna-cs",name:"Coffeeshop DNA",badge:"Oost premium",bdg:"sb-top",zone:"east",area:'Overtoom 68 — West',hours:"10:00–23:00",rd:8.6,gm:4.5,pays:"Accetta carta",map:"https://maps.google.com/?q=Coffeeshop+DNA+Amsterdam",prev:"Vicino lo Stadio Olimpico. Amsterdam Genetics supplier ufficiale. Moderno, luminoso, selezione premium. Molto apprezzato dai locali del quartiere.",spec:"<strong>Meglio per:</strong> Amsterdam Genetics strains, zona Oud-West, no turisti<br><strong>Prezzi:</strong> €12-17/g"}
+,{id:"mr-k",name:"Mr. K and Co",badge:"Jordaan boutique",bdg:"sb-chill",zone:"jordaan",area:'Tweede Laurierdwarsstraat 44 — Jordaan',hours:"10:00–01:00",rd:8.4,gm:4.4,pays:"Accetta carta",map:'https://maps.google.com/?q=Mr+K+coffeeshop+Tweede+Laurierdwarsstraat+44+Amsterdam',prev:"Boutique coffeeshop nel Jordaan con finestra su strada. Arredamento curato, atmosfera da living room. Uno dei piu fotografati e apprezzati del quartiere.",spec:"<strong>Meglio per:</strong> Jordaan vibes, atmosfera unica, 9 Straatjes<br><strong>Prezzi:</strong> €11-15/g"}
+,{id:"hashtag-cs",name:"Coffeeshop Hashtag",badge:"Moderno tech",bdg:"sb-local",zone:"centrum",area:'Reguliersgracht 27 — Centrum',hours:"10:00–23:00",rd:8.1,gm:4.2,pays:"Accetta carta",map:'https://maps.google.com/?q=Coffeeshop+Hashtag+Reguliersgracht+27+Amsterdam',prev:"Concept moderno con menu digitale interattivo. Clientela giovane e locale. Ottimo rapporto qualita-prezzo. Menu aggiornato frequentemente.",spec:"<strong>Meglio per:</strong> menu digitale, prezzi onesti, atmosfera moderna<br><strong>Prezzi:</strong> €10-14/g"}
+,{id:"babylon-cs",name:'Babylon',badge:'Centrum storico',bdg:"sb-local",zone:"centrum",area:'Beursstraat 27 — Centrum',hours:"10:00–23:00",rd:7.9,gm:4.1,pays:"Contanti",map:'https://maps.google.com/?q=Babylon+coffeeshop+Beursstraat+27+Amsterdam',prev:'Vicino Damrak. Storico e affidabile. Selezione classici olandesi a prezzi onesti. Staff diretto e professionale. Buona base per la zona Centrum.',spec:"<strong>Meglio per:</strong> classici olandesi, prezzi corretti, centro<br><strong>Prezzi:</strong> €9-13/g"}
+,{id:"de-watersnip",name:"De Watersnip",badge:"Noord nascosto",bdg:"sb-local",zone:'east',area:'Zeeburgerdijk 33 — Oost',hours:"10:00–22:00",rd:8.0,gm:4.2,pays:"Contanti",map:'https://maps.google.com/?q=De+Watersnip+coffeeshop+Zeeburgerdijk+33+Amsterdam',prev:"Gemma nascosta di Amsterdam Noord. Zero turisti, clientela 100% locale. Prezzi tra i piu onesti della citta. Atmosfera autentica e tranquilla.",spec:"<strong>Meglio per:</strong> esperienza locale pura, Noord alternativo<br><strong>Prezzi:</strong> €8-12/g"}
+,{id:"bulldog-palace",name:"Bulldog Palace",badge:"Bulldog premium",bdg:"sb-local",zone:"centrum",area:'Leidseplein 15 — Centrum',hours:"10:00–01:00",rd:7.5,gm:3.9,pays:"Accetta carta",map:'https://maps.google.com/?q=Bulldog+Palace+Leidseplein+15+Amsterdam',prev:"La sede premium del gruppo Bulldog — migliore qualita rispetto alle sedi standard. Palazzo storico su Leidseplein. Per chi vuole il nome Bulldog senza la delusione.",spec:"<strong>Attenzione:</strong> meglio delle sedi standard ma non al livello dei top shop<br><strong>Prezzi:</strong> €12-16/g"}
+,{id:"tha-dogg-house",name:"Tha Dogg House",badge:"Snoop Dogg — Cali vibes",bdg:"sb-top",zone:"west",area:"Marnixstraat 333 — West",hours:"09:00–01:00",rd:8.2,gm:4.3,pays:"Accetta carta",map:"https://maps.google.com/?q=Tha+Dogg+House+Marnixstraat+333+Amsterdam",prev:"Il coffeeshop ufficiale di Snoop Dogg. West coast hip-hop, vista canale, selezione Cali strains. Secondo punto a Oudebrugsteeg 26 vicino Centrum.",spec:"<strong>Meglio per:</strong> vibes hip-hop, Cali strains, atmosfera unica<br><strong>Prezzi:</strong> €13-18/g"}
+,{id:"tyson20",name:"Tyson 2.0",badge:"Mike Tyson — Premium lounge",bdg:"sb-top",zone:"centrum",area:"Spuistraat 222 — Centrum",hours:"07:00–01:00",rd:8.0,gm:4.2,pays:"Accetta carta",map:"https://maps.google.com/?q=Coffeeshop+Tyson+2.0+Spuistraat+222+Amsterdam",prev:"Il coffeeshop di Mike Tyson. Interior rosso-nero, lounge premium con vaporizzatori e gravity bong. Strains Tyson 2.0 brand. A 10 min a piedi da Centraal.",spec:"<strong>Meglio per:</strong> esperienza premium, lounge con vaporizzatori, brand strains<br><strong>Prezzi:</strong> €10-30/g"}
+,{id:"sloterdijk-cs",name:"Coffeeshop Sloterdijk",badge:"Moderno — Amsterdam Genetics",bdg:"sb-top",zone:"west",area:"Humberweg 2 — Sloterdijk",hours:"09:00–23:00",rd:8.9,gm:4.7,pays:"Accetta carta",map:"https://maps.google.com/?q=Coffeeshop+Sloterdijk+Humberweg+2+Amsterdam",prev:"Il piu moderno di Amsterdam. Marmo, legno, luce naturale, parcheggio gratuito. Cannabis sommelier in servizio. Tutto Amsterdam Genetics. Raggiungi in treno.",spec:"<strong>Meglio per:</strong> esperienza premium massima, Amsterdam Genetics, no folla<br><strong>Prezzi:</strong> €12-18/g"}
+,{id:"cafe420",name:"420 Cafe",badge:"Centrum storico",bdg:"sb-local",zone:"centrum",area:"Oudebrugsteeg 3 — Centrum",hours:"10:00–01:00",rd:8.0,gm:4.2,pays:"Accetta carta",map:"https://maps.google.com/?q=420+Cafe+Amsterdam+Oudebrugsteeg",prev:"Noto come De Kuil. Arredamento in legno caldo, musica selezionata. Clientela mista. Uno dei piu atmosferici del centro. Space cakes famosi.",spec:"<strong>Meglio per:</strong> atmosfera da pub olandese, classici, zona Damrak<br><strong>Prezzi:</strong> €10-14/g"}
+,{id:"balboa-family",name:"The Balboa Family",badge:"3 piani — cannabis sommelier",bdg:"sb-top",zone:"centrum",area:"Halvemaansteeg 1 — Rembrandtplein",hours:"09:00–01:00",rd:9.0,gm:4.7,pays:"Accetta carta",map:"https://maps.google.com/?q=The+Balboa+Family+Halvemaansteeg+1+Amsterdam",prev:"3 piani di lounge. Tony Balboa e ex giudice Cannabis Cup. Miglior prezzo-qualita di Amsterdam su Cali strains. Hash bubble da 73u. Pre-roll con trim puro. Imperdibile.",spec:"<strong>Meglio per:</strong> massima qualita al prezzo piu onesto, 3 piani lounge, hash bubble<br><strong>Prezzi:</strong> €14-25/g Cali, €10-16/g Dutch"}
+,{id:"basjoe-cs",name:"Coffeeshop Basjoe",badge:"Canal view — Red Light",bdg:"sb-chill",zone:"centrum",area:"Kloveniersburgwal 62 — Centrum",hours:"10:00–00:00",rd:8.2,gm:4.2,pays:"Accetta carta",map:"https://maps.google.com/?q=Coffeeshop+Basjoe+Kloveniersburgwal+62+Amsterdam",prev:"Vista diretta sul canale Kloveniersburgwal. Fuori dal Red Light District ma con tutta l'atmosfera. Edibles leggendari — Rainbow Cake e space muffin. Lounge interno.",spec:"<strong>Meglio per:</strong> vista canale, edibles, atmosfera bar-club non turistica<br><strong>Prezzi:</strong> €10-14/g"}
+,{id:"aktama2-cs",name:"Aktama 2",badge:"West — prezzi locali",bdg:"sb-local",zone:"west",area:'Hudsonstraat 9 — Amsterdam West',hours:"10:00–23:00",rd:8.1,gm:4.2,pays:"Contanti",map:"https://maps.google.com/?q=Aktama+2+Amsterdam+West+Hudsonstraat",prev:"Ex Coffeeshop 156, rinnovato nel 2024. Zona residenziale West, zero turisti. Prezzi da locals. Selezione Dutch + import selezionato. Staff diretto e onesto.",spec:"<strong>Meglio per:</strong> prezzi locali, zona West autentica, no crowds<br><strong>Prezzi:</strong> €9-14/g"}
+
+,{id:"club-media",name:"Club Media",badge:"De Pijp dal 1986",bdg:"sb-local",zone:"south",area:'Gerard Doustraat 85 — De Pijp',hours:"10:00–00:00",rd:8.3,gm:4.4,pays:"Accetta carta",map:'https://maps.google.com/?q=Club+Media+coffeeshop+Amsterdam+De+Pijp',prev:"Istituzione di De Pijp dal 1986. Luminoso e arioso, a due passi dal mercato Albert Cuyp. Staff femminile e accogliente. Clientela mista locale-turistica. Vicino Heineken Experience.",spec:"<strong>Meglio per:</strong> zona De Pijp, atmosfera autentica, vicino Albert Cuyp market<br><strong>Prezzi:</strong> €10-14/g"}
+,{id:"the-dolphins",name:"The Dolphins",badge:"Vaporizer — hash premium",bdg:"sb-chill",zone:"centrum",area:'Kerkstraat 39 — Leidseplein',hours:"10:00–23:00",rd:8.2,gm:4.3,pays:"Contanti",map:'https://maps.google.com/?q=The+Dolphins+coffeeshop+Kerkstraat+39+Amsterdam',prev:"Tema nautico marocchino. Vaporizer De Verdamper disponibile. Hash import da Nepal, Marocco e India. Proprie genetiche White Dolphin e Royal Dolphin. Staff knoledgeable.",spec:"<strong>Meglio per:</strong> hash orientale, vaporizer, atmosfera old school<br><strong>Prezzi:</strong> €10-15/g"}
+];
+
+
+
+/* ══════════════════════════════════════════════════════════════
+   LOOKUP MAPS — SEMPRE definite, mai undefined
+══════════════════════════════════════════════════════════════ */
+// row tag → compact CSS
+const TC={sativa:'ts',indica:'ti',hybrid:'th',fruity:'tf',haze:'tz',classic:'tc',hash:'thh',potente:'tp'};
+// row tag → compact label
+const TN={sativa:'Sativa',indica:'Indica',hybrid:'Hybrid',fruity:'Fruity',haze:'Haze',classic:'Classic',hash:'Hash',potente:'Potente'};
+// popup tag → CSS
+const TPC={sativa:'pt-s',indica:'pt-i',hybrid:'pt-h',fruity:'pt-f',haze:'pt-z',classic:'pt-c',hash:'pt-hh',potente:'pt-p'};
+// popup tag → full label
+const TPN={sativa:'Sativa',indica:'Indica',hybrid:'Hybrid',fruity:'Fruity',haze:'Haze',classic:'Classic',hash:'Hash',potente:'Potente'};
+
+/* ══════════════════════════════════
+   STORAGE
+══════════════════════════════════ */
+const gs=k=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):{}}catch{return{}}};
+const ss=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
+const rm=k=>{try{localStorage.removeItem(k)}catch{}};
+
+/* ══════════════════════════════════
+   HELPERS
+══════════════════════════════════ */
+const V=(id,v)=>document.getElementById(id).textContent=v;
+function rc(v){v=parseFloat(v);if(v>=9.5)return'#4eff38';if(v>=9.2)return'#62f042';if(v>=9.0)return'#7eec4c';if(v>=8.7)return'#96e456';if(v>=8.4)return'#acda60';if(v>=8.1)return'#bece6a';if(v>=8.0)return'#c8c870';if(v>=7.5)return'#d8b84a';if(v>=7.0)return'#e09830';return'#c07020';}
+function getR(item){const s=gs(item.id);return s.rating?parseFloat(s.rating):item.rd;}
+function getRS(id){const s=gs('sh_'+id);const shop=SHOPS.find(x=>x.id===id);return s.rating?parseFloat(s.rating):(shop?shop.rd:8);}
+function chkSVG(){return'<svg viewBox="0 0 9 9" fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4.5 3.5,7 8,1.5"/></svg>';}
+
+/* ══════════════════════════════════
+   NAV
+══════════════════════════════════ */
+function nav(name,btn,cls){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.getElementById('pg-'+name).classList.add('on');
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('ag','aa','abl'));
+  btn.classList.add(cls);window.scrollTo(0,0);
+}
+
+/* ══════════════════════════════════
+   FILTER CHIPS
+══════════════════════════════════ */
+let LF='all',SF='all',WT='weed';
+
+/* ── ITEM ICON ── */
+function itemIcon(item){
+  var tags=item.tags||[],id=item.id||'',st=item.style||'';
+  if(item.type==='hash'){
+    if(st.includes('hash-mar'))return'\u{1F7E4}';
+    if(st.includes('hash-ori'))return'\u{1F336}';
+    if(st.includes('hash-mod'))return'\u{1F48E}';
+    return'\u{1F7E4}';
+  }
+  if(st.includes('potente'))return'\u{1F480}';
+  if(st.includes('haze'))return'\u26A1';
+  if(st.includes('fruity')){
+    if(id.includes('lemon'))return'\u{1F34B}';
+    if(id.includes('orange')||id.includes('tangi')||id.includes('tropicana'))return'\u{1F34A}';
+    if(id.includes('strawberry'))return'\u{1F353}';
+    if(id.includes('mango'))return'\u{1F96D}';
+    if(id.includes('pineapple'))return'\u{1F34D}';
+    if(id.includes('mimosa'))return'\u{1F942}';
+    if(id.includes('banana'))return'\u{1F34C}';
+    if(id.includes('water')||id.includes('berry'))return'\u{1F347}';
+    if(id.includes('runtz')||id.includes('zkittlez'))return'\u{1F308}';
+    if(id.includes('cherry'))return'\u{1F352}';
+    return'\u{1F351}';
+  }
+  if(tags.includes('indica'))return'\u{1F319}';
+  if(tags.includes('sativa'))return'\u2600';
+  if(tags.includes('hybrid'))return'\u262F';
+  return'\u{1F33F}';
+}
+
+/* ── TYPE TAB ── */
+var LTAB='weed';
+function setTypeTab(tab,btn){
+  LTAB=tab;
+  document.querySelectorAll('.tt').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  LF='all';
+  updateChips();
+  renderList();
+}
+function updateChips(){
+  var row=document.getElementById('lf-row');
+  if(!row)return;
+  if(LTAB==='weed'){
+    row.innerHTML='<button class="fc on" onclick="setLF(this,\'all\')">Tutto</button>'
+      +'<button class="fc" onclick="setLF(this,\'sativa\')">Sativa</button>'
+      +'<button class="fc" onclick="setLF(this,\'indica\')">Indica</button>'
+      +'<button class="fc" onclick="setLF(this,\'hybrid\')">Hybrid</button>'
+      +'<button class="fc" onclick="setLF(this,\'fruity\')">Fruity</button>'
+      +'<button class="fc" onclick="setLF(this,\'haze\')">Haze</button>'
+      +'<button class="fc" onclick="setLF(this,\'classic\')">Classic</button>'
+      +'<button class="fc on-p" onclick="setLF(this,\'potente\')">\u{1F480} Potenti</button>'
+      +'<button class="fc on-a" onclick="setLF(this,\'strd\')">\u2605 Wish</button>';
+  } else {
+    row.innerHTML='<button class="fc on" onclick="setLF(this,\'all\')">Tutto</button>'
+      +'<button class="fc on-b" onclick="setLF(this,\'hash-mar\')">\u{1F7E4} Marocchino</button>'
+      +'<button class="fc on-b" onclick="setLF(this,\'hash-ori\')">\u{1F336} Orientale</button>'
+      +'<button class="fc on-b" onclick="setLF(this,\'hash-mod\')">\u{1F48E} Moderno</button>'
+      +'<button class="fc on-a" onclick="setLF(this,\'strd\')">\u2605 Wish</button>';
+  }
+}
+
+/* ── QUICK STAR erba ── */
+function quickStar(id){
+  var s=gs(id);s.starred=!s.starred;ss(id,s);
+  var btn=document.getElementById('star-'+id);
+  if(btn){btn.textContent=s.starred?'\u2605':'\u2606';btn.classList.toggle('on',!!s.starred);}
+  var row=document.getElementById('row-'+id);
+  if(row)row.classList.toggle('strd',!!s.starred);
+  updateStats();
+}
+
+/* ── QUICK STAR shop ── */
+function quickShopStar(id){
+  var s=gs('sh_'+id);s.starred=!s.starred;ss('sh_'+id,s);
+  var btn=document.getElementById('shstar-'+id);
+  if(btn){btn.textContent=s.starred?'\u2605':'\u2606';btn.classList.toggle('on',!!s.starred);}
+  var wsh=document.getElementById('w-sh');
+  if(wsh)wsh.textContent=SHOPS.filter(function(x){return !!gs('sh_'+x.id).starred;}).length;
+}
+
+function setLF(btn,val){
+  LF=val;
+  document.querySelectorAll('#lf-row .fc').forEach(c=>c.classList.remove('on','on-a','on-b','on-p'));
+  btn.classList.add(val==='hash'?'on-b':val==='strd'||val==='done'?'on-a':val==='potente'?'on-p':'on');
+  document.getElementById('list-q').value='';
+  document.getElementById('list-clr').style.display='none';
+  renderList();
+}
+function setSF(btn,val){
+  SF=val;
+  document.querySelectorAll('#sf-row .fc').forEach(c=>c.classList.remove('on','on-a','on-b','on-p'));
+  btn.classList.add(val==='rated'?'on-a':val==='hash'?'on-b':'on');
+  document.getElementById('shop-q').value='';
+  renderShops();
+}
+function setWT(btn,val){
+  WT=val;
+  document.querySelectorAll('#wish-tabs .wtab').forEach(b=>b.classList.remove('wt-g','wt-b','wt-bl'));
+  btn.classList.add(val==='hash'?'wt-b':val==='shop'?'wt-bl':'wt-g');
+  renderWish();
+}
+function onSrch(v){document.getElementById('list-clr').style.display=v?'inline':'none';renderList();}
+function clrSrch(){document.getElementById('list-q').value='';document.getElementById('list-clr').style.display='none';renderList();}
+
+/* ══════════════════════════════════
+   RENDER LIST
+══════════════════════════════════ */
+const CATS=[
+  {lbl:'Must Try — I Classici',ids:['white-widow','og-kush','amnesia-haze','super-silver-haze','jack-herer','northern-lights','skunk-1','cheese','ak47','critical-mass','kali-mist','haze-original','chiesel','chronic','nl5-haze','g13-haze','blue-cheese','wonder-woman','super-bud','power-plant','amnesia','dutch-treat','silver-haze','exodus-cheese','top-44','mazar','pure-kush','la-confidential','critical-kush']},
+  {lbl:'Fruity Sativas',ids:['tropicana-cookies','zkittlez','mimosa','tangie','orange-bud','pineapple-express','papaya','strawberry-cough','lemon-haze','super-lemon-haze','chocolope','mango-haze','grapefruit','shiskaberry','tangie-dream','cream-caramel','banana-kush','watermelon-zkittlez','lemon-cookies','pink-runtz','sweet-tooth','wedding-pie','strawnana','tangerine-dream','pineapple-chunk','zkittlez-original','berry-white','lemon-skunk','caramel-candy','c99','forbidden-fruit','purple-haze-x']},
+  {lbl:'Potenti & Premiati',ids:['blue-dream','gelato','gelato-41','wedding-cake','gorilla-glue','runtz','mac1','granddaddy-purple','cereal-milk','purple-punch','durban-poison','bubba-kush','sour-diesel','gsc','bruce-banner','wedding-glue','do-si-dos','mimosa-evo','black-widow','vanilla-kush','purple-haze','trainwreck','super-skunk','white-rhino','rs11','jealousy','zkittlez-og','slurricane','biscotti','kush-mints','obama-runtz','ice-cream-cake','tropicana-cherry','sunset-sherbert','moonrock','belladonna','c99','mother-of-all-buds','medusa','white-widow-x','gary-payton','london-pound-cake','gorilla-cookies','animal-cookies','mac-cheese']},
+  {lbl:'Hash — Marocchino Classico',ids:['h-pollen','h-zerozero','h-ketama','h-softblack','h-caramello','h-super-pollen','h-golden','h-king-hassan','h-morocco-slabs','h-moroccan-blonde','h-polm','h-super-critical','h-double-zero','h-cream-caramel-hash','h-moroccan-primero','h-beldi']},
+  {lbl:'Hash — Orientale',ids:['h-charas','h-afghan','h-nepal','h-leb','h-turkish','h-shiraz','h-malawi-gold','h-manali-cream','h-pakhtun','h-temple-ball-old','h-red-lebanese-v','h-hash-afghano-premium','h-malana-original','h-charas-kerala']},
+  {lbl:'Hash — Moderno Solventless',ids:['h-bubble','h-rosin','h-drysift','h-live-rosin','h-ice-cream','h-charas-fresh','h-full-melt','h-pressed-rosin','h-ice-o-lator','h-hifi-4g','h-solventless-wax','h-kief-pressed','h-nederhash','h-amnesia-hash','h-og-kush-rosin','h-lemon-hash','h-live-hash-rosin']},
+];
+
+function renderList(){
+  const q=(document.getElementById('list-q').value||'').toLowerCase().trim();
+  const thcMin=parseInt(document.getElementById('thc-sl').value)||0;
+  const body=document.getElementById('list-body');
+  body.innerHTML='';
+  let shown=0;
+  CATS.forEach(cat=>{
+    const items=cat.ids.map(id=>ALL.find(i=>i.id===id)).filter(Boolean);
+    const rows=[];
+    items.forEach(item=>{
+      const s=gs(item.id);
+      const isHash=item.type==='hash';
+      const checked=isHash?!!s.hdone:!!s.checked;
+      if(typeof LTAB!=='undefined'&&LTAB==='weed'&&item.type==='hash')return;
+      if(typeof LTAB!=='undefined'&&LTAB==='hash'&&item.type!=='hash')return;
+      const starred=!!s.starred;
+      const tags=item.tags||[];
+      // filter
+      let show=true;
+      if(q){show=item.name.toLowerCase().includes(q)||(item.aroma||'').toLowerCase().includes(q)||tags.join(' ').toLowerCase().includes(q)||(item.desc||'').toLowerCase().includes(q);}
+      else if(LF==='sativa')show=tags.includes('sativa');
+      else if(LF==='indica')show=tags.includes('indica');
+      else if(LF==='hybrid')show=tags.includes('hybrid');
+      else if(LF==='fruity')show=tags.includes('fruity');
+      else if(LF==='haze')show=tags.includes('haze');
+      else if(LF==='classic')show=tags.includes('classic');
+      else if(LF==='hash')show=isHash;
+      else if(LF==='hash-mar')show=(item.style||'').includes('hash-mar');
+      else if(LF==='hash-ori')show=(item.style||'').includes('hash-ori');
+      else if(LF==='hash-mod')show=(item.style||'').includes('hash-mod');
+      else if(LF==='potente')show=(item.thcN||0)>=25;
+      else if(LF==='strd')show=starred;
+      else if(LF==='done')show=checked;
+      if(!isHash&&thcMin>0&&(item.thcN||0)<thcMin)show=false;
+      if(!show)return;
+      const dr=getR(item);
+      const tagHtml=tags.slice(0,2).map(t=>`<span class="itag ${TC[t]||'tc'}">${TN[t]||t}</span>`).join('');
+      const style=item.style||'ir-default';
+      const rowCls=`ir ${style}`+(checked?(isHash?' hdone':' done'):'')+(starred?' strd':'');
+      const wrap=document.createElement('div');
+      const ico=itemIcon(item);
+      wrap.innerHTML=`<div class="${rowCls}" id="row-${item.id}" data-ico="${ico}">
+        <div class="cc">${ico}</div>
+        <span class="inm">${item.name}</span>
+        <div class="itags">${tagHtml}</div>
+        <div class="irt"><span class="ithc">${item.thc}</span><span class="irat" style="color:${rc(dr)}">${parseFloat(dr).toFixed(1)}</span></div>
+        <button class="${starred?'istar on':'istar'}" id="star-${item.id}" onclick="event.stopPropagation();quickStar('${item.id}')">${starred?'★':'☆'}</button>
+      </div>`;
+      const rowEl=wrap.firstElementChild;
+      let pt;
+      rowEl.addEventListener('pointerdown',()=>{pt=setTimeout(()=>quickChk(item.id,isHash),500);},{passive:true});
+      rowEl.addEventListener('pointerup',()=>clearTimeout(pt));
+      rowEl.addEventListener('pointercancel',()=>clearTimeout(pt));
+      rowEl.addEventListener('click',()=>{clearTimeout(pt);openItemPop(item.id);});
+      rows.push(wrap);
+    });
+    if(rows.length){
+      const sec=document.createElement('div');sec.className='sec';
+      sec.innerHTML=`<div class="slbl">${cat.lbl}<span class="slbl-c">(${rows.length})</span></div>`;
+      rows.forEach(r=>sec.appendChild(r));
+      body.appendChild(sec);
+      shown+=rows.length;
+    }
+  });
+  document.getElementById('list-nores').style.display=shown?'none':'block';
+  updateStats();updateRatio();
+}
+
+/* ══════════════════════════════════
+   QUICK CHECK (long press)
+══════════════════════════════════ */
+function quickChk(id,isHash){
+  const s=gs(id);if(isHash)s.hdone=!s.hdone;else s.checked=!s.checked;ss(id,s);
+  const row=document.getElementById('row-'+id);
+  if(row){
+    if(isHash)row.classList.toggle('hdone',!!s.hdone);
+    else{row.classList.toggle('done',!!s.checked);}
+  }
+  updateStats();updateRatio();
+}
+
+/* ══════════════════════════════════
+   STATS + RATIO
+══════════════════════════════════ */
+function updateStats(){
+  let tot=0,wish=0;
+  ALL.forEach(i=>{tot++;if(gs(i.id).starred)wish++;});
+  V('s-tot',tot);V('s-wish',wish);
+}
+function updateRatio(){
+  const w=ALL.filter(i=>i.type==='weed'),t=w.length||1;
+  const sat=w.filter(i=>(i.tags||[]).includes('sativa')).length;
+  const ind=w.filter(i=>(i.tags||[]).includes('indica')).length;
+  const hyb=w.filter(i=>(i.tags||[]).includes('hybrid')).length;
+  const sp=sat/t*100,hp=hyb/t*100,ip=ind/t*100;
+  document.getElementById('rb-s').style.width=sp+'%';
+  document.getElementById('rb-h').style.width=hp+'%';
+  V('rl-s','SAT '+Math.round(sp)+'%');
+  V('rl-h','HYB '+Math.round(hp)+'%');
+  V('rl-i','IND '+Math.round(ip)+'%');
+}
+
+/* ══════════════════════════════════
+   WISHLIST — 3 tab: erbe, hash, shop
+══════════════════════════════════ */
+function renderWish(){
+  const body=document.getElementById('wish-body');
+  body.innerHTML='';
+  const allStarred=ALL.filter(i=>gs(i.id).starred);
+  const shopStarred=SHOPS.filter(s=>gs('sh_'+s.id).starred);
+  // update tab counts
+  const weed=allStarred.filter(i=>i.type==='weed');
+  const hash=allStarred.filter(i=>i.type==='hash');
+  const btns=document.querySelectorAll('#wish-tabs .wtab');
+  if(btns[0])btns[0].textContent=`🌿 Erbe (${weed.length})`;
+  if(btns[1])btns[1].textContent=`🍫 Hash (${hash.length})`;
+  if(btns[2])btns[2].textContent=`☕ Shop (${shopStarred.length})`;
+  // update counters
+  let fnd=0;
+  allStarred.forEach(i=>{const s=gs(i.id);if(s.checked||s.hdone)fnd++;});
+  shopStarred.forEach(s=>{if(gs('sh_'+s.id).visited)fnd++;});
+  V('w-tot',allStarred.length+shopStarred.length);
+  V('w-fnd',fnd);
+  V('w-sh',shopStarred.length);
+
+  if(WT==='weed'){renderWishItems(body,weed);}
+  else if(WT==='hash'){renderWishItems(body,hash);}
+  else{renderWishShops(body,shopStarred);}
+}
+
+function renderWishItems(body,items){
+  if(!items.length){body.innerHTML='<div class="empty-st">Nessuna voce in wishlist<br>Aggiungi ★ dal popup nella scheda Lista</div>';return;}
+  const grouped={};
+  items.forEach(item=>{if(!grouped[item.cat])grouped[item.cat]=[];grouped[item.cat].push(item);});
+  Object.entries(grouped).forEach(([catName,citems])=>{
+    const sec=document.createElement('div');sec.className='sec';
+    sec.innerHTML=`<div class="slbl">${catName}</div>`;
+    citems.forEach(item=>{
+      const s=gs(item.id);
+      const isHash=item.type==='hash';
+      const checked=isHash?!!s.hdone:!!s.checked;
+      const dr=getR(item);
+      const tags=item.tags||[];
+      const wtype=item.style||'ir-default';
+      const tagHtml=tags.slice(0,2).map(t=>`<span class="itag ${TC[t]||'tc'}" style="font-size:7px">${TN[t]||t}</span>`).join('');
+      const wrap=document.createElement('div');
+      const wico=itemIcon(item);
+      wrap.innerHTML=`<div class="wcard wcs ${wtype}${checked?' wcard-done':''}" id="wc-${item.id}" data-ico="${wico}">
+        <div class="wcard-inner">
+          <div class="wcard-main" id="wcm-${item.id}">
+            <div style="min-width:0">
+              <div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px">${wico}</span><div class="wcard-nm">${item.name}</div></div>
+              <div class="wcard-sub">${item.thc} · ${item.aroma}</div>
+              <div style="display:flex;gap:2px;margin-top:2px">${tagHtml}</div>
+            </div>
+            <span class="wcard-r" style="color:${rc(dr)}">${parseFloat(dr).toFixed(1)}</span>
+            <span style="font-size:9px;color:var(--m2)">›</span>
+          </div>
+          <div class="wcard-rm" onclick="removeWishItem('${item.id}')" title="Rimuovi dalla wishlist">✕</div>
+        </div>
+      </div>`;
+      wrap.querySelector('#wcm-'+item.id).addEventListener('click',()=>openItemPop(item.id));
+      sec.appendChild(wrap);
+    });
+    body.appendChild(sec);
+  });
+}
+
+function renderWishShops(body,shops){
+  if(!shops.length){body.innerHTML='<div class="empty-st">Nessun coffeeshop in wishlist<br>Aggiungi ★ dal popup nella scheda Shops</div>';return;}
+  const sec=document.createElement('div');sec.className='sec';
+  sec.innerHTML='<div class="slbl">Coffeeshop da visitare</div>';
+  shops.forEach(shop=>{
+    const s=gs('sh_'+shop.id);
+    const visited=!!s.visited;
+    const r=getRS(shop.id);
+    const wrap=document.createElement('div');
+    wrap.innerHTML=`<div class="wcard wc-shop${visited?' wcard-done':''}" id="wc-sh-${shop.id}">
+      <div class="wcard-inner">
+        <div class="wcard-main" id="wcsm-${shop.id}">
+          <div style="min-width:0">
+            <div class="wcard-nm">${shop.name}</div>
+            <div class="wcard-sub">${shop.area} · ${shop.hours}</div>
+            <div class="wcard-sub" style="color:var(--m2)">${shop.pays}</div>
+          </div>
+          <span class="wcard-r" style="color:${rc(r)}">★ ${r.toFixed(1)}</span>
+          <span style="font-size:9px;color:var(--m2)">›</span>
+        </div>
+        <div class="wcard-rm" onclick="removeWishShop('${shop.id}')" title="Rimuovi dalla wishlist">✕</div>
+      </div>
+    </div>`;
+    // long press to mark visited
+    const main=wrap.querySelector('#wcsm-'+shop.id);
+    let pt;
+    main.addEventListener('pointerdown',()=>{pt=setTimeout(()=>{const s2=gs('sh_'+shop.id);s2.visited=!s2.visited;ss('sh_'+shop.id,s2);const el=document.getElementById('wc-sh-'+shop.id);if(el)el.classList.toggle('wcard-done',!!s2.visited);renderWish();},500);},{passive:true});
+    main.addEventListener('pointerup',()=>clearTimeout(pt));
+    main.addEventListener('click',()=>{clearTimeout(pt);openShopPop(shop.id);});
+    sec.appendChild(wrap);
+  });
+  body.appendChild(sec);
+}
+
+function removeWishItem(id){
+  const s=gs(id);s.starred=false;ss(id,s);
+  const rowEl=document.getElementById('row-'+id);
+  if(rowEl)rowEl.classList.remove('strd');
+  const sb=document.getElementById('star-'+id);
+  if(sb){sb.textContent='☆';sb.classList.remove('on');}
+  renderWish();updateStats();
+}
+function removeWishShop(id){
+  const s=gs('sh_'+id);s.starred=false;ss('sh_'+id,s);
+  const lb=document.getElementById('shstar-'+id);
+  if(lb){lb.textContent='☆';lb.classList.remove('on');}
+  renderWish();
+}
+
+/* ══════════════════════════════════
+   ITEM POPUP
+══════════════════════════════════ */
+function openItemPop(id){
+  const item=ALL.find(i=>i.id===id);if(!item)return;
+  const s=gs(id);
+  const isHash=item.type==='hash';
+  const checked=isHash?!!s.hdone:!!s.checked;
+  const starred=!!s.starred;
+  const tags=item.tags||[];
+  const rval=s.rating?parseFloat(s.rating):item.rd;
+  const rcls=isHash?'rsl rb':'rsl rg';
+  const rvcls=isHash?'rv-b':'rv-g';
+  const gcol=isHash?'var(--B)':'var(--G)';
+  const tagHtml=tags.map(t=>`<span class="ptag ${TPC[t]||'pt-c'}">${TPN[t]||t}</span>`).join('');
+  document.getElementById('pop-cnt').innerHTML=`
+    <div class="ph2"><div class="pn">${item.name}</div><button class="px" onclick="closeOv()">×</button></div>
+    <div class="psub">${item.thc} · ${isHash?'Hashish':'Cannabis'}</div>
+    <div class="rlp"><span style="color:var(--A);font-size:9px">★</span><span class="rlp-v" style="color:${rc(rval)}">${parseFloat(rval).toFixed(1)}/10</span><span class="rlp-src">${s.rating?'tuo voto':'AMS Guide'}</span></div>
+    <div class="pop-bar-wrap"><div class="pop-bar-fill" style="width:${(rval/10*100).toFixed(1)}%;background:${rc(rval)}"></div></div>
+    <div class="par">◈ ${item.aroma}</div>
+    <div class="ptags">${tagHtml}</div>
+    <div class="pdesc">${item.desc}</div>
+    <div class="pdet">${item.det}</div>
+    <div class="pdiv"></div>
+    <div class="plbl">valutazione personale (0.00–10.00)</div>
+    <div class="rrow">
+      <span style="font-family:'DM Mono',monospace;font-size:7.5px;color:var(--m2)">0</span>
+      <input type="range" class="${rcls}" id="pop-ri" min="0" max="10" step="0.01" value="${rval}">
+      <span style="font-family:'DM Mono',monospace;font-size:7.5px;color:var(--m2)">10</span>
+      <span class="rv ${rvcls}" id="pop-rv">${parseFloat(rval).toFixed(2)}</span>
+    </div>
+    <div class="pdiv"></div>
+    <div class="plbl">grammi acquistati</div>
+    <div style="display:flex;align-items:center;gap:.35rem;margin-bottom:.38rem">
+      <input class="grams-inp" type="number" style="color:${gcol}" min="0" max="20" step="0.5" placeholder="0" value="${s.grams||''}" id="pop-gr">
+      <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--m2)">g</span>
+    </div>
+    <div class="plbl">note personali</div>
+    <textarea class="ni" rows="2" placeholder="coffeeshop, impressioni, quando, con chi..." id="pop-note">${s.note||''}</textarea>
+    <div class="pacts">
+      <button class="pa ${checked?(isHash?'pb':'pg'):''}" id="pop-chk" onclick="toggleChkPop('${id}',${isHash})">
+        ${checked?(isHash?'✓ Provato':'✓ Trovata'):(isHash?'Segna provato':'Segna trovata')}
+      </button>
+      ${!isHash?`<button class="pa ${starred?'pa2':''}" id="pop-star" onclick="toggleStarPop('${id}')">
+        ${starred?'★ In wishlist':'☆ Wishlist'}
+      </button>`:`<button class="pa ${starred?'pa2':''}" id="pop-star" onclick="toggleStarPop('${id}')">
+        ${starred?'★ In wishlist':'☆ Wishlist'}
+      </button>`}
+      ${starred?`<button class="pa pr" onclick="removeWishItem('${id}');closeOv()">✕ Rimuovi wish</button>`:''}
+    </div>`;
+  document.getElementById('pop-ri').addEventListener('input',function(){
+    const v=parseFloat(this.value);
+    document.getElementById('pop-rv').textContent=v.toFixed(2);
+    sfld(id,'rating',v);
+    updR(id,v);
+  });
+  document.getElementById('pop-gr').addEventListener('input',e=>{sfld(id,'grams',e.target.value);updateStats();});
+  document.getElementById('pop-note').addEventListener('input',e=>sfld(id,'note',e.target.value));
+  showOv();
+}
+function updR(id,v){
+  ['row-','wc-'].forEach(pfx=>{const el=document.getElementById(pfx+id);if(el){const b=el.querySelector('.irat,.wcard-r');if(b){b.textContent=parseFloat(v).toFixed(1);b.style.color=rc(v);}}});
+  const rlpv=document.querySelector('#pop-cnt .rlp-v');
+  if(rlpv){rlpv.style.color=rc(v);rlpv.textContent=parseFloat(v).toFixed(1)+'/10';}
+  const bar=document.querySelector('#pop-cnt .pop-bar-fill');
+  if(bar){bar.style.width=(v/10*100).toFixed(1)+'%';bar.style.background=rc(v);}
+}
+function toggleChkPop(id,isHash){
+  const s=gs(id);if(isHash)s.hdone=!s.hdone;else s.checked=!s.checked;ss(id,s);
+  const chk=isHash?s.hdone:s.checked;
+  const btn=document.getElementById('pop-chk');
+  if(btn){btn.textContent=chk?(isHash?'✓ Provato':'✓ Trovata'):(isHash?'Segna provato':'Segna trovata');btn.className='pa '+(chk?(isHash?'pb':'pg'):'');}
+  const row=document.getElementById('row-'+id);
+  if(row){if(isHash)row.classList.toggle('hdone',!!s.hdone);else row.classList.toggle('done',!!s.checked);}
+  updateStats();updateRatio();
+}
+function toggleStarPop(id){
+  const s=gs(id);s.starred=!s.starred;ss(id,s);
+  const btn=document.getElementById('pop-star');
+  if(btn){btn.textContent=s.starred?'★ In wishlist':'☆ Wishlist';btn.className='pa '+(s.starred?'pa2':'');}
+  const row=document.getElementById('row-'+id);
+  if(row)row.classList.toggle('strd',!!s.starred);
+  const sb=document.getElementById('star-'+id);
+  if(sb){sb.textContent=s.starred?'★':'☆';sb.classList.toggle('on',!!s.starred);}
+  updateStats();
+}
+function sfld(id,f,v){const s=gs(id);s[f]=v;ss(id,s);}
+
+/* ══════════════════════════════════
+   SHOPS
+══════════════════════════════════ */
+// map bdg → card style
+const SHOP_STYLE={
+  'sb-top':'sc-top','sb-hash':'sc-hash','sb-chill':'sc-chill',
+  'sb-local':'sc-local','sb-old':'sc-old','sb-warn':'sc-warn'
+};
+function renderShops(){
+  const q=(document.getElementById('shop-q').value||'').toLowerCase().trim();
+  const rMin=parseFloat(document.getElementById('sh-sl').value)||0;
+  const body=document.getElementById('shops-body');body.innerHTML='';
+  const sorted=[...SHOPS].sort((a,b)=>{const ra=getRS(a.id),rb=getRS(b.id);return rb-ra;});
+  sorted.forEach(shop=>{
+    const s=gs('sh_'+shop.id);
+    const r=getRS(shop.id);
+    let show=true;
+    if(q)show=shop.name.toLowerCase().includes(q)||(shop.area||'').toLowerCase().includes(q)||(shop.prev||'').toLowerCase().includes(q)||(shop.badge||'').toLowerCase().includes(q);
+    else if(SF==='top')show=shop.bdg==='sb-top';
+    else if(SF==='hash')show=shop.bdg==='sb-hash';
+    else if(SF==='chill')show=shop.bdg==='sb-chill';
+    else if(SF==='local')show=shop.bdg==='sb-local';
+    else if(SF==='old')show=shop.bdg==='sb-old';
+    else if(SF==='centrum')show=shop.zone==='centrum';
+    else if(SF==='jordaan')show=shop.zone==='jordaan';
+    else if(SF==='west')show=shop.zone==='west';
+    else if(SF==='east')show=shop.zone==='east';
+    else if(SF==='south')show=shop.zone==='south';
+    else if(SF==='rated')show=r>=8.5;
+    if(rMin>0&&r<rMin)show=false;
+    if(!show)return;
+    const starred=!!s.starred;
+    const cardStyle=SHOP_STYLE[shop.bdg]||'sc-local';
+    const gmTxt=shop.gm?` GM ${shop.gm}/5`:'';
+    const card=document.createElement('div');
+    const vis=!!s.visited;
+    card.className='sc '+cardStyle+(vis?' sc-visited':'');
+    card.id='shcard-'+shop.id;
+    card.innerHTML=`
+      <div style="flex:1;min-width:0">
+        <div class="sc-nm">${shop.name}</div>
+        <div class="sc-ar">${shop.area}</div>
+        <div class="sc-pv">${shop.prev}</div>
+        <div class="sc-mt">
+          <span class="sc-rt" style="color:${rc(r)}">★ ${r.toFixed(1)}/10</span>
+          <span class="sc-hr">${shop.hours}</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
+        <button class="sh-star${starred?' on':''}" id="shstar-${shop.id}" onclick="event.stopPropagation();quickShopStar('${shop.id}')">${starred?'★':'☆'}</button>
+        <div class="sbdg ${shop.bdg}">${shop.badge}</div>
+      </div>`;
+    card.addEventListener('click',()=>openShopPop(shop.id));
+    body.appendChild(card);
+  });
+}
+
+function openShopPop(id){
+  const shop=SHOPS.find(s=>s.id===id);if(!shop)return;
+  const s=gs('sh_'+id);
+  const r=getRS(id);
+  const starred=!!s.starred;
+  const visited=!!s.visited;
+  const gmTxt=shop.gm?` (Google Maps: ${shop.gm}/5)`:'';
+  document.getElementById('pop-cnt').innerHTML=`
+    <div class="ph2"><div class="pn">${shop.name}</div><button class="px" onclick="closeOv()">×</button></div>
+    <div class="psub">${shop.area} · ${shop.hours}</div>
+
+    <div class="rlp"><span style="color:var(--A);font-size:9px">★</span><span class="rlp-v" style="color:${rc(r)}">${r.toFixed(1)}/10</span><span class="rlp-src">${s.rating?'tuo voto':'AMS Guide'+gmTxt}</span></div>
+    <div class="pop-bar-wrap"><div class="pop-bar-fill" id="sh-bar" style="width:${(r/10*100).toFixed(1)}%;background:${rc(r)}"></div></div>
+    <div class="pdesc">${shop.prev}</div>
+    <div class="spop-spec">${shop.spec}</div>
+    <div class="pdiv"></div>
+    <div class="plbl">valutazione personale (0.00–10.00)</div>
+    <div class="sh-rr">
+      <span style="font-family:'DM Mono',monospace;font-size:7.5px;color:var(--m2)">0</span>
+      <input type="range" class="sh-rsl" id="sh-ri" min="0" max="10" step="0.01" value="${r}">
+      <span style="font-family:'DM Mono',monospace;font-size:7.5px;color:var(--m2)">10</span>
+      <span class="sh-rv" id="sh-rv">${r.toFixed(2)}</span>
+    </div>
+    <div class="pdiv"></div>
+    <div class="plbl">note personali</div>
+    <textarea class="ni" rows="2" placeholder="cosa hai provato, impressioni, ci torni?" id="sh-note">${s.note||''}</textarea>
+    <div class="pacts" style="margin-bottom:.3rem">
+      <button class="pa ${starred?'pa2':''}" id="sh-star" onclick="toggleShopStar('${id}')">
+        ${starred?'★ In wishlist':'☆ Wishlist shop'}
+      </button>
+      <button class="pa ${visited?'pbl':''}" id="sh-vis" onclick="toggleShopVisited('${id}')">
+        ${visited?'✓ Visitato':'Segna visitato'}
+      </button>
+      ${starred?`<button class="pa pr" onclick="removeWishShop('${id}');closeOv()">✕ Rimuovi wish</button>`:''}
+    </div>
+    <a class="map-btn" href="${shop.map}" target="_blank">↗ Apri in Google Maps</a>
+    <button class="srch-btn" onclick="openG('${shop.name} coffeeshop Amsterdam recensioni')">🔍 Cerca su Google</button>
+    <button class="srch-btn" onclick="openG('${shop.name} coffeeshop Amsterdam menu weed 2025')">🌿 Cerca menu online</button>
+    <button class="srch-btn" onclick="openG('${shop.name} Amsterdam tripadvisor')">⭐ Vedi su TripAdvisor</button>
+  `;
+  document.getElementById('sh-ri').addEventListener('input',function(){
+    const v=parseFloat(this.value);
+    document.getElementById('sh-rv').textContent=v.toFixed(2);
+    const shrlpv=document.querySelector('#pop-cnt .rlp-v');if(shrlpv){shrlpv.style.color=rc(v);shrlpv.textContent=v.toFixed(1)+'/10';}
+    const shbar=document.getElementById('sh-bar');if(shbar){shbar.style.width=(v/10*100).toFixed(1)+'%';shbar.style.background=rc(v);}
+    shfld(id,'rating',v);renderShops();
+  });
+  document.getElementById('sh-note').addEventListener('input',e=>shfld(id,'note',e.target.value));
+  showOv();
+}
+
+function toggleShopStar(id){
+  const s=gs('sh_'+id);s.starred=!s.starred;ss('sh_'+id,s);
+  const btn=document.getElementById('sh-star');
+  if(btn){btn.textContent=s.starred?'★ In wishlist':'☆ Wishlist shop';btn.className='pa '+(s.starred?'pa2':'');}
+  const lb=document.getElementById('shstar-'+id);
+  if(lb){lb.textContent=s.starred?'★':'☆';lb.classList.toggle('on',!!s.starred);}
+}
+function toggleShopVisited(id){
+  const s=gs('sh_'+id);s.visited=!s.visited;ss('sh_'+id,s);
+  const btn=document.getElementById('sh-vis');
+  if(btn){btn.textContent=s.visited?'✓ Visitato':'Segna visitato';btn.className='pa '+(s.visited?'pbl':'');}
+  const card=document.getElementById('shcard-'+id);
+  if(card)card.classList.toggle('sc-visited',!!s.visited);
+  const wc=document.getElementById('wc-sh-'+id);
+  if(wc)wc.classList.toggle('wcard-done',!!s.visited);
+}
+function shfld(id,f,v){const s=gs('sh_'+id);s[f]=v;ss('sh_'+id,s);}
+function openG(q){window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank');}
+
+/* ══════════════════════════════════
+   OVERLAY
+══════════════════════════════════ */
+function showOv(){document.getElementById('ov').classList.add('show');}
+function closeOv(){document.getElementById('ov').classList.remove('show');}
+function maybeClose(e){if(e.target===document.getElementById('ov'))closeOv();}
+
+
+/* ══════════════════════════════════
+   INIT
+══════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',function(){
+  updateChips();renderList();renderShops();updateStats();updateRatio();
+});
+
+// swipe down to close popup
+document.addEventListener('DOMContentLoaded',function(){
+  var popEl=document.getElementById('pop');
+  if(!popEl)return;
+  var ty=0;
+  popEl.addEventListener('touchstart',function(e){ty=e.touches[0].clientY;},{passive:true});
+  popEl.addEventListener('touchmove',function(e){
+    if(e.touches[0].clientY-ty>70&&popEl.scrollTop===0)closeOv();
+  },{passive:true});
+});
+
+</script>
+
+<script>
+(function(){
+  var dp=null;
+  window.addEventListener("beforeinstallprompt",function(e){
+    e.preventDefault();dp=e;
+    if(localStorage.getItem("pwa-ok"))return;
+    var d=document.createElement("div");d.id="pwa-b";
+    d.style.cssText="position:fixed;bottom:70px;left:50%;transform:translateX(-50%);width:calc(100% - 24px);max-width:456px;z-index:9999;background:#0e1a0a;border:1px solid #4eff38;border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 4px 24px rgba(0,0,0,.8)";
+    d.innerHTML="<span style='font-size:22px'>&#127807;</span><div style='flex:1'><div style='font-family:Chakra Petch,sans-serif;font-size:13px;font-weight:700;color:#4eff38'>Installa AMS Green Guide</div><div style='font-family:Kanit,sans-serif;font-size:12px;color:#b0aca4'>Aggiungi alla schermata Home</div></div><button id='pwa-inst' style='background:#4eff38;color:#070707;border:none;border-radius:8px;padding:6px 11px;font-family:Kanit,sans-serif;font-size:12px;font-weight:600;cursor:pointer'>Installa</button><button id='pwa-dis' style='background:none;border:none;color:#888;font-size:20px;cursor:pointer;padding:0 4px'>&#215;</button>";
+    document.body.appendChild(d);
+    document.getElementById("pwa-inst").onclick=function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(r){if(r.outcome==="accepted")localStorage.setItem("pwa-ok","1");var b=document.getElementById("pwa-b");if(b)b.remove();dp=null;});};
+    document.getElementById("pwa-dis").onclick=function(){var b=document.getElementById("pwa-b");if(b)b.remove();};
+  });
+  window.addEventListener("appinstalled",function(){localStorage.setItem("pwa-ok","1");var b=document.getElementById("pwa-b");if(b)b.remove();});
+})();
+</script>
+</body>
+</html>
